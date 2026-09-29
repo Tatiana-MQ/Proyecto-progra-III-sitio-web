@@ -52,52 +52,10 @@
   </div>
 </section>
 
-<!-- ========== PERSONA 3: VISOR 3D + CONTROLES (src/js/viewer3d.js) ========== -->
 <section id="personalizar" class="max-w-6xl mx-auto px-4 py-16">
-  <h2 class="text-3xl font-bold text-stone-900">Personaliza tu pulsera</h2>
-  <div class="mt-8 grid gap-8 md:grid-cols-2">
-
-    <div id="viewer-3d" class="aspect-square rounded-2xl border-2 border-dashed border-stone-300 bg-white grid place-items-center text-stone-500">
-      Aquí va el visor 3D (Persona 3)
-    </div>
-
-    <form id="customizer-form" class="flex flex-col gap-5 bg-white rounded-2xl border border-stone-200 shadow-sm p-6" novalidate>
-      <fieldset>
-        <legend class="font-semibold text-stone-900">Hilo</legend>
-        <label class="mr-4"><input type="radio" name="hilo" value="un_tono" checked class="accent-lime-500"> Un tono</label>
-        <label><input type="radio" name="hilo" value="dos_tonos" class="accent-lime-500"> Dos tonos</label>
-      </fieldset>
-      <label class="block"><span class="font-semibold text-stone-900">Color principal</span>
-        <select name="color1" class="mt-1 w-full rounded-lg border border-stone-300 bg-white px-3 py-2">
-          <option value="#1E4D2B">Verde bosque</option><option value="#9ACD32">Verde pistacho</option>
-          <option value="#3E2723">Café</option><option value="#E8DCC8">Crema</option>
-          <option value="#1C1917">Negro</option><option value="#C2410C">Terracota</option>
-        </select>
-      </label>
-      <label id="color2-caja" class="block hidden"><span class="font-semibold text-stone-900">Segundo color</span>
-        <select name="color2" class="mt-1 w-full rounded-lg border border-stone-300 bg-white px-3 py-2">
-          <option value="#E8DCC8">Crema</option><option value="#1E4D2B">Verde bosque</option>
-          <option value="#9ACD32">Verde pistacho</option><option value="#3E2723">Café</option>
-          <option value="#1C1917">Negro</option><option value="#C2410C">Terracota</option>
-        </select>
-      </label>
-      <label class="block"><span class="font-semibold text-stone-900">Dije</span>
-        <select name="dije" class="mt-1 w-full rounded-lg border border-stone-300 bg-white px-3 py-2">
-          <option value="ninguno">Sin dije</option><option value="metalico">Dije metálico</option><option value="natural">Dije natural</option>
-        </select>
-      </label>
-
-      <!-- PERSONA 4: pedido -->
-      <label class="block"><span class="font-semibold text-stone-900">Tu nombre</span>
-        <input name="cliente" type="text" placeholder="Para identificar tu pedido" class="mt-1 w-full rounded-lg border border-stone-300 bg-white px-3 py-2">
-      </label>
-      <p id="customizer-error" class="text-red-600 text-sm min-h-5" role="alert"></p>
-      <div class="flex items-center justify-between gap-4">
-        <p>Total <strong id="customizer-total" class="text-2xl text-stone-900">₡0</strong></p>
-        <button type="submit" class="bg-lime-400 hover:bg-lime-500 text-stone-900 font-semibold rounded-full px-6 py-3">Pedir por WhatsApp</button>
-      </div>
-    </form>
-  </div>
+  <h2 class="text-3xl font-bold text-stone-900">Mira cada pulsera en 360°</h2>
+  <p class="mt-3 max-w-2xl">Arrastra cada pulsera para verla por todos lados y elige tu color favorito.</p>
+  <div id="catalogo-360" class="mt-8"></div>
 </section>
 
 <!-- ========== PERSONA 2: CONTACTO ========== -->
