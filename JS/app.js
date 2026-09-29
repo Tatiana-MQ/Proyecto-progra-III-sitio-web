@@ -1,5 +1,179 @@
+
 // ================= PERSONA 1: menú =================
+(() => {
+  // TODO Persona 1: falta el clic de #menu-btn para mostrar/ocultar #menu en celular.
+})();
+
 // ================= PERSONA 2: catálogo y contacto =================
+(() => {
+  const TELEFONO = '50684131678';          // WhatsApp de la tienda (con 506)
+  const CARPETA = 'assets/images/360/';    // se reutilizan las imágenes del visor 360°
+
+  // ---------- 1. DATOS DEL CATÁLOGO ----------
+  // precio: número en colones, o null si es "Consultar"
+  const PRODUCTOS = [
+    { linea: 'Pulsera de piedras naturales', nombre: 'Ágata azul',       tipo: 'piedras', precio: 4000, imagen: 'piedras-agata-azul.webp' },
+    { linea: 'Pulsera de piedras naturales', nombre: 'Amatista',         tipo: 'piedras', precio: 4000, imagen: 'piedras-amatista.webp' },
+    { linea: 'Pulsera de piedras naturales', nombre: 'Aventurina verde', tipo: 'piedras', precio: 4000, imagen: 'piedras-aventurina-verde.webp' },
+    { linea: 'Pulsera de piedras naturales', nombre: 'Cuarzo rosa',      tipo: 'piedras', precio: 4000, imagen: 'piedras-cuarzo-rosa.webp' },
+    { linea: 'Pulsera de piedras naturales', nombre: 'Howlita blanca',   tipo: 'piedras', precio: 4000, imagen: 'piedras-howlita-blanca.webp' },
+    { linea: 'Pulsera de piedras naturales', nombre: 'Ónix negro',       tipo: 'piedras', precio: 4000, imagen: 'piedras-onix-negro.webp' },
+    { linea: 'Pulsera con corazón', nombre: 'Aventurina, corazón dorado',    tipo: 'corazon', precio: 4000, imagen: 'corazon-aventurina-dorado.webp' },
+    { linea: 'Pulsera con corazón', nombre: 'Cuarzo rosa, corazón oro rosa', tipo: 'corazon', precio: 4000, imagen: 'corazon-cuarzo-rosa-oro-rosa.webp' },
+    { linea: 'Pulsera con corazón', nombre: 'Howlita, corazón oro rosa',     tipo: 'corazon', precio: 4000, imagen: 'corazon-howlita-oro-rosa.webp' },
+    { linea: 'Macramé yin yang', nombre: 'Negro',       tipo: 'macrame', precio: null, imagen: 'macrame-negro.webp' },
+    { linea: 'Macramé yin yang', nombre: 'Rojo',        tipo: 'macrame', precio: null, imagen: 'macrame-rojo.webp' },
+    { linea: 'Macramé yin yang', nombre: 'Azul marino', tipo: 'macrame', precio: null, imagen: 'macrame-azul-marino.webp' },
+    { linea: 'Macramé yin yang', nombre: 'Café',        tipo: 'macrame', precio: null, imagen: 'macrame-cafe.webp' },
+    { linea: 'Macramé yin yang', nombre: 'Beige',       tipo: 'macrame', precio: null, imagen: 'macrame-beige.webp' }
+  ];
+
+  const FILTROS = [
+    { id: 'todas',   texto: 'Todas' },
+    { id: 'piedras', texto: 'Piedras naturales' },
+    { id: 'corazon', texto: 'Con corazón' },
+    { id: 'macrame', texto: 'Macramé' }
+  ];
+
+  const colones = (n) => (n === null ? 'Consultar precio' : '₡' + n.toLocaleString('es-CR'));
+  const enlaceWhatsApp = (texto) => `https://wa.me/${TELEFONO}?text=${encodeURIComponent(texto)}`;
+
+  // ---------- 2. TARJETA DEL CATÁLOGO ----------
+  function crearTarjeta(p) {
+    const tarjeta = document.createElement('article');
+    tarjeta.dataset.tipo = p.tipo;
+    tarjeta.className = 'flex flex-col overflow-hidden rounded-2xl border border-stone-200 bg-stone-50';
+
+    const mensaje = `Hola Artesanías Guapinol, me interesa la ${p.linea.toLowerCase()} (${p.nombre}). ¿Está disponible?`;
+
+    // La imagen es la cuadrícula de 36 fotos del 360°: con background-size 600%
+    // y posición 0 0 se muestra solo la primera foto.
+    tarjeta.innerHTML = `
+      <div class="foto aspect-[16/10] w-full bg-no-repeat"
+           style="background-size:600% 600%; background-position:0 0"
+           data-img="${CARPETA + p.imagen}" role="img" aria-label="${p.linea}, ${p.nombre}"></div>
+      <div class="flex flex-1 flex-col p-4">
+        <p class="text-xs text-stone-500">${p.linea}</p>
+        <h3 class="mt-1 font-semibold text-stone-900">${p.nombre}</h3>
+        <p class="mt-auto pt-3 font-semibold text-stone-900">${colones(p.precio)}</p>
+        <div class="mt-3 grid gap-2 sm:grid-cols-2">
+          <a href="#personalizar" class="rounded-lg border border-stone-300 py-2 text-center text-sm hover:border-stone-900">Ver en 360°</a>
+          <a href="${enlaceWhatsApp(mensaje)}" target="_blank" rel="noopener"
+             class="rounded-lg bg-lime-400 py-2 text-center text-sm font-medium text-stone-900 hover:bg-lime-500">Pedir</a>
+        </div>
+      </div>`;
+    return tarjeta;
+  }
+
+  // ---------- 3. PINTAR CATÁLOGO Y FILTROS ----------
+  const grid = document.getElementById('catalog-grid');
+  const zonaFiltros = document.getElementById('catalog-filtros');
+  const total = document.getElementById('catalog-total');
+
+  if (grid) {
+    const tarjetas = PRODUCTOS.map(crearTarjeta);
+    tarjetas.forEach((t) => grid.appendChild(t));
+
+    // Las imágenes se descargan solo cuando la tarjeta está cerca de la pantalla
+    const observador = new IntersectionObserver((entradas) => {
+      entradas.forEach((e) => {
+        if (!e.isIntersecting) return;
+        e.target.style.backgroundImage = `url("${e.target.dataset.img}")`;
+        observador.unobserve(e.target);
+      });
+    }, { rootMargin: '200px' });
+    grid.querySelectorAll('.foto').forEach((f) => observador.observe(f));
+
+    // Muestra solo las tarjetas del tipo elegido y actualiza el contador
+    function filtrar(id) {
+      let visibles = 0;
+      tarjetas.forEach((t) => {
+        const mostrar = id === 'todas' || t.dataset.tipo === id;
+        t.classList.toggle('hidden', !mostrar);
+        if (mostrar) visibles++;
+      });
+      total.textContent = `${visibles} ${visibles === 1 ? 'pulsera' : 'pulseras'}`;
+      zonaFiltros.querySelectorAll('button').forEach((b) => b.setAttribute('aria-pressed', b.dataset.filtro === id));
+    }
+
+    FILTROS.forEach((f) => {
+      const boton = document.createElement('button');
+      boton.type = 'button';
+      boton.dataset.filtro = f.id;
+      boton.textContent = f.texto;
+      boton.className = 'rounded-full border border-stone-300 px-4 py-2 text-sm hover:border-stone-900 ' +
+                        'aria-pressed:border-stone-900 aria-pressed:bg-stone-900 aria-pressed:text-white';
+      boton.addEventListener('click', () => filtrar(f.id));
+      zonaFiltros.appendChild(boton);
+    });
+
+    filtrar('todas');
+  }
+
+  // ---------- 4. FORMULARIO DE CONTACTO ----------
+  const form = document.getElementById('form-contacto');
+
+  // Cada regla devuelve true si está bien, o el texto del error
+  const REGLAS = {
+    nombre:   (v) => v.length >= 3 || 'Escribe tu nombre (mínimo 3 letras).',
+    telefono: (v) => /^[245678]\d{7}$/.test(v.replace(/[\s-]/g, '')) || 'Escribe un número de 8 dígitos, por ejemplo 8888 8888.',
+    correo:   (v) => v === '' || /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v) || 'Revisa el correo, por ejemplo nombre@correo.com.',
+    motivo:   (v) => v !== '' || 'Elige el motivo de tu mensaje.',
+    mensaje:  (v) => v.length >= 10 || 'Cuéntanos un poco más (mínimo 10 caracteres).'
+  };
+
+  function validar(campo) {
+    const resultado = REGLAS[campo.name](campo.value.trim());
+    const valido = resultado === true;
+    document.getElementById('error-' + campo.name).textContent = valido ? '' : resultado;
+    campo.setAttribute('aria-invalid', !valido);
+    return valido;
+  }
+
+  if (form) {
+    const campos = Object.keys(REGLAS).map((nombre) => form.elements[nombre]);
+    const estado = document.getElementById('form-estado');
+
+    campos.forEach((campo) => {
+      campo.addEventListener('blur', () => validar(campo));
+      // Si ya tenía error, se revisa mientras escribe para quitarlo al corregir
+      campo.addEventListener('input', () => {
+        if (campo.getAttribute('aria-invalid') === 'true') validar(campo);
+      });
+    });
+
+    form.addEventListener('submit', (e) => {
+      e.preventDefault();
+      estado.textContent = '';
+      const invalidos = campos.filter((c) => !validar(c));
+      if (invalidos.length) {
+        invalidos[0].focus();
+        return;
+      }
+
+      const v = (n) => form.elements[n].value.trim();
+      const texto = [
+        'Hola Artesanías Guapinol 👋',
+        'Motivo: ' + v('motivo'),
+        'Nombre: ' + v('nombre'),
+        'Teléfono: ' + v('telefono'),
+        v('correo') ? 'Correo: ' + v('correo') : '',
+        '',
+        v('mensaje')
+      ].filter((l, i, arr) => l !== '' || arr[i - 1] !== '').join('\n');
+
+      window.open(enlaceWhatsApp(texto), '_blank');
+      form.reset();
+      campos.forEach((c) => c.removeAttribute('aria-invalid'));
+      estado.textContent = 'Se abrió WhatsApp con tu mensaje. Solo falta tocar Enviar.';
+    });
+  }
+
+  // ---------- 5. FOOTER ----------
+  const anio = document.getElementById('anio');
+  if (anio) anio.textContent = new Date().getFullYear();
+})();
+
 // ================= PERSONA 3: vista 360° =================
 (() => {
   // ---------- 1. DATOS DEL CATÁLOGO ----------
@@ -167,49 +341,51 @@
     CATALOGO.productos.forEach((p) => contenedor.appendChild(crearTarjeta(p)));
   }
 })();
-// ================= PERSONA 4(Tati): datos, precios y WhatsApp =================
+
 // ================= PERSONA 4: datos, precios y WhatsApp =================
-const WHATSAPP = '50684131678';
+(() => {
+  const WHATSAPP = '50684131678';
 
-const PRECIOS_INICIALES = {
-  pulseraUnTono: 4500,
-  pulseraDosTonos: 5500,
-  dijeMetalico: 1500,
-  dijeNatural: 1000,
-};
+  const PRECIOS_INICIALES = {
+    pulseraUnTono: 4500,
+    pulseraDosTonos: 5500,
+    dijeMetalico: 1500,
+    dijeNatural: 1000,
+  };
 
-// Guarda los precios la primera vez y los lee después
-function obtenerPrecios() {
-  const guardados = localStorage.getItem('precios');
-  if (guardados) return JSON.parse(guardados);
-  localStorage.setItem('precios', JSON.stringify(PRECIOS_INICIALES));
-  return PRECIOS_INICIALES;
-}
+  // Guarda los precios la primera vez y los lee después
+  function obtenerPrecios() {
+    const guardados = localStorage.getItem('precios');
+    if (guardados) return JSON.parse(guardados);
+    localStorage.setItem('precios', JSON.stringify(PRECIOS_INICIALES));
+    return PRECIOS_INICIALES;
+  }
 
-function formatoColones(n) {
-  return '₡' + n.toLocaleString('es-CR');
-}
+  function formatoColones(n) {
+    return '₡' + n.toLocaleString('es-CR');
+  }
 
-// config = { hilo: 'un_tono' | 'dos_tonos', color1, color2, dije: 'ninguno' | 'metalico' | 'natural' }
-function calcularTotal(config) {
-  const p = obtenerPrecios();
-  let total = config.hilo === 'dos_tonos' ? p.pulseraDosTonos : p.pulseraUnTono;
-  if (config.dije === 'metalico') total += p.dijeMetalico;
-  if (config.dije === 'natural') total += p.dijeNatural;
-  return total;
-}
+  // config = { hilo: 'un_tono' | 'dos_tonos', color1, color2, dije: 'ninguno' | 'metalico' | 'natural' }
+  function calcularTotal(config) {
+    const p = obtenerPrecios();
+    let total = config.hilo === 'dos_tonos' ? p.pulseraDosTonos : p.pulseraUnTono;
+    if (config.dije === 'metalico') total += p.dijeMetalico;
+    if (config.dije === 'natural') total += p.dijeNatural;
+    return total;
+  }
 
-function pedirPorWhatsApp(config, nombreCliente) {
-  const mensaje = [
-    'Hola Artesanías Guapinol, quiero hacer este pedido:',
-    '• Pulsera de macramé personalizada',
-    '• Hilo: ' + config.color1 + (config.hilo === 'dos_tonos' ? ' y ' + config.color2 : ''),
-    '• Dije: ' + config.dije,
-    'Total: ' + formatoColones(calcularTotal(config)),
-    'A nombre de: ' + nombreCliente,
-  ].join('\n');
+  function pedirPorWhatsApp(config, nombreCliente) {
+    const mensaje = [
+      'Hola Artesanías Guapinol, quiero hacer este pedido:',
+      '• Pulsera de macramé personalizada',
+      '• Hilo: ' + config.color1 + (config.hilo === 'dos_tonos' ? ' y ' + config.color2 : ''),
+      '• Dije: ' + config.dije,
+      'Total: ' + formatoColones(calcularTotal(config)),
+      'A nombre de: ' + nombreCliente,
+    ].join('\n');
 
-  window.open('https://wa.me/' + WHATSAPP + '?text=' + encodeURIComponent(mensaje), '_blank');
-}
+    window.open('https://wa.me/' + WHATSAPP + '?text=' + encodeURIComponent(mensaje), '_blank');
+  }
 
 
+})();
