@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="es" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Artesanías Guapinol · Pulseras de macramé</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-stone-50 text-stone-700">
+
+<!-- ========== PERSONA 1: NAVBAR ========== -->
+<header class="sticky top-0 z-50 bg-white/90 backdrop-blur border-b border-stone-200">
+  <nav class="max-w-6xl mx-auto px-4 h-16 flex items-center justify-between">
+    <a href="#inicio" class="flex items-center gap-2 text-lg font-bold text-stone-900">
+      <img src="assets/images/logo.png" alt="" class="h-9 w-9 object-contain" onerror="this.style.display='none'">
+      Artesanías Guapinol
+    </a>
+    <button id="menu-btn" class="md:hidden p-2 rounded-lg border border-stone-300" aria-label="Abrir menú">
+      <svg class="h-6 w-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M4 6h16M4 12h16M4 18h16"/></svg>
+    </button>
+    <ul id="menu" class="hidden md:flex absolute md:static top-16 inset-x-0 flex-col md:flex-row gap-1 md:gap-8 bg-white md:bg-transparent p-4 md:p-0 border-b md:border-0 border-stone-200 font-medium">
+      <li><a class="block py-2 hover:text-lime-600" href="#inicio">Inicio</a></li>
+      <li><a class="block py-2 hover:text-lime-600" href="#nosotros">Nosotros</a></li>
+      <li><a class="block py-2 hover:text-lime-600" href="#catalogo">Catálogo</a></li>
+      <li><a class="block py-2 hover:text-lime-600" href="#personalizar">Personalizar 3D</a></li>
+      <li><a class="block py-2 hover:text-lime-600" href="#contacto">Contacto</a></li>
+    </ul>
+  </nav>
+</header>
+
+<main>
+<!-- ========== PERSONA 1: HERO ========== -->
+<section id="inicio" class="bg-lime-50">
+  <div class="max-w-6xl mx-auto px-4 py-20 md:py-28">
+    <h1 class="text-4xl md:text-6xl font-bold text-stone-900 max-w-3xl">Pulseras de macramé hechas a mano, diseñadas por ti.</h1>
+    <p class="mt-4 text-lg max-w-xl">TODO Persona 1: mensaje principal e imagen del hero.</p>
+    <a href="#personalizar" class="inline-block mt-8 bg-lime-400 hover:bg-lime-500 text-stone-900 font-semibold rounded-full px-6 py-3">Diseña tu pulsera</a>
+  </div>
+</section>
+
+<!-- ========== PERSONA 1: QUIÉNES SOMOS / MISIÓN / VISIÓN ========== -->
+<section id="nosotros" class="max-w-6xl mx-auto px-4 py-16">
+  <h2 class="text-3xl font-bold text-stone-900">Quiénes somos</h2>
+  <p class="mt-3">TODO Persona 1: historia, valor artesanal, misión y visión.</p>
+</section>
+
+<!-- ========== PERSONA 2: CATÁLOGO (src/js/catalog.js) ========== -->
+<section id="catalogo" class="bg-white border-y border-stone-200">
+  <div class="max-w-6xl mx-auto px-4 py-16">
+    <h2 class="text-3xl font-bold text-stone-900">Catálogo</h2>
+    <div id="catalog-grid" class="mt-8 grid gap-6 sm:grid-cols-2 lg:grid-cols-3"></div>
+  </div>
+</section>
+
+<!-- ========== PERSONA 3: VISOR 3D + CONTROLES (src/js/viewer3d.js) ========== -->
+<section id="personalizar" class="max-w-6xl mx-auto px-4 py-16">
+  <h2 class="text-3xl font-bold text-stone-900">Personaliza tu pulsera</h2>
+  <div class="mt-8 grid gap-8 md:grid-cols-2">
+
+    <div id="viewer-3d" class="aspect-square rounded-2xl border-2 border-dashed border-stone-300 bg-white grid place-items-center text-stone-500">
+      Aquí va el visor 3D (Persona 3)
+    </div>
+
+    <form id="customizer-form" class="flex flex-col gap-5 bg-white rounded-2xl border border-stone-200 shadow-sm p-6" novalidate>
+      <fieldset>
+        <legend class="font-semibold text-stone-900">Hilo</legend>
+        <label class="mr-4"><input type="radio" name="hilo" value="un_tono" checked class="accent-lime-500"> Un tono</label>
+        <label><input type="radio" name="hilo" value="dos_tonos" class="accent-lime-500"> Dos tonos</label>
+      </fieldset>
+      <label class="block"><span class="font-semibold text-stone-900">Color principal</span>
+        <select name="color1" class="mt-1 w-full rounded-lg border border-stone-300 bg-white px-3 py-2">
+          <option value="#1E4D2B">Verde bosque</option><option value="#9ACD32">Verde pistacho</option>
+          <option value="#3E2723">Café</option><option value="#E8DCC8">Crema</option>
+          <option value="#1C1917">Negro</option><option value="#C2410C">Terracota</option>
+        </select>
+      </label>
+      <label id="color2-caja" class="block hidden"><span class="font-semibold text-stone-900">Segundo color</span>
+        <select name="color2" class="mt-1 w-full rounded-lg border border-stone-300 bg-white px-3 py-2">
+          <option value="#E8DCC8">Crema</option><option value="#1E4D2B">Verde bosque</option>
+          <option value="#9ACD32">Verde pistacho</option><option value="#3E2723">Café</option>
+          <option value="#1C1917">Negro</option><option value="#C2410C">Terracota</option>
+        </select>
+      </label>
+      <label class="block"><span class="font-semibold text-stone-900">Dije</span>
+        <select name="dije" class="mt-1 w-full rounded-lg border border-stone-300 bg-white px-3 py-2">
+          <option value="ninguno">Sin dije</option><option value="metalico">Dije metálico</option><option value="natural">Dije natural</option>
+        </select>
+      </label>
+
+      <!-- PERSONA 4: pedido -->
+      <label class="block"><span class="font-semibold text-stone-900">Tu nombre</span>
+        <input name="cliente" type="text" placeholder="Para identificar tu pedido" class="mt-1 w-full rounded-lg border border-stone-300 bg-white px-3 py-2">
+      </label>
+      <p id="customizer-error" class="text-red-600 text-sm min-h-5" role="alert"></p>
+      <div class="flex items-center justify-between gap-4">
+        <p>Total <strong id="customizer-total" class="text-2xl text-stone-900">₡0</strong></p>
+        <button type="submit" class="bg-lime-400 hover:bg-lime-500 text-stone-900 font-semibold rounded-full px-6 py-3">Pedir por WhatsApp</button>
+      </div>
+    </form>
+  </div>
+</section>
+
+<!-- ========== PERSONA 2: CONTACTO ========== -->
+<section id="contacto" class="bg-white border-t border-stone-200">
+  <div class="max-w-6xl mx-auto px-4 py-16">
+    <h2 class="text-3xl font-bold text-stone-900">Contacto</h2>
+    <p class="mt-3">TODO Persona 2: formulario con validación. Propietaria: Shirleny Quirós Hernández · WhatsApp / SINPE: 8413 1678 · @ArteGuapinol</p>
+  </div>
+</section>
+</main>
+
+<!-- ========== PERSONA 2: FOOTER ========== -->
+<footer class="bg-stone-900 text-stone-300 py-8 text-center text-sm">© 2026 Artesanías Guapinol</footer>
+
+<script src="src/js/store.js"></script>
+<script src="src/js/main.js"></script>
+<script src="src/js/catalog.js"></script>
+<script src="src/js/viewer3d.js"></script>
+</body>
+</html>
