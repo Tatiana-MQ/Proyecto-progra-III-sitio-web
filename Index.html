@@ -44,6 +44,7 @@
   <p class="mt-3">TODO Persona 1: historia, valor artesanal, misión y visión.</p>
 </section>
 
+
 <!-- ========== PERSONA 2: CATÁLOGO (src/js/catalog.js) ========== -->
 <section id="catalogo" class="bg-white border-y border-stone-200">
   <div class="max-w-6xl mx-auto px-4 py-16">
@@ -105,16 +106,157 @@
   <div class="max-w-6xl mx-auto px-4 py-16">
     <h2 class="text-3xl font-bold text-stone-900">Contacto</h2>
     <p class="mt-3">TODO Persona 2: formulario con validación. Propietaria: Shirleny Quirós Hernández · WhatsApp / SINPE: 8413 1678 · @ArteGuapinol</p>
+
+<!-- ========== PERSONA 2: CATÁLOGO (JS/app.js) ========== -->
+<section id="catalogo" class="bg-white border-y border-stone-200">
+  <div class="max-w-6xl mx-auto px-4 py-16">
+    <div class="flex flex-col gap-4 md:flex-row md:items-end md:justify-between">
+      <div>
+        <h2 class="text-3xl font-bold text-stone-900">Catálogo</h2>
+        <p id="catalog-total" class="mt-2 text-stone-500"></p>
+      </div>
+      <!-- Los botones de filtro se crean desde JS -->
+      <div id="catalog-filtros" class="flex flex-wrap gap-2" role="group" aria-label="Filtrar catálogo"></div>
+    </div>
+    <div id="catalog-grid" class="mt-8 grid gap-5 grid-cols-2 md:grid-cols-3 lg:grid-cols-4"></div>
+  </div>
+</section>
+
+<!-- ========== PERSONA 3: VISTA 360° (JS/app.js) ========== -->
+<section id="personalizar" class="max-w-6xl mx-auto px-4 py-16">
+  <h2 class="text-3xl font-bold text-stone-900">Mira cada pulsera en 360°</h2>
+  <p class="mt-3 max-w-2xl">Arrastra cada pulsera para verla por todos lados y elige tu color favorito.</p>
+  <div id="catalogo-360" class="mt-8"></div>
+</section>
+
+<!-- ========== PERSONA 2: CONTACTO ========== -->
+<section id="contacto" class="bg-white border-t border-stone-200">
+  <div class="max-w-6xl mx-auto px-4 py-16 grid gap-10 lg:grid-cols-5">
+
+    <!-- Datos de contacto y redes -->
+    <div class="lg:col-span-2">
+      <h2 class="text-3xl font-bold text-stone-900">Contacto</h2>
+      <p class="mt-3 max-w-md">¿Quieres una pulsera, un pedido especial o tienes una duda? Escríbenos y te respondemos por WhatsApp.</p>
+
+      <dl class="mt-8 space-y-5">
+        <div>
+          <dt class="text-sm text-stone-500">Propietaria</dt>
+          <dd class="font-medium text-stone-900">Shirleny Quirós Hernández</dd>
+        </div>
+        <div>
+          <dt class="text-sm text-stone-500">WhatsApp y SINPE Móvil</dt>
+          <dd><a href="https://wa.me/50684131678" target="_blank" rel="noopener" class="font-medium text-stone-900 underline decoration-lime-400 decoration-2 underline-offset-4 hover:text-lime-700">8413 1678</a></dd>
+        </div>
+        <div>
+          <dt class="text-sm text-stone-500">Instagram</dt>
+          <dd><a href="https://www.instagram.com/ArteGuapinol/" target="_blank" rel="noopener" class="font-medium text-stone-900 underline decoration-lime-400 decoration-2 underline-offset-4 hover:text-lime-700">@ArteGuapinol</a></dd>
+        </div>
+        <div>
+          <dt class="text-sm text-stone-500">Ubicación</dt>
+          <dd class="font-medium text-stone-900">Hojancha, Guanacaste</dd>
+        </div>
+      </dl>
+    </div>
+
+    <!-- Formulario con validación (la lógica está en JS/app.js) -->
+    <form id="form-contacto" novalidate class="lg:col-span-3 grid gap-5 sm:grid-cols-2 rounded-3xl border border-stone-200 bg-stone-50 p-6 md:p-8">
+      <div class="sm:col-span-2">
+        <label for="nombre" class="block text-sm font-medium text-stone-900">Nombre</label>
+        <input id="nombre" name="nombre" type="text" autocomplete="name"
+               class="mt-1 w-full rounded-xl border border-stone-300 bg-white px-4 py-3 outline-none focus:border-lime-500 focus:ring-2 focus:ring-lime-200 aria-[invalid=true]:border-red-500">
+        <p id="error-nombre" class="mt-1 text-sm text-red-600"></p>
+      </div>
+
+      <div>
+        <label for="telefono" class="block text-sm font-medium text-stone-900">Teléfono</label>
+        <input id="telefono" name="telefono" type="tel" inputmode="numeric" autocomplete="tel" placeholder="8888 8888"
+               class="mt-1 w-full rounded-xl border border-stone-300 bg-white px-4 py-3 outline-none focus:border-lime-500 focus:ring-2 focus:ring-lime-200 aria-[invalid=true]:border-red-500">
+        <p id="error-telefono" class="mt-1 text-sm text-red-600"></p>
+      </div>
+
+      <div>
+        <label for="correo" class="block text-sm font-medium text-stone-900">Correo <span class="font-normal text-stone-500">(opcional)</span></label>
+        <input id="correo" name="correo" type="email" autocomplete="email"
+               class="mt-1 w-full rounded-xl border border-stone-300 bg-white px-4 py-3 outline-none focus:border-lime-500 focus:ring-2 focus:ring-lime-200 aria-[invalid=true]:border-red-500">
+        <p id="error-correo" class="mt-1 text-sm text-red-600"></p>
+      </div>
+
+      <div class="sm:col-span-2">
+        <label for="motivo" class="block text-sm font-medium text-stone-900">Motivo</label>
+        <select id="motivo" name="motivo"
+                class="mt-1 w-full rounded-xl border border-stone-300 bg-white px-4 py-3 outline-none focus:border-lime-500 focus:ring-2 focus:ring-lime-200 aria-[invalid=true]:border-red-500">
+          <option value="">Elige una opción</option>
+          <option>Quiero hacer un pedido</option>
+          <option>Pulsera personalizada</option>
+          <option>Pedido para regalo o evento</option>
+          <option>Otra consulta</option>
+        </select>
+        <p id="error-motivo" class="mt-1 text-sm text-red-600"></p>
+      </div>
+
+      <div class="sm:col-span-2">
+        <label for="mensaje" class="block text-sm font-medium text-stone-900">Mensaje</label>
+        <textarea id="mensaje" name="mensaje" rows="4"
+                  class="mt-1 w-full rounded-xl border border-stone-300 bg-white px-4 py-3 outline-none focus:border-lime-500 focus:ring-2 focus:ring-lime-200 aria-[invalid=true]:border-red-500"></textarea>
+        <p id="error-mensaje" class="mt-1 text-sm text-red-600"></p>
+      </div>
+
+      <div class="sm:col-span-2 flex flex-col gap-3 sm:flex-row sm:items-center">
+        <button type="submit" class="h-12 rounded-xl bg-stone-900 px-6 font-medium text-white hover:bg-stone-700 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-lime-500">
+          Enviar por WhatsApp
+        </button>
+        <p id="form-estado" role="status" class="text-sm text-lime-700"></p>
+      </div>
+    </form>
+
   </div>
 </section>
 </main>
 
 <!-- ========== PERSONA 2: FOOTER ========== -->
+
 <footer class="bg-stone-900 text-stone-300 py-8 text-center text-sm">© 2026 Artesanías Guapinol</footer>
 
 <script src="src/js/store.js"></script>
 <script src="src/js/main.js"></script>
 <script src="src/js/catalog.js"></script>
 <script src="src/js/viewer3d.js"></script>
+
+<footer class="bg-stone-900 text-stone-300">
+  <div class="max-w-6xl mx-auto px-4 py-12 grid gap-10 sm:grid-cols-2 lg:grid-cols-4">
+    <div class="lg:col-span-2">
+      <p class="text-lg font-bold text-white">Artesanías Guapinol</p>
+      <p class="mt-3 max-w-sm text-sm text-stone-400">Pulseras de macramé y piedras naturales hechas a mano en Hojancha, Guanacaste.</p>
+    </div>
+
+    <nav aria-label="Secciones">
+      <p class="font-semibold text-white">Secciones</p>
+      <ul class="mt-3 space-y-2 text-sm">
+        <li><a href="#inicio" class="hover:text-lime-300">Inicio</a></li>
+        <li><a href="#nosotros" class="hover:text-lime-300">Nosotros</a></li>
+        <li><a href="#catalogo" class="hover:text-lime-300">Catálogo</a></li>
+        <li><a href="#personalizar" class="hover:text-lime-300">Vista 360°</a></li>
+        <li><a href="#contacto" class="hover:text-lime-300">Contacto</a></li>
+      </ul>
+    </nav>
+
+    <div>
+      <p class="font-semibold text-white">Síguenos</p>
+      <ul class="mt-3 space-y-2 text-sm">
+        <li><a href="https://www.instagram.com/ArteGuapinol/" target="_blank" rel="noopener" class="hover:text-lime-300">Instagram @ArteGuapinol</a></li>
+        <li><a href="https://wa.me/50684131678" target="_blank" rel="noopener" class="hover:text-lime-300">WhatsApp 8413 1678</a></li>
+        <li>SINPE Móvil 8413 1678</li>
+      </ul>
+    </div>
+  </div>
+  <div class="border-t border-stone-800">
+    <p class="max-w-6xl mx-auto px-4 py-5 text-xs text-stone-500">
+      © <span id="anio">2026</span> Artesanías Guapinol. Proyecto de Programación III, UNA Sede Chorotega.
+    </p>
+  </div>
+</footer>
+
+<script src="JS/app.js"></script>
+
 </body>
 </html>
