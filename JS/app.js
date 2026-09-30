@@ -49,6 +49,22 @@ function pedirPorWhatsApp(pedido, nombreCliente) {
 // ================= PERSONA 1: menú =================
 (() => {
   // TODO Persona 1: falta el clic de #menu-btn para mostrar/ocultar #menu en celular.
+
+  // Abre y cierra el menú en celular (#boton-menu y #menu-movil del navbar)
+  const boton = document.getElementById('boton-menu');
+  const menu = document.getElementById('menu-movil');
+  if (boton && menu) {
+    const alternar = (abrir) => {
+      menu.classList.toggle('hidden', !abrir);
+      document.getElementById('icono-abrir').classList.toggle('hidden', abrir);
+      document.getElementById('icono-cerrar').classList.toggle('hidden', !abrir);
+      boton.setAttribute('aria-expanded', abrir);
+      boton.setAttribute('aria-label', abrir ? 'Cerrar menú' : 'Abrir menú');
+    };
+    boton.addEventListener('click', () => alternar(menu.classList.contains('hidden')));
+    // Al tocar una opción, el menú se cierra
+    menu.querySelectorAll('a').forEach((a) => a.addEventListener('click', () => alternar(false)));
+  }
 })();
 
 // ================= PERSONA 2: catálogo y contacto =================
@@ -83,6 +99,9 @@ function pedirPorWhatsApp(pedido, nombreCliente) {
   ];
 
   const colones = (n) => (n === null ? 'Consultar precio' : '₡' + n.toLocaleString('es-CR'));
+  // El precio que se muestra sale de Persona 4, así coincide con el personalizador
+  const MODELO_DE_TIPO = { piedras: 'piedras', corazon: 'piedrasDije', macrame: 'macrame' };
+  const precioDe = (p) => calcularTotal(MODELO_DE_TIPO[p.tipo]);
   const enlaceWhatsApp = (texto) => `https://wa.me/${TELEFONO}?text=${encodeURIComponent(texto)}`;
 
   // ---------- 2. TARJETA DEL CATÁLOGO ----------
@@ -102,7 +121,7 @@ function pedirPorWhatsApp(pedido, nombreCliente) {
       <div class="flex flex-1 flex-col p-4">
         <p class="text-xs text-stone-500">${p.linea}</p>
         <h3 class="mt-1 font-semibold text-stone-900">${p.nombre}</h3>
-        <p class="mt-auto pt-3 font-semibold text-stone-900">${colones(p.precio)}</p>
+        <p class="mt-auto pt-3 font-semibold text-stone-900">${colones(precioDe(p))}</p>
         <div class="mt-3 grid gap-2 sm:grid-cols-2">
           <a href="#personalizar" class="rounded-lg border border-stone-300 py-2 text-center text-sm hover:border-stone-900">Ver en 360°</a>
           <a href="${enlaceWhatsApp(mensaje)}" target="_blank" rel="noopener"
