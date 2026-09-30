@@ -1,4 +1,3 @@
-
 // ================= PERSONA 1: menú =================
 // ================= PERSONA 2: catálogo y contacto =================
 // ================= PERSONA 3: visor 3D =================
@@ -7,16 +6,16 @@
 const WHATSAPP = '50684131678';
 
 const PRECIOS_INICIALES = {
-  pulseraUnTono: 4500,
-  pulseraDosTonos: 5500,
-  dijeMetalico: 1500,
-  dijeNatural: 1000,
+  pulseraPiedras: 4000,       // piedras naturales sin dije
+  pulseraPiedrasDije: 4500,   // piedras con dije de corazón
+  pulseraMacrame: 5000,       // macramé con dije yin yang
 };
 
 // Guarda los precios la primera vez y los lee después
 function obtenerPrecios() {
   const guardados = localStorage.getItem('precios');
-  if (guardados) return JSON.parse(guardados);
+  // Si el navegador tenía precios guardados de antes, se completan con los nuevos
+  if (guardados) return { ...PRECIOS_INICIALES, ...JSON.parse(guardados) };
   localStorage.setItem('precios', JSON.stringify(PRECIOS_INICIALES));
   return PRECIOS_INICIALES;
 }
@@ -25,22 +24,21 @@ function formatoColones(n) {
   return '₡' + n.toLocaleString('es-CR');
 }
 
-// config = { hilo: 'un_tono' | 'dos_tonos', color1, color2, dije: 'ninguno' | 'metalico' | 'natural' }
-function calcularTotal(config) {
+// modelo = 'piedras' | 'piedrasDije' | 'macrame'
+function calcularTotal(modelo) {
   const p = obtenerPrecios();
-  let total = config.hilo === 'dos_tonos' ? p.pulseraDosTonos : p.pulseraUnTono;
-  if (config.dije === 'metalico') total += p.dijeMetalico;
-  if (config.dije === 'natural') total += p.dijeNatural;
-  return total;
+  if (modelo === 'piedras') return p.pulseraPiedras;
+  if (modelo === 'piedrasDije') return p.pulseraPiedrasDije;
+  return p.pulseraMacrame;
 }
 
-function pedirPorWhatsApp(config, nombreCliente) {
+// pedido = { id, nombre, color, dije } (lo envía el personalizador de Persona 3)
+function pedirPorWhatsApp(pedido, nombreCliente) {
   const mensaje = [
     'Hola Artesanías Guapinol, quiero hacer este pedido:',
-    '• Pulsera de macramé personalizada',
-    '• Hilo: ' + config.color1 + (config.hilo === 'dos_tonos' ? ' y ' + config.color2 : ''),
-    '• Dije: ' + config.dije,
-    'Total: ' + formatoColones(calcularTotal(config)),
+    '• Pulsera: ' + pedido.nombre + ' (' + pedido.color + ')',
+    '• Dije: ' + pedido.dije,
+    'Total: ' + formatoColones(calcularTotal(pedido.id)),
     'A nombre de: ' + nombreCliente,
   ].join('\n');
 
@@ -223,56 +221,55 @@ function pedirPorWhatsApp(config, nombreCliente) {
   if (anio) anio.textContent = new Date().getFullYear();
 })();
 
-// ================= PERSONA 3: vista 360° =================
-(() => {
-  // ---------- 1. DATOS DEL CATÁLOGO ----------
-  const CATALOGO = {
-    carpeta: 'assets/images/360/',
-    vistas: 36,     // fotos por pulsera
-    columnas: 6,    // columnas de la cuadrícula dentro de la imagen
-    productos: [
-      {
-        nombre: 'Pulsera de piedras naturales',
-        descripcion: 'Cuentas de 8 mm en elástico resistente.',
-        precio: '₡4000',
-        variantes: [
-          { nombre: 'Ágata azul',       color: '#2447d8', imagen: 'piedras-agata-azul.webp' },
-          { nombre: 'Amatista',         color: '#8e5fcc', imagen: 'piedras-amatista.webp' },
-          { nombre: 'Aventurina verde', color: '#8fcca0', imagen: 'piedras-aventurina-verde.webp' },
-          { nombre: 'Cuarzo rosa',      color: '#f2b6c4', imagen: 'piedras-cuarzo-rosa.webp' },
-          { nombre: 'Howlita blanca',   color: '#f1f0eb', imagen: 'piedras-howlita-blanca.webp' },
-          { nombre: 'Ónix negro',       color: '#1a1a1a', imagen: 'piedras-onix-negro.webp' }
-        ]
-      },
-      {
-        nombre: 'Pulsera de piedras con corazón',
-        descripcion: 'Piedras naturales con dije de corazón metálico.',
-        precio: '₡4000',
-        variantes: [
-          { nombre: 'Aventurina, corazón dorado',   color: '#8fcca0', imagen: 'corazon-aventurina-dorado.webp' },
-          { nombre: 'Cuarzo rosa, corazón oro rosa', color: '#f2b6c4', imagen: 'corazon-cuarzo-rosa-oro-rosa.webp' },
-          { nombre: 'Howlita, corazón oro rosa',    color: '#f1f0eb', imagen: 'corazon-howlita-oro-rosa.webp' }
-        ]
-      },
-      {
-        nombre: 'Pulsera de macramé yin yang',
-        descripcion: 'Doble tira tejida a mano con cierre ajustable.',
-        precio: 'Consultar',
-        variantes: [
-          { nombre: 'Negro',       color: '#161616', imagen: 'macrame-negro.webp' },
-          { nombre: 'Rojo',        color: '#9c1c24', imagen: 'macrame-rojo.webp' },
-          { nombre: 'Azul marino', color: '#1d2b4d', imagen: 'macrame-azul-marino.webp' },
-          { nombre: 'Café',        color: '#5b3a22', imagen: 'macrame-cafe.webp' },
-          { nombre: 'Beige',       color: '#d8c6a4', imagen: 'macrame-beige.webp' }
-        ]
-      }
-    ]
-  };
+// ================= PERSONA 3: personalizador semi-3D =================
+// Panel con los 3 modelos: el usuario elige uno y luego su color.
+// Se muestra solo el modelo elegido, girando con el visor 360° (crearVisor).
+const Personalizador = (() => {
+  const CARPETA = 'assets/images/360/';
+
+  // ---------- 1. DATOS: los 3 modelos y sus colores ----------
+  const MODELOS = [
+    {
+      id: 'piedras', nombre: 'Piedras naturales', dije: 'Sin dije',
+      variantes: [
+        { nombre: 'Ágata azul',       color: '#2447d8', imagen: 'piedras-agata-azul.webp' },
+        { nombre: 'Amatista',         color: '#8e5fcc', imagen: 'piedras-amatista.webp' },
+        { nombre: 'Aventurina verde', color: '#8fcca0', imagen: 'piedras-aventurina-verde.webp' },
+        { nombre: 'Cuarzo rosa',      color: '#f2b6c4', imagen: 'piedras-cuarzo-rosa.webp' },
+        { nombre: 'Howlita blanca',   color: '#f1f0eb', imagen: 'piedras-howlita-blanca.webp' },
+        { nombre: 'Ónix negro',       color: '#1a1a1a', imagen: 'piedras-onix-negro.webp' }
+      ]
+    },
+    {
+      id: 'piedrasDije', nombre: 'Piedras con dije', dije: 'Corazón metálico',
+      variantes: [
+        { nombre: 'Aventurina verde', color: '#8fcca0', imagen: 'corazon-aventurina-dorado.webp' },
+        { nombre: 'Cuarzo rosa',      color: '#f2b6c4', imagen: 'corazon-cuarzo-rosa-oro-rosa.webp' },
+        { nombre: 'Howlita blanca',   color: '#f1f0eb', imagen: 'corazon-howlita-oro-rosa.webp' }
+      ]
+    },
+    {
+      id: 'macrame', nombre: 'Macramé', dije: 'Dije yin yang',
+      variantes: [
+        { nombre: 'Negro',       color: '#161616', imagen: 'macrame-negro.webp' },
+        { nombre: 'Rojo',        color: '#9c1c24', imagen: 'macrame-rojo.webp' },
+        { nombre: 'Azul marino', color: '#1d2b4d', imagen: 'macrame-azul-marino.webp' },
+        { nombre: 'Café',        color: '#5b3a22', imagen: 'macrame-cafe.webp' },
+        { nombre: 'Beige',       color: '#d8c6a4', imagen: 'macrame-beige.webp' }
+      ]
+    }
+  ];
+
+  let modelo = MODELOS[0];
+  let variante = modelo.variantes[0];
+  let cambiarImagen;
 
   // ---------- 2. VISOR 360° ----------
+  // Cada imagen trae 36 fotos de la pulsera en una cuadrícula de 6x6;
+  // mostrando una tras otra, la pulsera "gira".
   // Recibe un div y la imagen. Devuelve una función para cambiar de imagen.
   function crearVisor(visor, imagen) {
-    const { vistas, columnas } = CATALOGO;
+    const vistas = 36, columnas = 6;   // fotos por pulsera y columnas de la cuadrícula
     const filas = Math.ceil(vistas / columnas);
     visor.style.backgroundSize = `${columnas * 100}% ${filas * 100}%`;
 
@@ -317,7 +314,7 @@ function pedirPorWhatsApp(config, nombreCliente) {
     visor.addEventListener('pointercancel', soltar);   // en celular, si el usuario hace scroll
 
     // La imagen se descarga solo cuando la tarjeta aparece en pantalla
-    const cambiarImagen = (img) => { visor.style.backgroundImage = `url("${CATALOGO.carpeta + img}")`; };
+    const cambiarImagen = (img) => { visor.style.backgroundImage = `url("${CARPETA + img}")`; };
     new IntersectionObserver((entradas, observador) => {
       if (entradas[0].isIntersecting) {
         cambiarImagen(imagen);
@@ -330,112 +327,99 @@ function pedirPorWhatsApp(config, nombreCliente) {
     return cambiarImagen;
   }
 
-  // ---------- 3. TARJETA DE PRODUCTO ----------
-  function crearTarjeta(producto) {
-    let actual = producto.variantes[0];
-    const tarjeta = document.createElement('article');
-    tarjeta.className = 'flex flex-col overflow-hidden rounded-3xl border border-stone-200 bg-white';
+  // ---------- 3. PRECIO (con los datos de Persona 4) ----------
+  // El precio lo calcula Persona 4 según el modelo elegido
+  function calcularPrecio() {
+    return calcularTotal(modelo.id);
+  }
 
-    tarjeta.innerHTML = `
-      <div class="bg-stone-50 p-4">
+  // ---------- 4. PANEL DE MODELOS ----------
+  // Cada tarjeta muestra la primera foto de su modelo (con background-size 600%)
+  function pintarModelos() {
+    document.getElementById('panel-modelos').innerHTML = MODELOS.map((m, i) => `
+      <button type="button" data-modelo="${i}" aria-pressed="${m === modelo}"
+              class="flex flex-col overflow-hidden rounded-xl border border-stone-300 bg-white text-left hover:border-stone-500
+                     aria-pressed:border-lime-500 aria-pressed:ring-2 aria-pressed:ring-lime-200">
+        <span class="block aspect-[16/10] w-full bg-stone-50 bg-no-repeat"
+              style="background-image:url('${CARPETA + m.variantes[0].imagen}'); background-size:600% 600%; background-position:0 0"></span>
+        <span class="px-3 py-2 text-sm">
+          <span class="block font-medium text-stone-900">${m.nombre}</span>
+          <span class="text-stone-500">${m.dije}</span>
+        </span>
+      </button>`).join('');
+  }
+
+  // ---------- 5. COLORES DEL MODELO ELEGIDO ----------
+  function pintarColores() {
+    document.getElementById('panel-colores').innerHTML = modelo.variantes.map((v, i) => `
+      <button type="button" data-color="${i}" title="${v.nombre}" aria-label="${v.nombre}" aria-pressed="${v === variante}"
+              class="h-9 w-9 rounded-full ring-1 ring-black/15 ring-offset-2 aria-pressed:ring-2 aria-pressed:ring-stone-900"
+              style="background:${v.color}"></button>`).join('');
+    document.getElementById('color-nombre').textContent = variante.nombre;
+  }
+
+  // ---------- 6. MOSTRAR LA ELECCIÓN ----------
+  function mostrar() {
+    cambiarImagen(variante.imagen);
+    document.getElementById('customizer-total').textContent = formatoColones(calcularPrecio());
+  }
+
+  // ---------- 7. PEDIDO POR WHATSAPP ----------
+  function pedir(evento) {
+    evento.preventDefault();
+    const form = evento.target;
+    const error = document.getElementById('customizer-error');
+    const nombre = form.elements.cliente.value.trim();
+    if (nombre.length < 3) {
+      error.textContent = 'Escribe tu nombre para identificar el pedido (mínimo 3 letras).';
+      form.elements.cliente.focus();
+      return;
+    }
+    error.textContent = '';
+    // El mensaje y el envío por WhatsApp los hace Persona 4
+    pedirPorWhatsApp({ id: modelo.id, nombre: modelo.nombre, color: variante.nombre, dije: modelo.dije }, nombre);
+  }
+
+  // ---------- 8. INICIO ----------
+  function iniciar() {
+    const form = document.getElementById('customizer-form');
+    const cont = document.getElementById('viewer-3d');
+    if (!form || !cont) return;
+
+    cont.className = 'grid aspect-square place-items-center rounded-3xl border border-stone-200 bg-stone-50 p-4';
+    cont.innerHTML = `
+      <div class="w-full">
         <div class="visor aspect-[16/10] w-full cursor-grab touch-pan-y select-none bg-no-repeat"
-             role="img" aria-label="${producto.nombre}, vista 360°"></div>
-      </div>
-      <div class="flex flex-1 flex-col gap-4 p-5">
-        <div>
-          <h3 class="text-lg font-semibold">${producto.nombre}</h3>
-          <p class="text-sm text-stone-600">${producto.descripcion}</p>
-        </div>
-        <div class="flex flex-wrap gap-2.5">
-          ${producto.variantes.map((v, i) => `
-            <button data-i="${i}" title="${v.nombre}" aria-label="${v.nombre}" aria-pressed="${i === 0}"
-                    class="h-8 w-8 rounded-full ring-1 ring-black/15 ring-offset-2 aria-pressed:ring-2 aria-pressed:ring-stone-900"
-                    style="background:${v.color}"></button>`).join('')}
-        </div>
-        <p class="variante text-sm text-stone-500">${actual.nombre}</p>
-        <div class="mt-auto flex items-center justify-between">
-          <span class="text-lg font-semibold">${producto.precio}</span>
-          <button class="pedido h-11 rounded-xl bg-stone-900 px-4 text-sm font-medium text-white hover:bg-stone-700">
-            Agregar al pedido
-          </button>
-        </div>
+             role="img" aria-label="Vista 360° de tu pulsera"></div>
+        <p class="mt-4 text-center text-sm text-stone-400">Arrastra para girar</p>
       </div>`;
+    cambiarImagen = crearVisor(cont.querySelector('.visor'), variante.imagen);
 
-    const cambiarImagen = crearVisor(tarjeta.querySelector('.visor'), actual.imagen);
-
-    // Botones de color: cambian la imagen y el nombre de la variante
-    tarjeta.querySelectorAll('[data-i]').forEach((boton) => {
-      boton.addEventListener('click', () => {
-        actual = producto.variantes[boton.dataset.i];
-        tarjeta.querySelectorAll('[data-i]').forEach((b) => b.setAttribute('aria-pressed', b === boton));
-        tarjeta.querySelector('.variante').textContent = actual.nombre;
-        cambiarImagen(actual.imagen);
-      });
+    // Elegir modelo: se muestra ese modelo con su primer color
+    document.getElementById('panel-modelos').addEventListener('click', (e) => {
+      const boton = e.target.closest('[data-modelo]');
+      if (!boton) return;
+      modelo = MODELOS[boton.dataset.modelo];
+      variante = modelo.variantes[0];
+      pintarModelos(); pintarColores(); mostrar();
     });
 
-    // Botón de pedido: avisa al módulo de pedidos (Persona 4)
-    tarjeta.querySelector('.pedido').addEventListener('click', () => {
-      document.dispatchEvent(new CustomEvent('guapinol:pedido', {
-        detail: { producto: producto.nombre, variante: actual.nombre, precio: producto.precio }
-      }));
+    // Elegir color del modelo actual
+    document.getElementById('panel-colores').addEventListener('click', (e) => {
+      const boton = e.target.closest('[data-color]');
+      if (!boton) return;
+      variante = modelo.variantes[boton.dataset.color];
+      pintarColores(); mostrar();
     });
 
-    return tarjeta;
+    form.addEventListener('submit', pedir);
+    pintarModelos();
+    pintarColores();
+    document.getElementById('customizer-total').textContent = formatoColones(calcularPrecio());
   }
 
-  // ---------- 4. INICIO ----------
-  const contenedor = document.getElementById('catalogo-360');
-  if (contenedor) {
-    contenedor.className = 'grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3';
-    CATALOGO.productos.forEach((p) => contenedor.appendChild(crearTarjeta(p)));
-  }
+  return { iniciar };
 })();
 
-// ================= PERSONA 4: datos, precios y WhatsApp =================
-(() => {
-  const WHATSAPP = '50684131678';
-
-  const PRECIOS_INICIALES = {
-    pulseraUnTono: 4500,
-    pulseraDosTonos: 5500,
-    dijeMetalico: 1500,
-    dijeNatural: 1000,
-  };
-
-  // Guarda los precios la primera vez y los lee después
-  function obtenerPrecios() {
-    const guardados = localStorage.getItem('precios');
-    if (guardados) return JSON.parse(guardados);
-    localStorage.setItem('precios', JSON.stringify(PRECIOS_INICIALES));
-    return PRECIOS_INICIALES;
-  }
-
-  function formatoColones(n) {
-    return '₡' + n.toLocaleString('es-CR');
-  }
-
-  // config = { hilo: 'un_tono' | 'dos_tonos', color1, color2, dije: 'ninguno' | 'metalico' | 'natural' }
-  function calcularTotal(config) {
-    const p = obtenerPrecios();
-    let total = config.hilo === 'dos_tonos' ? p.pulseraDosTonos : p.pulseraUnTono;
-    if (config.dije === 'metalico') total += p.dijeMetalico;
-    if (config.dije === 'natural') total += p.dijeNatural;
-    return total;
-  }
-
-  function pedirPorWhatsApp(config, nombreCliente) {
-    const mensaje = [
-      'Hola Artesanías Guapinol, quiero hacer este pedido:',
-      '• Pulsera de macramé personalizada',
-      '• Hilo: ' + config.color1 + (config.hilo === 'dos_tonos' ? ' y ' + config.color2 : ''),
-      '• Dije: ' + config.dije,
-      'Total: ' + formatoColones(calcularTotal(config)),
-      'A nombre de: ' + nombreCliente,
-    ].join('\n');
-
-    window.open('https://wa.me/' + WHATSAPP + '?text=' + encodeURIComponent(mensaje), '_blank');
-  }
-
-
-})();
-
+// Se inicia cuando todo el archivo ya cargó (así las funciones de Persona 4 ya existen)
+document.addEventListener('DOMContentLoaded', Personalizador.iniciar);
