@@ -2,7 +2,7 @@
 
 <html lang="es" class="scroll-smooth scroll-pt-16 motion-reduce:scroll-auto md:scroll-pt-20">
 <head>
-  <meta charset="UTF-8">
+  <meta charset="UTF-8"> 
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 
@@ -39,10 +39,19 @@
           <li><a href="#inicio" class="rounded-full px-2 py-2 transition-colors duration-200 lg:px-3 hover:bg-guapinol-cream">Inicio</a></li>
           <li><a href="#nosotros" class="rounded-full px-2 py-2 transition-colors duration-200 lg:px-3 hover:bg-guapinol-cream">Nosotros</a></li>
           <li><a href="#catalogo" class="rounded-full px-2 py-2 transition-colors duration-200 lg:px-3 hover:bg-guapinol-cream">Catálogo</a></li>
+          <li><a href="#ferias" class="rounded-full px-2 py-2 transition-colors duration-200 lg:px-3 hover:bg-guapinol-cream">Ferias</a></li>
           <li><a href="#personalizar" class="rounded-full border px-3 py-2 font-semibold shadow-sm transition-colors duration-200 lg:px-4 border-guapinol-primary bg-guapinol-primary hover:border-guapinol-green hover:bg-guapinol-green hover:text-guapinol-light">Personalizar 3D</a></li>
           <li><a href="#contacto" class="rounded-full px-2 py-2 transition-colors duration-200 lg:px-3 hover:bg-guapinol-cream">Contacto</a></li>
         </ul>
 
+        <div class="flex items-center gap-1">
+        <!-- Botón del carrito -->
+        <button id="boton-carrito" type="button" class="relative inline-flex h-11 w-11 items-center justify-center rounded-full transition-colors duration-200 hover:bg-guapinol-cream" aria-label="Abrir carrito">
+          <svg class="h-6 w-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M3 4h2l2.4 11h10.2L20 7H6.2" /><circle cx="9" cy="19.5" r="1.3" /><circle cx="17" cy="19.5" r="1.3" />
+          </svg>
+          <span id="carrito-cantidad" class="absolute -right-0.5 -top-0.5 hidden h-5 min-w-5 items-center justify-center rounded-full bg-guapinol-primary px-1 text-xs font-bold text-guapinol-green">0</span>
+        </button>
         <!-- Botón del menú móvil  -->
         <button id="boton-menu" type="button" class="inline-flex h-11 w-11 items-center justify-center rounded-full transition-colors duration-200 md:hidden hover:bg-guapinol-cream" aria-controls="menu-movil" aria-expanded="false" aria-label="Abrir menú">
           <svg id="icono-abrir" class="h-6 w-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true">
@@ -52,6 +61,7 @@
             <path d="M6 6l12 12M18 6 6 18" />
           </svg>
         </button>
+        </div>
       </div>
 
       <div id="menu-movil" class="hidden border-t py-3 md:hidden border-guapinol-brown/10">
@@ -59,6 +69,7 @@
           <li><a href="#inicio" class="block rounded-xl px-4 py-3 transition-colors duration-200 hover:bg-guapinol-cream">Inicio</a></li>
           <li><a href="#nosotros" class="block rounded-xl px-4 py-3 transition-colors duration-200 hover:bg-guapinol-cream">Nosotros</a></li>
           <li><a href="#catalogo" class="block rounded-xl px-4 py-3 transition-colors duration-200 hover:bg-guapinol-cream">Catálogo</a></li>
+          <li><a href="#ferias" class="block rounded-xl px-4 py-3 transition-colors duration-200 hover:bg-guapinol-cream">Ferias</a></li>
 
           
           <li><a href="#personalizar" class="block rounded-xl border px-4 py-3 font-semibold transition-colors duration-200 border-guapinol-primary bg-guapinol-primary hover:border-guapinol-green hover:bg-guapinol-green hover:text-guapinol-light">Personalizar 3D</a></li>
@@ -71,8 +82,14 @@
   <main>
 
     <!-- PORTADA-->
-    <section id="inicio">
-      <div class="mx-auto grid max-w-7xl items-center gap-12 px-4 py-16 sm:px-6 sm:py-20 lg:grid-cols-2 lg:gap-16 lg:px-8 lg:py-24">
+    <section id="inicio" class="relative overflow-hidden">
+      <!-- Video de fondo: poner el archivo en assets/videos/ (corto, sin audio, menos de 5 MB) -->
+      <video class="absolute inset-0 h-full w-full object-cover motion-reduce:hidden" autoplay muted loop playsinline preload="metadata" poster="assets/images/logo1.jpg" aria-hidden="true">
+        <source src="assets/videos/semillas.webm" type="video/webm">
+        <source src="assets/videos/semillas.mp4" type="video/mp4">
+      </video>
+      <div class="absolute inset-0 bg-guapinol-light/80" aria-hidden="true"></div>
+      <div class="relative mx-auto grid max-w-7xl items-center gap-12 px-4 py-16 sm:px-6 sm:py-20 lg:grid-cols-2 lg:gap-16 lg:px-8 lg:py-24">
 
         <div class="text-center lg:text-left">
           
@@ -261,6 +278,16 @@
   </div>
 </section>
 
+<!-- ========== FERIAS (los datos están en JS/ferias.js) ========== -->
+<section id="ferias" class="bg-guapinol-cream py-16 md:py-24">
+  <div class="mx-auto max-w-6xl px-4">
+    <p class="text-sm font-bold uppercase tracking-widest text-guapinol-brown/80 underline decoration-4 underline-offset-8 decoration-guapinol-primary">Encuéntranos</p>
+    <h2 class="mt-6 text-3xl font-semibold tracking-tight sm:text-4xl font-display">Ferias y puntos de venta</h2>
+    <p class="mt-3 max-w-2xl text-guapinol-green/80">Visítanos, toca las piezas y llévate tu pulsera en persona.</p>
+    <div id="ferias-lista" class="mt-8 grid gap-5 md:grid-cols-2"></div>
+  </div>
+</section>
+
 <!-- ========== PERSONA 3: VISOR 3D + CONTROLES (src/js/viewer3d.js) ========== -->
 <!-- El visor semi-3D se dibuja dentro de #viewer-3d desde JS/app.js -->
 <!-- Muestra la imagen 360° del modelo y color elegidos -->
@@ -292,7 +319,10 @@
       <p id="customizer-error" class="text-red-600 text-sm min-h-5" role="alert"></p>
       <div class="flex items-center justify-between gap-4">
         <p>Total <strong id="customizer-total" class="text-2xl text-stone-900">₡0</strong></p>
-        <button type="submit" class="bg-lime-400 hover:bg-lime-500 text-stone-900 font-semibold rounded-full px-6 py-3">Pedir por WhatsApp</button>
+        <div class="flex flex-wrap justify-end gap-2">
+          <button type="button" id="customizer-agregar" class="rounded-full border border-stone-900 px-5 py-3 font-semibold text-stone-900 hover:bg-stone-100">Agregar al carrito</button>
+          <button type="submit" class="bg-lime-400 hover:bg-lime-500 text-stone-900 font-semibold rounded-full px-5 py-3">Pedir ahora</button>
+        </div>
       </div>
     </form>
   </div>
@@ -322,9 +352,15 @@
         </div>
         <div>
           <dt class="text-sm text-stone-500">Ubicación</dt>
-          <dd class="font-medium text-stone-900">Hojancha, Guanacaste</dd>
+          <dd class="font-medium text-stone-900">Hojancha, Guanacaste
+            <a href="https://maps.app.goo.gl/AozQ8v1wDZB91prQA" target="_blank" rel="noopener" class="ml-2 text-sm font-normal underline decoration-lime-400 decoration-2 underline-offset-4 hover:text-lime-700">Cómo llegar</a></dd>
         </div>
       </dl>
+
+      <!-- Mapa del taller (coordenadas 10.028852, -85.402792) -->
+      <div class="mt-8 overflow-hidden rounded-2xl border border-stone-200">
+        <iframe title="Ubicación del taller de Artesanías Guapinol" src="https://www.google.com/maps?q=10.028852,-85.402792&z=16&output=embed" class="h-64 w-full" loading="lazy" referrerpolicy="no-referrer-when-downgrade" allowfullscreen></iframe>
+      </div>
     </div>
 
     <!-- Formulario con validación (la lógica está en JS/app.js) -->
@@ -418,11 +454,34 @@
 </footer>
 
 <!-- Scripts: pedidos.js va primero porque los demás usan sus funciones -->
+<!-- ========== CARRITO ========== -->
+<div id="carrito" class="fixed inset-0 z-[60] hidden" role="dialog" aria-modal="true" aria-labelledby="carrito-titulo">
+  <div id="carrito-fondo" class="absolute inset-0 bg-guapinol-brown/50"></div>
+  <aside class="absolute right-0 top-0 flex h-full w-full max-w-md flex-col bg-guapinol-light shadow-2xl">
+    <div class="flex items-center justify-between border-b border-guapinol-brown/10 p-5">
+      <h2 id="carrito-titulo" class="text-xl font-semibold font-display">Tu carrito</h2>
+      <button id="carrito-cerrar" type="button" class="h-10 w-10 rounded-full hover:bg-guapinol-cream" aria-label="Cerrar carrito">✕</button>
+    </div>
+    <ul id="carrito-lista" class="flex-1 space-y-3 overflow-y-auto p-5"></ul>
+    <div class="space-y-3 border-t border-guapinol-brown/10 p-5">
+      <p class="flex justify-between text-lg">Total <strong id="carrito-total">₡0</strong></p>
+      <label class="block text-sm font-medium">Tu nombre
+        <input id="carrito-cliente" type="text" placeholder="Para identificar tu pedido" class="mt-1 w-full rounded-lg border border-stone-300 bg-white px-3 py-2 font-normal">
+      </label>
+      <p id="carrito-error" class="min-h-5 text-sm text-red-600" role="alert"></p>
+      <button id="carrito-pedir" type="button" class="w-full rounded-full bg-lime-400 py-3 font-semibold text-stone-900 hover:bg-lime-500">Pedir por WhatsApp</button>
+      <button id="carrito-vaciar" type="button" class="w-full text-sm text-stone-500 underline">Vaciar carrito</button>
+    </div>
+  </aside>
+</div>
+
 <script src="JS/pedidos.js"></script>
 <script src="JS/menu.js"></script>
+<script src="JS/carrito.js"></script>
 <script src="JS/catalogo.js"></script>
 <script src="JS/personalizador.js"></script>
 <script src="JS/contacto.js"></script>
+<script src="JS/ferias.js"></script>
 
 </body>
 </html>
