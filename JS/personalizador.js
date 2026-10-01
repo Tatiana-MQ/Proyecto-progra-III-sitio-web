@@ -222,6 +222,26 @@ function pedir(evento) {
 }
 
 
+// ---------- AGREGAR AL CARRITO ----------
+// Agrega la pulsera elegida al carrito (la función agregarAlCarrito está en carrito.js)
+function agregarModeloAlCarrito() {
+  agregarAlCarrito({
+    clave: modeloElegido.id + '-' + colorElegido.nombre,   // identifica la combinación modelo + color
+    nombre: modeloElegido.nombre,
+    color: colorElegido.nombre,
+    dije: modeloElegido.dije,
+    precio: calcularTotal(modeloElegido.id)
+  });
+
+  // Aviso en el mismo botón durante 1.5 segundos
+  const boton = document.getElementById('customizer-agregar');
+  boton.textContent = '¡Agregada! ✓';
+  setTimeout(function () {
+    boton.textContent = 'Agregar al carrito';
+  }, 1500);
+}
+
+
 // ---------- 7. INICIO ----------
 function iniciarPersonalizador() {
   const form = document.getElementById('customizer-form');
@@ -249,6 +269,12 @@ function iniciarPersonalizador() {
   visor.addEventListener('pointercancel', soltar);   // en celular, si el usuario hace scroll
 
   form.addEventListener('submit', pedir);
+
+  // Botón "Agregar al carrito" (solo si existe en el HTML)
+  const botonAgregar = document.getElementById('customizer-agregar');
+  if (botonAgregar !== null) {
+    botonAgregar.addEventListener('click', agregarModeloAlCarrito);
+  }
 
   actualizar();
   mostrarFoto(0);
