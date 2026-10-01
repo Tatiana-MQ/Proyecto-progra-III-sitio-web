@@ -1,48 +1,250 @@
 <!DOCTYPE html>
-<html lang="es" class="scroll-smooth">
+
+<html lang="es" class="scroll-smooth scroll-pt-16 motion-reduce:scroll-auto md:scroll-pt-20">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Artesanías Guapinol · Pulseras de macramé</title>
-  <script src="https://cdn.tailwindcss.com"></script>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+
+  <meta name="description" content="Artesanías Guapinol.">
+  <title>Artesanías Guapinol</title>
+  <link rel="icon" type="image/jpeg" href="assets/images/logo1.jpg">
+
+  
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,400..700&family=Fraunces:opsz,wght@9..144,500..700&display=swap">
+
+
+  <script src="https://cdn.tailwindcss.com/3.4.17"></script>
+  <script src="JS/tailwind.config.js"></script>
+
+  <link rel="stylesheet" href="src/css/styles.css">
 </head>
-<body class="bg-stone-50 text-stone-700">
 
-<!-- ========== PERSONA 1: NAVBAR ========== -->
-<header class="sticky top-0 z-50 bg-white/90 backdrop-blur border-b border-stone-200">
-  <nav class="max-w-6xl mx-auto px-4 h-16 flex items-center justify-between">
-    <a href="#inicio" class="flex items-center gap-2 text-lg font-bold text-stone-900">
-      <img src="assets/images/logo.png" alt="" class="h-9 w-9 object-contain" onerror="this.style.display='none'">
-      Artesanías Guapinol
-    </a>
-    <button id="menu-btn" class="md:hidden p-2 rounded-lg border border-stone-300" aria-label="Abrir menú">
-      <svg class="h-6 w-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M4 6h16M4 12h16M4 18h16"/></svg>
-    </button>
-    <ul id="menu" class="hidden md:flex absolute md:static top-16 inset-x-0 flex-col md:flex-row gap-1 md:gap-8 bg-white md:bg-transparent p-4 md:p-0 border-b md:border-0 border-stone-200 font-medium">
-      <li><a class="block py-2 hover:text-lime-600" href="#inicio">Inicio</a></li>
-      <li><a class="block py-2 hover:text-lime-600" href="#nosotros">Nosotros</a></li>
-      <li><a class="block py-2 hover:text-lime-600" href="#catalogo">Catálogo</a></li>
-      <li><a class="block py-2 hover:text-lime-600" href="#personalizar">Personalizar 3D</a></li>
-      <li><a class="block py-2 hover:text-lime-600" href="#contacto">Contacto</a></li>
-    </ul>
-  </nav>
-</header>
+<body class="antialiased bg-guapinol-light text-guapinol-green selection:bg-guapinol-primary/40">
 
-<main>
-<!-- ========== PERSONA 1: HERO ========== -->
-<section id="inicio" class="bg-lime-50">
-  <div class="max-w-6xl mx-auto px-4 py-20 md:py-28">
-    <h1 class="text-4xl md:text-6xl font-bold text-stone-900 max-w-3xl">Pulseras de macramé hechas a mano, diseñadas por ti.</h1>
-    <p class="mt-4 text-lg max-w-xl">TODO Persona 1: mensaje principal e imagen del hero.</p>
-    <a href="#personalizar" class="inline-block mt-8 bg-lime-400 hover:bg-lime-500 text-stone-900 font-semibold rounded-full px-6 py-3">Diseña tu pulsera</a>
-  </div>
-</section>
+  <!--  NAVBAR-->
+  <header id="navbar" class="sticky top-0 z-50 border-b border-guapinol-brown/10 bg-guapinol-light/90 backdrop-blur"> <!--un efecto visual de desenfoque detrás del navbar.-->
+    <nav class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8" aria-label="Navegación principal">
+      <div class="flex h-16 items-center justify-between md:h-20">
 
-<!-- ========== PERSONA 1: QUIÉNES SOMOS / MISIÓN / VISIÓN ========== -->
-<section id="nosotros" class="max-w-6xl mx-auto px-4 py-16">
-  <h2 class="text-3xl font-bold text-stone-900">Quiénes somos</h2>
-  <p class="mt-3">TODO Persona 1: historia, valor artesanal, misión y visión.</p>
-</section>
+        <a href="#inicio" class="flex items-center gap-3">
+
+          <img src="assets/images/logo1.jpg" alt="Logo de Artesanías Guapinol" width="44" height="44" class="h-10 w-10 md:h-14 md:w-14">
+          <span class="text-lg font-semibold tracking-tight font-display">Artesanías Guapinol</span>
+        </a>
+
+        <ul class="hidden items-center gap-1 whitespace-nowrap text-sm font-medium md:flex lg:gap-3 lg:text-base">
+          <li><a href="#inicio" class="rounded-full px-2 py-2 transition-colors duration-200 lg:px-3 hover:bg-guapinol-cream">Inicio</a></li>
+          <li><a href="#nosotros" class="rounded-full px-2 py-2 transition-colors duration-200 lg:px-3 hover:bg-guapinol-cream">Nosotros</a></li>
+          <li><a href="#catalogo" class="rounded-full px-2 py-2 transition-colors duration-200 lg:px-3 hover:bg-guapinol-cream">Catálogo</a></li>
+          <li><a href="#personalizar" class="rounded-full border px-3 py-2 font-semibold shadow-sm transition-colors duration-200 lg:px-4 border-guapinol-primary bg-guapinol-primary hover:border-guapinol-green hover:bg-guapinol-green hover:text-guapinol-light">Personalizar 3D</a></li>
+          <li><a href="#contacto" class="rounded-full px-2 py-2 transition-colors duration-200 lg:px-3 hover:bg-guapinol-cream">Contacto</a></li>
+        </ul>
+
+        <!-- Botón del menú móvil  -->
+        <button id="boton-menu" type="button" class="inline-flex h-11 w-11 items-center justify-center rounded-full transition-colors duration-200 md:hidden hover:bg-guapinol-cream" aria-controls="menu-movil" aria-expanded="false" aria-label="Abrir menú">
+          <svg id="icono-abrir" class="h-6 w-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true">
+            <path d="M4 7h16M4 12h16M4 17h16" />
+          </svg>
+          <svg id="icono-cerrar" class="hidden h-6 w-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true">
+            <path d="M6 6l12 12M18 6 6 18" />
+          </svg>
+        </button>
+      </div>
+
+      <div id="menu-movil" class="hidden border-t py-3 md:hidden border-guapinol-brown/10">
+        <ul class="flex flex-col gap-1 font-medium">
+          <li><a href="#inicio" class="block rounded-xl px-4 py-3 transition-colors duration-200 hover:bg-guapinol-cream">Inicio</a></li>
+          <li><a href="#nosotros" class="block rounded-xl px-4 py-3 transition-colors duration-200 hover:bg-guapinol-cream">Nosotros</a></li>
+          <li><a href="#catalogo" class="block rounded-xl px-4 py-3 transition-colors duration-200 hover:bg-guapinol-cream">Catálogo</a></li>
+
+          
+          <li><a href="#personalizar" class="block rounded-xl border px-4 py-3 font-semibold transition-colors duration-200 border-guapinol-primary bg-guapinol-primary hover:border-guapinol-green hover:bg-guapinol-green hover:text-guapinol-light">Personalizar 3D</a></li>
+          <li><a href="#contacto" class="block rounded-xl px-4 py-3 transition-colors duration-200 hover:bg-guapinol-cream">Contacto</a></li>
+        </ul>
+      </div>
+    </nav>
+  </header>
+
+  <main>
+
+    <!-- PORTADA-->
+    <section id="inicio">
+      <div class="mx-auto grid max-w-7xl items-center gap-12 px-4 py-16 sm:px-6 sm:py-20 lg:grid-cols-2 lg:gap-16 lg:px-8 lg:py-24">
+
+        <div class="text-center lg:text-left">
+          
+          <p class="inline-block rounded-full border px-4 py-1.5 text-sm font-medium border-guapinol-brown/10 bg-guapinol-cream">
+            Artesanias · Bisuteria
+          </p>
+
+          <h1 class="mt-6 text-balance text-4xl font-semibold leading-tight tracking-tight sm:text-5xl lg:text-6xl font-display">
+            Personalizamos tus 
+            <span class="underline decoration-4 underline-offset-8 decoration-guapinol-primary">ideas.</span>
+          </h1>
+
+          <p class="mt-6 text-lg font-medium sm:text-xl">
+            Artesanias inspiradas en la naturaleza y creadas a tu medida.
+          </p>
+
+          <p class="mx-auto mt-4 max-w-xl leading-relaxed lg:mx-0 text-guapinol-green/80">
+            Unimos el valor del trabajo hecho a mano con la tecnología: elige los colores,  los dijes que más te gusten, y mira tu pulsera en 3D antes de pedirla.
+          </p>
+
+          <div class="mt-8 flex flex-col gap-4 sm:flex-row sm:justify-center lg:justify-start">
+            <a href="#personalizar" class="group inline-flex items-center justify-center gap-2 rounded-full border px-8 py-4 font-semibold shadow-lg transition duration-300 hover:-translate-y-0.5 border-guapinol-primary bg-guapinol-primary shadow-guapinol-green/20 hover:border-guapinol-green hover:bg-guapinol-green hover:text-guapinol-light">
+              Personaliza tu pulsera
+              <svg class="h-5 w-5 transition-transform duration-300 group-hover:translate-x-1" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <path d="M5 12h14M13 6l6 6-6 6" />
+              </svg>
+            </a>
+            <a href="#nosotros" class="inline-flex items-center justify-center rounded-full border px-8 py-4 font-semibold transition duration-300 border-guapinol-green/20 hover:border-guapinol-green hover:bg-guapinol-cream">
+              Conócenos
+            </a>
+          </div>
+
+          <ul class="mt-10 flex flex-wrap justify-center gap-x-6 gap-y-3 text-sm font-medium lg:justify-start">
+            <li class="flex items-center gap-2">
+              <span class="flex h-8 w-8 items-center justify-center rounded-full bg-guapinol-primary/25">
+                <svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                  <path d="M12 20s-7-4.4-7-10a4 4 0 0 1 7-2.6A4 4 0 0 1 19 10c0 5.6-7 10-7 10z" />
+                </svg>
+              </span>
+              Hecho a mano
+            </li>
+            <li class="flex items-center gap-2">
+              <span class="flex h-8 w-8 items-center justify-center rounded-full bg-guapinol-primary/25">
+                <svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                  <path d="M4 7h9M17 7h3M4 17h3M11 17h9" />
+                  <circle cx="15" cy="7" r="2" />
+                  <circle cx="9" cy="17" r="2" />
+                </svg>
+              </span>
+              Diseño personalizado
+            </li>
+            <li class="flex items-center gap-2">
+              <span class="flex h-8 w-8 items-center justify-center rounded-full bg-guapinol-primary/25">
+                <svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                  <path d="M12 3l8 4.5v9L12 21l-8-4.5v-9z" />
+                  <path d="M4 7.5l8 4.5 8-4.5M12 12v9" />
+                </svg>
+              </span>
+              Vista previa en 3D
+            </li>
+          </ul>
+        </div>
+
+        <div class="mx-auto w-full max-w-md lg:mr-0">
+        <img src="assets/images/logo1.jpg" alt="Artesanías Guapinol" class="aspect-[5/5] w-full rounded-2xl object-cover"> 
+        </div>
+
+      </div>
+    </section>
+
+
+
+    <!-- quienes somos -->
+    <section id="nosotros" class="py-16 md:py-24">
+      <div class="mx-auto grid max-w-7xl items-center gap-12 px-4 sm:px-6 lg:grid-cols-2 lg:gap-16 lg:px-8">
+
+        <div>
+          <p class="text-sm font-bold uppercase tracking-widest text-guapinol-brown/80 underline decoration-4 underline-offset-8 decoration-guapinol-primary"> Quiénes somos</p>
+          <div class="mt-6 space-y-4 leading-relaxed sm:text-lg text-guapinol-green/80">
+            <p>Somos un emprendimiento familiar costarricense dedicado al diseño y elaboración de bisutería artesanal única. Inspirados en la biodiversidad de nuestra tierra, trabajamos en equipo desde nuestro taller utilizando semillas y materiales de la zona para crear piezas y detalles especiales que transmiten la esencia, el color y la calidez de Costa Rica..</p>
+            <p>Cada una de nuestros accesorios está hecho a mano con dedicación y cariño familiar, ofreciendo un recuerdo auténtico y sostenible tanto para quienes nos visitan como para quienes desean llevar un pedacito de la naturaleza tica siempre consigo.</p>
+          </div>
+        </div>
+
+        <ul class="grid gap-4 sm:grid-cols-2">
+          <li class="rounded-2xl border p-6 transition duration-300 hover:-translate-y-1 hover:shadow-lg border-guapinol-brown/10 bg-guapinol-cream hover:shadow-guapinol-green/10">
+            <span class="flex h-12 w-12 items-center justify-center rounded-xl bg-guapinol-primary/25">
+              <svg class="h-6 w-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <path d="M12 20s-7-4.4-7-10a4 4 0 0 1 7-2.6A4 4 0 0 1 19 10c0 5.6-7 10-7 10z" />
+              </svg>
+            </span>
+            <h3 class="mt-4 text-xl font-semibold font-display">Hecho a mano</h3>
+            <p class="mt-2 text-sm leading-relaxed text-guapinol-green/80">Cada pulsera se elabora de forma manual, pieza por pieza.</p>
+          </li>
+          <li class="rounded-2xl border p-6 transition duration-300 hover:-translate-y-1 hover:shadow-lg border-guapinol-brown/10 bg-guapinol-cream hover:shadow-guapinol-green/10">
+            <span class="flex h-12 w-12 items-center justify-center rounded-xl bg-guapinol-primary/25">
+              <svg class="h-6 w-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <path d="M4 8c4 0 4 8 8 8s4-8 8-8" />
+                <path d="M4 16c4 0 4-8 8-8s4 8 8 8" />
+              </svg>
+            </span>
+            
+            <h3 class="mt-4 text-xl font-semibold font-display">Personalización</h3>
+            <p class="mt-2 text-sm leading-relaxed text-guapinol-green/80">Tú eliges los colores y los detalles para que tu pulsera refleje tu estilo.</p>
+          </li>
+          <li class="rounded-2xl border p-6 transition duration-300 hover:-translate-y-1 hover:shadow-lg border-guapinol-brown/10 bg-guapinol-cream hover:shadow-guapinol-green/10">
+            <span class="flex h-12 w-12 items-center justify-center rounded-xl bg-guapinol-primary/25">
+              <svg class="h-6 w-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <path d="M12 3.5l2.6 5.3 5.9.9-4.2 4.1 1 5.8-5.3-2.8-5.3 2.8 1-5.8-4.2-4.1 5.9-.9z" />
+              </svg>
+            </span>
+            <h3 class="mt-4 text-xl font-semibold font-display">Valor artesanal</h3>
+            <p class="mt-2 text-sm leading-relaxed text-guapinol-green/80">Elegir una artesanía es reconocer la creatividad y el trabajo de quien la crea.</p>
+          </li>
+        </ul>
+
+      </div>
+    </section>
+   
+    <section id="mision-vision" class="py-16 md:py-24 bg-guapinol-green">
+      <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+
+        <div class="mx-auto max-w-2xl text-center">
+          <p class="text-sm font-semibold uppercase tracking-widest text-guapinol-primary">Nuestro propósito</p>
+          <h2 class="mt-3 text-3xl font-semibold tracking-tight sm:text-4xl lg:text-5xl font-display text-guapinol-light">Misión y visión</h2>
+          <p class="mt-4 sm:text-lg text-guapinol-light/80">Lo que nos mueve hoy y hacia dónde queremos llegar.</p>
+        </div>
+
+        <div class="mt-12 grid gap-6 md:grid-cols-2 lg:gap-8">
+
+          <article id="mision" class="flex flex-col rounded-3xl border p-8 shadow-xl transition duration-300 hover:-translate-y-1 sm:p-10 border-guapinol-brown/10 bg-guapinol-cream">
+            <span class="flex h-14 w-14 items-center justify-center rounded-2xl bg-guapinol-primary">
+              <svg class="h-7 w-7" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true">
+                <circle cx="12" cy="12" r="9" />
+                <circle cx="12" cy="12" r="5" />
+                <circle cx="12" cy="12" r="1.5" fill="currentColor" />
+              </svg>
+            </span>
+            <h3 class="mt-6 text-2xl font-semibold sm:text-3xl font-display">Misión</h3>
+            <p class="mt-4 leading-relaxed text-guapinol-green/80">
+              Crear artesanías únicas y de alta calidad que fusionen la tradición y la innovación, utilizando materiales locales de manera sostenible, y generando un impacto positivo en las comunidades locales y el medio ambiente, mientras preservamos y difundimos nuestro legado cultural y artesanal.
+            </p>
+            <ul class="mt-auto flex flex-wrap gap-2 pt-6 text-xs font-semibold">
+              <li class="rounded-full border px-3 py-1 border-guapinol-brown/15 bg-guapinol-light">Artesanía</li>
+              <li class="rounded-full border px-3 py-1 border-guapinol-brown/15 bg-guapinol-light">Calidad</li>
+              <li class="rounded-full border px-3 py-1 border-guapinol-brown/15 bg-guapinol-light">Personalización</li>
+            </ul>
+          </article>
+
+          <!-- TEXTO PROPUESTO, NO OFICIAL: VALIDAR CON EL EMPRENDIMIENTO -->
+          <article id="vision" class="flex flex-col rounded-3xl border p-8 shadow-xl transition duration-300 hover:-translate-y-1 sm:p-10 border-guapinol-brown/10 bg-guapinol-cream">
+            <span class="flex h-14 w-14 items-center justify-center rounded-2xl bg-guapinol-primary">
+              <svg class="h-7 w-7" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <path d="M2.5 12S6 5 12 5s9.5 7 9.5 7-3.5 7-9.5 7S2.5 12 2.5 12z" />
+                <circle cx="12" cy="12" r="3" />
+              </svg>
+            </span>
+            <h3 class="mt-6 text-2xl font-semibold sm:text-3xl font-display">Visión</h3>
+            <p class="mt-4 leading-relaxed text-guapinol-green/80">
+              Convertirnos en un referente nacional e internacional en la creación de artesanías únicas y sostenibles que reflejen la riqueza cultural y natural de nuestra región, preservando las técnicas artesanales tradicionales y promoviendo la conservación de la biodiversidad y el desarrollo de comunidades locales.
+            </p>
+            <ul class="mt-auto flex flex-wrap gap-2 pt-6 text-xs font-semibold">
+              <li class="rounded-full border px-3 py-1 border-guapinol-brown/15 bg-guapinol-light">Tradicionales</li>
+              <li class="rounded-full border px-3 py-1 border-guapinol-brown/15 bg-guapinol-light">Biodiversidad</li>
+              <li class="rounded-full border px-3 py-1 border-guapinol-brown/15 bg-guapinol-light">únicas </li>
+            </ul>
+          </article>
+
+        </div>
+      </div>
+    </section>
+
 
 <!-- ========== PERSONA 2: CATÁLOGO (JS/app.js) ========== -->
 <section id="catalogo" class="bg-white border-y border-stone-200">
@@ -215,7 +417,12 @@
   </div>
 </footer>
 
-<script src="JS/app.js"></script>
+<!-- Scripts: pedidos.js va primero porque los demás usan sus funciones -->
+<script src="JS/pedidos.js"></script>
+<script src="JS/menu.js"></script>
+<script src="JS/catalogo.js"></script>
+<script src="JS/personalizador.js"></script>
+<script src="JS/contacto.js"></script>
 
 </body>
 </html>
