@@ -31,17 +31,31 @@ const FILTROS = [
   { id: 'macrame', texto: 'Macramé' }
 ];
 
-// El precio que se muestra sale de Persona 4, así coincide con el personalizador.
-// Cada tipo de tarjeta corresponde a un modelo de Persona 4 (pedidos.js).
-function precioDelProducto(producto) {
-  let modelo = 'macrame';
+// Cada tipo de tarjeta corresponde a un modelo de Persona 4 (pedidos.js)
+function modeloDelProducto(producto) {
   if (producto.tipo === 'piedras') {
-    modelo = 'piedras';
+    return 'piedras';
   }
   if (producto.tipo === 'corazon') {
-    modelo = 'piedrasDije';
+    return 'piedrasDije';
   }
-  return formatoColones(calcularTotal(modelo));
+  return 'macrame';
+}
+
+// Qué dije lleva cada tipo de pulsera (igual que en el personalizador)
+function dijeDelProducto(producto) {
+  if (producto.tipo === 'piedras') {
+    return 'Sin dije';
+  }
+  if (producto.tipo === 'corazon') {
+    return 'Corazón metálico';
+  }
+  return 'Dije yin yang';
+}
+
+// El precio que se muestra sale de Persona 4, así coincide con el personalizador.
+function precioDelProducto(producto) {
+  return calcularTotal(modeloDelProducto(producto));
 }
 
 // Arma el enlace que abre WhatsApp con un mensaje ya escrito
@@ -57,9 +71,6 @@ function crearTarjeta(producto) {
   tarjeta.className = 'flex flex-col overflow-hidden rounded-2xl border border-stone-200 bg-stone-50';
   tarjeta.setAttribute('data-tipo', producto.tipo);   // se guarda el tipo para poder filtrar
 
-  const mensaje = 'Hola Artesanías Guapinol, me interesa la ' + producto.linea.toLowerCase() +
-                  ' (' + producto.nombre + '). ¿Está disponible?';
-
   // La imagen es la cuadrícula de 36 fotos del 360°: con background-size 600%
   // y posición 0 0 se muestra solo la primera foto.
   tarjeta.innerHTML =
@@ -69,15 +80,53 @@ function crearTarjeta(producto) {
     '<div class="flex flex-1 flex-col p-4">' +
       '<p class="text-xs text-stone-500">' + producto.linea + '</p>' +
       '<h3 class="mt-1 font-semibold text-stone-900">' + producto.nombre + '</h3>' +
-      '<p class="mt-auto pt-3 font-semibold text-stone-900">' + precioDelProducto(producto) + '</p>' +
-      '<div class="mt-3 grid gap-2 sm:grid-cols-2">' +
-        '<a href="#personalizar" class="rounded-lg border border-stone-300 py-2 text-center text-sm hover:border-stone-900">Ver en 360°</a>' +
-        '<a href="' + enlaceWhatsApp(mensaje) + '" target="_blank" rel="noopener" ' +
-           'class="rounded-lg bg-lime-400 py-2 text-center text-sm font-medium text-stone-900 hover:bg-lime-500">Pedir</a>' +
+      '<p class="mt-auto pt-3 font-semibold text-stone-900">' + formatoColones(precioDelProducto(producto)) + '</p>' +
+      '<div class="mt-3 grid gap-2">' +
+        '<button type="button" class="agregar rounded-lg border border-stone-300 py-2 text-center text-sm hover:border-stone-900">Agregar al carrito</button>' +
+        '<button type="button" class="comprar rounded-lg bg-lime-400 py-2 text-center text-sm font-medium text-stone-900 hover:bg-lime-500">Comprar ahora</button>' +
       '</div>' +
     '</div>';
 
+  // Botón "Agregar al carrito"
+  const botonAgregar = tarjeta.querySelector('.agregar');
+  botonAgregar.addEventListener('click', function () {
+    agregarProductoAlCarrito(producto, botonAgregar);
+  });
+
+  // Botón "Comprar ahora"
+  tarjeta.querySelector('.comprar').addEventListener('click', function () {
+    comprarAhora(producto);
+  });
+
   return tarjeta;
+}
+
+
+// ---------- AGREGAR AL CARRITO Y COMPRAR AHORA ----------
+// Agrega el producto al carrito (agregarAlCarrito está en carrito.js)
+function agregarProductoAlCarrito(producto, boton) {
+  agregarAlCarrito({
+    clave: modeloDelProducto(producto) + '-' + producto.nombre,   // identifica la pulsera
+    nombre: producto.linea,
+    color: producto.nombre,
+    dije: dijeDelProducto(producto),
+    precio: precioDelProducto(producto)
+  });
+
+  // Aviso en el mismo botón durante 1.5 segundos
+  boton.textContent = '¡Agregada! ✓';
+  setTimeout(function () {
+    boton.textContent = 'Agregar al carrito';
+  }, 1500);
+}
+
+// Abre WhatsApp con el pedido de esta pulsera, sin pasar por el carrito
+function comprarAhora(producto) {
+  let mensaje = 'Hola Artesanías Guapinol, quiero comprar:\n';
+  mensaje = mensaje + '• ' + producto.linea + ' (' + producto.nombre + ')\n';
+  mensaje = mensaje + '• Dije: ' + dijeDelProducto(producto) + '\n';
+  mensaje = mensaje + 'Total: ' + formatoColones(precioDelProducto(producto));
+  window.open(enlaceWhatsApp(mensaje), '_blank');
 }
 
 
