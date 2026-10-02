@@ -1,0 +1,7 @@
+Fotos reales del catálogo.
+
+Guarda aquí cada foto con el mismo nombre que aparece en JS/catalogo.js (campo "foto"),
+por ejemplo: piedras-amatista.jpg
+
+Mientras la foto no exista, la tarjeta muestra el cuadro "Foto próximamente".
+Recomendado: fotos horizontales (4:3), de unos 800 x 600 px.
