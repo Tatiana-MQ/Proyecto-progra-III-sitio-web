@@ -1,162 +1,201 @@
-/* catalogo.js | Catálogo de productos con filtros. */
-
-// ================= PERSONA 2: catálogo =================
+/* carrito.js | Carrito: agregar productos, ver el total y pedir todo por WhatsApp. */
 
 
-// =============================================================
-// 1. DATOS DEL CATÁLOGO
-// =============================================================
-// categoria: 'collares' o 'pulseras'. Sirve para filtrar y para saber el precio
-// (calcularTotal está en pedidos.js).
-// foto: nombre del archivo que está en assets/images/catalogo/
-const PRODUCTOS = [
-  // ----- Collares -----
-  { categoria: 'collares', linea: 'Collar con dije de corazón', nombre: 'Corazón amarillo', dije: 'Corazón amarillo', foto: 'collar-corazon-amarillo.png' },
-  { categoria: 'collares', linea: 'Collar con dije de corazón', nombre: 'Corazón azul', dije: 'Corazón azul', foto: 'collar-corazon-azul.png' },
-  { categoria: 'collares', linea: 'Collar con dije de corazón', nombre: 'Corazón verde', dije: 'Corazón verde', foto: 'collar-corazon-verde.png' },
-  { categoria: 'collares', linea: 'Semilla de guapinol', nombre: 'Collar y aretes', dije: 'Semilla de guapinol', foto: 'collar-guapinol.jpg' },
+// ===== 1. DATOS =====
+// Cada producto del carrito: { clave, nombre, color, dije, precio, cantidad }
+// "clave" sirve para saber si el producto ya está en el carrito
+let listaCarrito = [];
 
-  // ----- Pulseras -----
-  { categoria: 'pulseras', linea: 'Pulsera para compartir', nombre: 'Rojo con corazón de imán', dije: 'Corazón de imán', foto: 'pulsera-roja-iman.jpg' },
-  { categoria: 'pulseras', linea: 'Pulsera para compartir', nombre: 'Morado y blanco con corazón de imán', dije: 'Corazón de imán', foto: 'pulsera-morado-blanco-iman.jpg' },
-  { categoria: 'pulseras', linea: 'Pulsera para compartir', nombre: 'Negro y blanco con corazón de imán', dije: 'Corazón de imán', foto: 'pulsera-negra-blanco-iman.jpg' },
-  { categoria: 'pulseras', linea: 'Pulsera para compartir', nombre: 'Negro con infinito', dije: 'Dije de infinito', foto: 'pulsera-negra-infinito.jpg' },
-  { categoria: 'pulseras', linea: 'Macramé yin yang', nombre: 'Negro con yin yang', dije: 'Dije yin yang', foto: 'pulsera-yingyang.jpg' }
-];
+// Nombre con el que se guarda en el navegador (localStorage)
+const CLAVE_CARRITO = 'carrito-v2';
 
-// Botones para filtrar. "id" coincide con la "categoria" de los productos.
-const FILTROS = [
-  { id: 'todas',    texto: 'Todos' },
-  { id: 'pulseras', texto: 'Pulseras' },
-  { id: 'collares', texto: 'Collares' }
-];
+// Guarda el carrito en el navegador (como texto JSON)
+function guardarCarrito() {
+  localStorage.setItem(CLAVE_CARRITO, JSON.stringify(listaCarrito));
+}
 
-// Filtro elegido en este momento (al inicio se ven todas)
-let filtroActual = 'todas';
-
-
-// =============================================================
-// 2. ELEMENTOS DEL HTML
-// =============================================================
-const listaCatalogo = document.querySelector('#catalog-grid');
-const zonaFiltros = document.querySelector('#catalog-filtros');
-const contadorCatalogo = document.querySelector('#catalog-total');
-
-
-// =============================================================
-// 3. MOSTRAR LOS PRODUCTOS (renderizado)
-// =============================================================
-// Igual que mostrarProductos() de clase: limpia, recorre el arreglo y crea una tarjeta por producto.
-// Solo muestra los productos del filtro elegido.
-function mostrarCatalogo() {
-
-  listaCatalogo.innerHTML = '';
-  let visibles = 0;
-
-  PRODUCTOS.forEach(function (producto) {
-
-    // Si el producto no es del filtro elegido, se salta (return pasa al siguiente producto)
-    if (filtroActual !== 'todas' && producto.categoria !== filtroActual) {
-      return;
-    }
-    visibles = visibles + 1;
-
-    // El precio sale de la categoría (collares $6.000, pulseras $4.000)
-    const precio = calcularTotal(producto.categoria);
-    const tarjeta = document.createElement('article');
-    // El ancho (2, 3 o 4 tarjetas por fila) deja las filas parejas; flex-col hace que todas tengan la misma altura
-    tarjeta.className = 'flex w-[calc(50%-0.5rem)] flex-col overflow-hidden rounded-2xl border border-guapinol-brown/10 bg-white transition duration-300 hover:-translate-y-1 hover:shadow-lg md:w-[calc(33.333%-1rem)] lg:w-[calc(25%-1.125rem)]';
-
-    // La foto del producto (vertical, 3:4). Si la foto no carga, se esconde y queda el texto "Foto no disponible".
-    tarjeta.innerHTML = `
-      <div class="relative flex aspect-[3/4] w-full items-center justify-center bg-guapinol-cream text-sm text-guapinol-green/60">
-        <span>Foto no disponible</span>
-        <img src="assets/images/catalogo/${producto.foto}" alt="${producto.linea}: ${producto.nombre}" loading="lazy" class="absolute inset-0 h-full w-full object-cover" onerror="this.classList.add('hidden')">
-      </div>
-      <div class="flex flex-1 flex-col p-4">
-        <p class="text-xs text-stone-500">${producto.linea}</p>
-        <h3 class="mt-1 font-semibold text-stone-900">${producto.nombre}</h3>
-        <p class="mt-auto pt-3 font-semibold text-stone-900">${formatoColones(precio)}</p>
-        <div class="mt-3 grid gap-2">
-          <button type="button" class="agregar rounded-lg border border-stone-300 py-2 text-center text-sm hover:border-stone-900">Agregar al carrito</button>
-          <button type="button" class="comprar rounded-lg bg-lime-400 py-2 text-center text-sm font-medium text-stone-900 hover:bg-lime-500">Comprar ahora</button>
-        </div>
-      </div>
-    `;
-
-    // Botón "Agregar al carrito" de esta tarjeta (agregarAlCarrito está en carrito.js)
-    const botonAgregarProducto = tarjeta.querySelector('.agregar');
-    botonAgregarProducto.addEventListener('click', function () {
-      agregarAlCarrito({
-        clave: producto.foto,   // cada foto es única, sirve como identificador
-        nombre: producto.linea,
-        color: producto.nombre,
-        dije: producto.dije,
-        precio: precio
-      });
-
-      // Aviso en el mismo botón durante 1.5 segundos
-      botonAgregarProducto.textContent = '¡Agregada! ✓';
-      setTimeout(function () {
-        botonAgregarProducto.textContent = 'Agregar al carrito';
-      }, 1500);
-    });
-
-    // Botón "Comprar ahora": abre WhatsApp con este producto (enviarWhatsApp está en pedidos.js)
-    tarjeta.querySelector('.comprar').addEventListener('click', function () {
-      let mensaje = SALUDO + ', quiero comprar:\n';
-      mensaje = mensaje + '• ' + producto.linea + ' (' + producto.nombre + ')\n';
-      mensaje = mensaje + '• Dije: ' + producto.dije + '\n';
-      mensaje = mensaje + 'Total: ' + formatoColones(precio);
-      enviarWhatsApp(mensaje);
-    });
-
-    listaCatalogo.appendChild(tarjeta);
-  });
-
-  // Contador: "1 producto" o "9 productos"
-  if (visibles === 1) {
-    contadorCatalogo.textContent = '1 producto';
-  } else {
-    contadorCatalogo.textContent = visibles + ' productos';
+// Lee el carrito guardado, si existe
+function cargarCarrito() {
+  const guardado = localStorage.getItem(CLAVE_CARRITO);
+  if (guardado !== null) {
+    listaCarrito = JSON.parse(guardado);
   }
 }
 
 
-// =============================================================
-// 4. MOSTRAR LOS BOTONES DE FILTRO
-// =============================================================
-function mostrarFiltros() {
+// ===== 2. ELEMENTOS DEL HTML =====
+const ventanaCarrito = document.querySelector('#carrito');
+const fondoCarrito = document.querySelector('#carrito-fondo');
+const listaHTMLCarrito = document.querySelector('#carrito-lista');
+const totalCarrito = document.querySelector('#carrito-total');
+const numeritoCarrito = document.querySelector('#carrito-cantidad');
+const inputClienteCarrito = document.querySelector('#carrito-cliente');
+const errorCarrito = document.querySelector('#carrito-error');
+const botonAbrirCarrito = document.querySelector('#boton-carrito');
+const botonCerrarCarrito = document.querySelector('#carrito-cerrar');
+const botonPedirCarrito = document.querySelector('#carrito-pedir');
+const botonVaciarCarrito = document.querySelector('#carrito-vaciar');
 
-  zonaFiltros.innerHTML = '';
 
-  FILTROS.forEach(function (filtro) {
+// ===== 3. AGREGAR, CAMBIAR CANTIDAD Y VACIAR =====
 
-    const boton = document.createElement('button');
-    boton.type = 'button';
-    boton.textContent = filtro.texto;
+// Agrega un producto al carrito; si ya estaba, le suma 1
+function agregarAlCarrito(pulsera) {
 
-    // El filtro elegido se pinta de oscuro
-    if (filtro.id === filtroActual) {
-      boton.className = 'rounded-full border border-stone-900 bg-stone-900 px-4 py-2 text-sm text-white';
-    } else {
-      boton.className = 'rounded-full border border-stone-300 px-4 py-2 text-sm hover:border-stone-900';
-    }
-
-    // Al tocar un filtro: se guarda y se vuelve a dibujar todo
-    boton.addEventListener('click', function () {
-      filtroActual = filtro.id;
-      mostrarFiltros();
-      mostrarCatalogo();
-    });
-
-    zonaFiltros.appendChild(boton);
+  // Busca si ya está (-1 = no está)
+  const indice = listaCarrito.findIndex(function (item) {
+    return item.clave === pulsera.clave;
   });
+
+  if (indice !== -1) {
+    listaCarrito[indice].cantidad = listaCarrito[indice].cantidad + 1;
+  } else {
+    pulsera.cantidad = 1;
+    listaCarrito.push(pulsera);
+  }
+
+  guardarCarrito();
+  mostrarCarrito();
+}
+
+// Suma (+1) o resta (-1) una unidad; si llega a 0, lo quita
+function cambiarCantidad(clave, cambio) {
+  const indice = listaCarrito.findIndex(function (item) {
+    return item.clave === clave;
+  });
+
+  listaCarrito[indice].cantidad = listaCarrito[indice].cantidad + cambio;
+
+  if (listaCarrito[indice].cantidad === 0) {
+    listaCarrito.splice(indice, 1);   // lo elimina del arreglo
+  }
+
+  guardarCarrito();
+  mostrarCarrito();
+}
+
+// Vacía el carrito por completo
+function vaciarCarrito() {
+  listaCarrito = [];
+  guardarCarrito();
+  mostrarCarrito();
 }
 
 
-// =============================================================
-// 5. PRIMER DIBUJO
-// =============================================================
-mostrarFiltros();
-mostrarCatalogo();
+// ===== 4. MOSTRAR EL CARRITO =====
+
+// Dibuja los productos del carrito, el total y el numerito del navbar
+function mostrarCarrito() {
+
+  listaHTMLCarrito.innerHTML = '';
+  let total = 0;
+  let cantidadPulseras = 0;
+
+  if (listaCarrito.length === 0) {
+    listaHTMLCarrito.innerHTML = '<li class="py-10 text-center text-stone-500">Tu carrito está vacío.</li>';
+  }
+
+  listaCarrito.forEach(function (pulsera) {
+
+    const subtotal = pulsera.precio * pulsera.cantidad;
+    total = total + subtotal;
+    cantidadPulseras = cantidadPulseras + pulsera.cantidad;
+
+    const elemento = document.createElement('li');
+    elemento.className = 'flex items-center justify-between gap-3 rounded-xl border border-guapinol-brown/10 bg-white p-4';
+    elemento.innerHTML = `
+      <div>
+        <p class="font-semibold">${pulsera.nombre}</p>
+        <p class="text-sm text-stone-500">${pulsera.color} · ${pulsera.dije}</p>
+        <p class="mt-1 text-sm font-medium">${formatoColones(subtotal)}</p>
+      </div>
+      <div class="flex items-center gap-2">
+        <button type="button" class="restar h-8 w-8 rounded-full border border-stone-300 hover:bg-guapinol-cream">−</button>
+        <span class="w-5 text-center font-semibold">${pulsera.cantidad}</span>
+        <button type="button" class="sumar h-8 w-8 rounded-full border border-stone-300 hover:bg-guapinol-cream">+</button>
+      </div>
+    `;
+
+    // Botones − y + de este producto
+    elemento.querySelector('.restar').addEventListener('click', function () {
+      cambiarCantidad(pulsera.clave, -1);
+    });
+    elemento.querySelector('.sumar').addEventListener('click', function () {
+      cambiarCantidad(pulsera.clave, 1);
+    });
+
+    listaHTMLCarrito.appendChild(elemento);
+  });
+
+  totalCarrito.textContent = formatoColones(total);
+
+  // Numerito del navbar: se oculta si el carrito está vacío
+  numeritoCarrito.textContent = cantidadPulseras;
+  if (cantidadPulseras === 0) {
+    numeritoCarrito.classList.add('hidden');
+    numeritoCarrito.classList.remove('flex');
+  } else {
+    numeritoCarrito.classList.remove('hidden');
+    numeritoCarrito.classList.add('flex');
+  }
+}
+
+
+// ===== 5. ABRIR Y CERRAR EL CARRITO =====
+
+// Muestra el panel del carrito
+function abrirCarrito() {
+  ventanaCarrito.classList.remove('hidden');
+}
+
+// Oculta el panel del carrito
+function cerrarCarrito() {
+  ventanaCarrito.classList.add('hidden');
+}
+
+botonAbrirCarrito.addEventListener('click', abrirCarrito);
+botonCerrarCarrito.addEventListener('click', cerrarCarrito);
+fondoCarrito.addEventListener('click', cerrarCarrito);   // clic fuera del panel
+
+
+// ===== 6. PEDIR TODO POR WHATSAPP =====
+
+// Valida el carrito y el nombre, arma el mensaje y abre WhatsApp
+botonPedirCarrito.addEventListener('click', function () {
+
+  const nombre = inputClienteCarrito.value.trim();
+
+  if (listaCarrito.length === 0) {
+    errorCarrito.textContent = 'Tu carrito está vacío.';
+    return;
+  }
+  if (nombre.length < 3) {
+    errorCarrito.textContent = 'Escribe tu nombre para identificar el pedido (mínimo 3 letras).';
+    inputClienteCarrito.focus();
+    return;
+  }
+  errorCarrito.textContent = '';
+
+  // Una línea por producto, luego el total y el nombre
+  let mensaje = SALUDO + ', quiero hacer este pedido:\n';
+  let total = 0;
+
+  listaCarrito.forEach(function (pulsera) {
+    const subtotal = pulsera.precio * pulsera.cantidad;
+    total = total + subtotal;
+    mensaje = mensaje + '• ' + pulsera.cantidad + ' x ' + pulsera.nombre + ' (' + pulsera.color + ', ' + pulsera.dije + ') = ' + formatoColones(subtotal) + '\n';
+  });
+
+  mensaje = mensaje + 'Total: ' + formatoColones(total) + '\n';
+  mensaje = mensaje + 'A nombre de: ' + nombre;
+
+  enviarWhatsApp(mensaje);   // pedidos.js
+});
+
+botonVaciarCarrito.addEventListener('click', vaciarCarrito);
+
+
+// ===== 7. AL CARGAR LA PÁGINA =====
+// Lee el carrito guardado y lo muestra
+cargarCarrito();
+mostrarCarrito();
