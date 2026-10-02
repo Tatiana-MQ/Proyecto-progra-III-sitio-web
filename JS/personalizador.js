@@ -179,13 +179,15 @@ function mostrarModelos() {
 
     // La foto es la primera de la tabla de 36 (esquina de arriba a la izquierda)
     boton.innerHTML = `
-      <span class="block aspect-[16/10] w-full bg-stone-50 bg-no-repeat"
-            style="background-image: url('${CARPETA + modelo.variantes[0].imagen}'); background-size: 600% 600%;"></span>
+      <span class="miniatura block aspect-[16/10] w-full bg-stone-50 bg-no-repeat bg-[length:600%_600%]"></span>
       <span class="px-3 py-2 text-sm">
         <span class="block font-medium text-stone-900">${modelo.nombre}</span>
         <span class="text-stone-500">${modelo.dije}</span>
       </span>
     `;
+
+    // Ponemos la foto de la miniatura desde JS (cambia según el modelo)
+    boton.querySelector('.miniatura').style.backgroundImage = `url('${CARPETA + modelo.variantes[0].imagen}')`;
 
     boton.addEventListener('click', function () {
       elegirModelo(modelo);
@@ -251,7 +253,7 @@ function actualizar() {
   // Cambiamos la imagen del visor por la del color elegido
   visor.style.backgroundImage = `url('${CARPETA + colorElegido.imagen}')`;
 
-  // El precio lo calcula Persona 4 (calcularTotal y formatoColones están en pedidos.js)
+  // Actualizamos el precio del modelo 3D (calcularTotal y formatoColones están en pedidos.js)
   textoTotal.textContent = formatoColones(calcularTotal(modeloElegido.id));
 }
 

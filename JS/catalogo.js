@@ -6,23 +6,29 @@
 // =============================================================
 // 1. DATOS DEL CATÁLOGO
 // =============================================================
-// tipo: el modelo de la pulsera ('piedras', 'piedrasDije' o 'macrame').
-// Sirve para filtrar y para saber su precio (calcularTotal está en pedidos.js).
-// foto: nombre del archivo en assets/images/catalogo/. Para poner la foto real,
-// guarda la imagen con ese mismo nombre (o cambia el nombre aquí). Ver assets/images/catalogo/LEEME.txt
+// categoria: 'collares' o 'pulseras'. Sirve para filtrar y para saber el precio
+// (calcularTotal está en pedidos.js).
+// foto: nombre del archivo que está en assets/images/catalogo/
 const PRODUCTOS = [
-{ categoria: 'pulseras', linea: 'Pulsera para compartir', nombre: 'Macramé rojo con corazón de imán', tipo: 'piedras', dije: '', foto: 'piedras-amatista.webp' },
-{ categoria: 'pulseras', linea: 'Macramé yin yang', nombre: 'Negro', tipo: 'macrame', dije: 'Dije yin yang', foto: 'macrame-negro.webp' },
-{ categoria: 'llaveros', linea: 'Llavero de macramé', nombre: 'Rojo', tipo: 'llavero', dije: 'Sin dije', foto: 'llavero-rojo.webp' },
-{ categoria: 'collares', linea: 'Collar de piedras', nombre: 'Cuarzo rosa', tipo: 'collar', dije: 'Sin dije', foto: 'collar-cuarzo-rosa.webp' },
+  // ----- Collares -----
+  { categoria: 'collares', linea: 'Collar con dije de corazón', nombre: 'Corazón amarillo', dije: 'Corazón amarillo', foto: 'collar-corazon-amarillo.png' },
+  { categoria: 'collares', linea: 'Collar con dije de corazón', nombre: 'Corazón azul', dije: 'Corazón azul', foto: 'collar-corazon-azul.png' },
+  { categoria: 'collares', linea: 'Collar con dije de corazón', nombre: 'Corazón verde', dije: 'Corazón verde', foto: 'collar-corazon-verde.png' },
+  { categoria: 'collares', linea: 'Semilla de guapinol', nombre: 'Collar y aretes', dije: 'Semilla de guapinol', foto: 'collar-guapinol.jpg' },
+
+  // ----- Pulseras -----
+  { categoria: 'pulseras', linea: 'Pulsera para compartir', nombre: 'Rojo con corazón de imán', dije: 'Corazón de imán', foto: 'pulsera-roja-iman.jpg' },
+  { categoria: 'pulseras', linea: 'Pulsera para compartir', nombre: 'Morado y blanco con corazón de imán', dije: 'Corazón de imán', foto: 'pulsera-morado-blanco-iman.jpg' },
+  { categoria: 'pulseras', linea: 'Pulsera para compartir', nombre: 'Negro y blanco con corazón de imán', dije: 'Corazón de imán', foto: 'pulsera-negra-blanco-iman.jpg' },
+  { categoria: 'pulseras', linea: 'Pulsera para compartir', nombre: 'Negro con infinito', dije: 'Dije de infinito', foto: 'pulsera-negra-infinito.jpg' },
+  { categoria: 'pulseras', linea: 'Macramé yin yang', nombre: 'Negro con yin yang', dije: 'Dije yin yang', foto: 'pulsera-yingyang.jpg' }
 ];
 
-// Botones para filtrar. "id" coincide con el "tipo" de los productos.
+// Botones para filtrar. "id" coincide con la "categoria" de los productos.
 const FILTROS = [
-  { id: 'todas',       texto: 'Todas' },
-  { id: 'pulseras',     texto: 'Pulsera' },
-  { id: 'llaveros', texto: 'Llavero' },
-  { id: 'collares',     texto: 'Collar' }
+  { id: 'todas',    texto: 'Todos' },
+  { id: 'pulseras', texto: 'Pulseras' },
+  { id: 'collares', texto: 'Collares' }
 ];
 
 // Filtro elegido en este momento (al inicio se ven todas)
@@ -55,16 +61,17 @@ function mostrarCatalogo() {
     }
     visibles = visibles + 1;
 
-    const precio = calcularTotal(producto.tipo);
+    // El precio sale de la categoría (collares $6.000, pulseras $4.000)
+    const precio = calcularTotal(producto.categoria);
     const tarjeta = document.createElement('article');
-    tarjeta.className = 'flex flex-col overflow-hidden rounded-2xl border border-guapinol-brown/10 bg-white transition duration-300 hover:-translate-y-1 hover:shadow-lg';
+    // El ancho (2, 3 o 4 tarjetas por fila) deja las filas parejas; flex-col hace que todas tengan la misma altura
+    tarjeta.className = 'flex w-[calc(50%-0.5rem)] flex-col overflow-hidden rounded-2xl border border-guapinol-brown/10 bg-white transition duration-300 hover:-translate-y-1 hover:shadow-lg md:w-[calc(33.333%-1rem)] lg:w-[calc(25%-1.125rem)]';
 
-    // Espacio para la foto del producto. Si la foto todavía no existe, onerror la
-    // esconde (clase hidden) y se ve el cuadro con el texto "Foto próximamente".
+    // La foto del producto (vertical, 3:4). Si la foto no carga, se esconde y queda el texto "Foto no disponible".
     tarjeta.innerHTML = `
-      <div class="relative flex aspect-[4/3] w-full items-center justify-center bg-guapinol-cream text-sm text-guapinol-green/60">
-        <span>Foto próximamente</span>
-        <img src="assets/images/catalogo/${producto.foto}" alt="${producto.linea}: ${producto.nombre}" class="absolute inset-0 h-full w-full object-cover" onerror="this.classList.add('hidden')">
+      <div class="relative flex aspect-[3/4] w-full items-center justify-center bg-guapinol-cream text-sm text-guapinol-green/60">
+        <span>Foto no disponible</span>
+        <img src="assets/images/catalogo/${producto.foto}" alt="${producto.linea}: ${producto.nombre}" loading="lazy" class="absolute inset-0 h-full w-full object-cover" onerror="this.classList.add('hidden')">
       </div>
       <div class="flex flex-1 flex-col p-4">
         <p class="text-xs text-stone-500">${producto.linea}</p>
@@ -81,7 +88,7 @@ function mostrarCatalogo() {
     const botonAgregarProducto = tarjeta.querySelector('.agregar');
     botonAgregarProducto.addEventListener('click', function () {
       agregarAlCarrito({
-        clave: producto.tipo + '-' + producto.nombre,
+        clave: producto.foto,   // cada foto es única, sirve como identificador
         nombre: producto.linea,
         color: producto.nombre,
         dije: producto.dije,
@@ -95,7 +102,7 @@ function mostrarCatalogo() {
       }, 1500);
     });
 
-    // Botón "Comprar ahora": abre WhatsApp con esta pulsera (enviarWhatsApp está en pedidos.js)
+    // Botón "Comprar ahora": abre WhatsApp con este producto (enviarWhatsApp está en pedidos.js)
     tarjeta.querySelector('.comprar').addEventListener('click', function () {
       let mensaje = SALUDO + ', quiero comprar:\n';
       mensaje = mensaje + '• ' + producto.linea + ' (' + producto.nombre + ')\n';
@@ -107,11 +114,11 @@ function mostrarCatalogo() {
     listaCatalogo.appendChild(tarjeta);
   });
 
-  // Contador: "1 pulsera" o "5 pulseras"
+  // Contador: "1 producto" o "9 productos"
   if (visibles === 1) {
-    contadorCatalogo.textContent = '1 pulsera';
+    contadorCatalogo.textContent = '1 producto';
   } else {
-    contadorCatalogo.textContent = visibles + ' pulseras';
+    contadorCatalogo.textContent = visibles + ' productos';
   }
 }
 

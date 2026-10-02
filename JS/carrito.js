@@ -17,12 +17,15 @@ let listaCarrito = [];
 
 // Lo guardamos en el navegador para que no se pierda al recargar la página.
 // localStorage solo guarda texto: JSON.stringify() para guardar y JSON.parse() para leer.
+// Nombre con el que se guarda el carrito. Se cambió a "-v2" para borrar carritos viejos con precios anteriores.
+const CLAVE_CARRITO = 'carrito-v2';
+
 function guardarCarrito() {
-  localStorage.setItem('carrito', JSON.stringify(listaCarrito));
+  localStorage.setItem(CLAVE_CARRITO, JSON.stringify(listaCarrito));
 }
 
 function cargarCarrito() {
-  const guardado = localStorage.getItem('carrito');
+  const guardado = localStorage.getItem(CLAVE_CARRITO);
   if (guardado !== null) {
     listaCarrito = JSON.parse(guardado);
   }

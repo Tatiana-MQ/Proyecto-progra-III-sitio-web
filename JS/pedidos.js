@@ -14,35 +14,20 @@ const WHATSAPP = '50684131678';
 // mensaje, busca la palabra "mensaje" en: catalogo.js, carrito.js, contacto.js y abajo en este archivo.
 const SALUDO = 'Hola Artesanías Guapinol';
 
-// Precio de cada modelo de pulsera
-const PRECIOS_INICIALES = {
-  pulseraPiedras: 4000,
-  pulseraPiedrasDije: 4500,
-  pulseraMacrame: 5000,
-  llavero: 3000,     
-  collar: 6000       
+// Precios de la tienda (en colones)
+const PRECIOS = {
+  // Catálogo: un precio general por categoría
+  collares: 6000,
+  pulseras: 4000,
+  // Visor 3D (excepción): cada modelo tiene su propio precio
+  piedras: 3000,       // 1.ª pulsera del visor
+  piedrasDije: 3000,   // 2.ª pulsera del visor
+  macrame: 4000        // 3.ª pulsera del visor
 };
 
 
 // =============================================================
-// 2. PRECIOS GUARDADOS EN EL NAVEGADOR (localStorage)
-// =============================================================
-/*
-localStorage guarda información en el navegador, aunque se cierre la página.
-Solo guarda TEXTO, por eso usamos:
-  JSON.stringify() → objeto a texto (para guardar)
-  JSON.parse()     → texto a objeto (para leer)
-*/
-function obtenerPrecios() {
-  // Siempre se guardan los precios actuales de PRECIOS_INICIALES. Antes se guardaban solo
-  // la primera vez, y si cambiabas un precio arriba, el navegador seguía usando el viejo.
-  localStorage.setItem('preciosGuapinol', JSON.stringify(PRECIOS_INICIALES));
-  return PRECIOS_INICIALES;
-}
-
-
-// =============================================================
-// 3. FUNCIONES QUE USAN LOS DEMÁS ARCHIVOS
+// 2. FUNCIONES QUE USAN LOS DEMÁS ARCHIVOS
 // =============================================================
 
 // Escribe un número como colones: 5000 → "₡5 000"
@@ -50,16 +35,10 @@ function formatoColones(numero) {
   return '₡' + numero.toLocaleString('es-CR');
 }
 
-// Devuelve el precio de un modelo: 'piedras', 'piedrasDije' o 'macrame'
+// Devuelve el precio según la categoría del catálogo ('collares', 'pulseras')
+// o según el modelo del visor 3D ('piedras', 'piedrasDije', 'macrame')
 function calcularTotal(modelo) {
-  const precios = obtenerPrecios();
-
-  if (modelo === 'llavero') {
-    return precios.llavero;
-  }
-  if (modelo === 'collar') {
-    return precios.collar;
-  }
+  return PRECIOS[modelo];
 }
 
 /*

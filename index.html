@@ -153,11 +153,12 @@
 
 
 
-    <!-- quienes somos -->
+    <!-- Sección Quiénes Somos: texto centrado y 3 tarjetas simétricas con Tailwind -->
     <section id="nosotros" class="py-16 md:py-24">
-      <div class="mx-auto grid max-w-7xl items-center gap-12 px-4 sm:px-6 lg:grid-cols-2 lg:gap-16 lg:px-8">
+      <div class="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
 
-        <div>
+        <!-- Texto centrado, con un ancho máximo para que se lea cómodo -->
+        <div class="mx-auto max-w-3xl text-center">
           <p class="text-sm font-bold uppercase tracking-widest text-guapinol-brown/80 underline decoration-4 underline-offset-8 decoration-guapinol-primary"> Quiénes somos</p>
           <div class="mt-6 space-y-4 leading-relaxed sm:text-lg text-guapinol-green/80">
             <p>Somos un emprendimiento familiar costarricense dedicado al diseño y elaboración de bisutería artesanal única. Inspirados en la biodiversidad de nuestra tierra, trabajamos en equipo desde nuestro taller utilizando semillas y materiales de la zona para crear piezas y detalles especiales que transmiten la esencia, el color y la calidez de Costa Rica.</p>
@@ -165,8 +166,9 @@
           </div>
         </div>
 
-        <ul class="grid gap-4 sm:grid-cols-2">
-          <li class="rounded-2xl border p-6 transition duration-300 hover:-translate-y-1 hover:shadow-lg border-guapinol-brown/10 bg-guapinol-cream hover:shadow-guapinol-green/10">
+        <!-- Las 3 tarjetas: 1 columna en celular y 3 iguales en pantallas medianas (el grid las deja de la misma altura) -->
+        <ul class="mt-12 grid grid-cols-1 gap-6 md:grid-cols-3">
+          <li class="flex flex-col items-center rounded-2xl border p-8 text-center transition duration-300 hover:-translate-y-1 hover:shadow-lg border-guapinol-brown/10 bg-guapinol-cream hover:shadow-guapinol-green/10">
             <span class="flex h-12 w-12 items-center justify-center rounded-xl bg-guapinol-primary/25">
               <svg class="h-6 w-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
                 <path d="M12 20s-7-4.4-7-10a4 4 0 0 1 7-2.6A4 4 0 0 1 19 10c0 5.6-7 10-7 10z" />
@@ -175,7 +177,7 @@
             <h3 class="mt-4 text-xl font-semibold font-display">Hecho a mano</h3>
             <p class="mt-2 text-sm leading-relaxed text-guapinol-green/80">Cada pulsera se elabora de forma manual, pieza por pieza.</p>
           </li>
-          <li class="rounded-2xl border p-6 transition duration-300 hover:-translate-y-1 hover:shadow-lg border-guapinol-brown/10 bg-guapinol-cream hover:shadow-guapinol-green/10">
+          <li class="flex flex-col items-center rounded-2xl border p-8 text-center transition duration-300 hover:-translate-y-1 hover:shadow-lg border-guapinol-brown/10 bg-guapinol-cream hover:shadow-guapinol-green/10">
             <span class="flex h-12 w-12 items-center justify-center rounded-xl bg-guapinol-primary/25">
               <svg class="h-6 w-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
                 <path d="M4 8c4 0 4 8 8 8s4-8 8-8" />
@@ -186,7 +188,7 @@
             <h3 class="mt-4 text-xl font-semibold font-display">Personalización</h3>
             <p class="mt-2 text-sm leading-relaxed text-guapinol-green/80">Tú eliges los colores y los detalles para que tu pulsera refleje tu estilo.</p>
           </li>
-          <li class="rounded-2xl border p-6 transition duration-300 hover:-translate-y-1 hover:shadow-lg border-guapinol-brown/10 bg-guapinol-cream hover:shadow-guapinol-green/10">
+          <li class="flex flex-col items-center rounded-2xl border p-8 text-center transition duration-300 hover:-translate-y-1 hover:shadow-lg border-guapinol-brown/10 bg-guapinol-cream hover:shadow-guapinol-green/10">
             <span class="flex h-12 w-12 items-center justify-center rounded-xl bg-guapinol-primary/25">
               <svg class="h-6 w-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
                 <path d="M12 3.5l2.6 5.3 5.9.9-4.2 4.1 1 5.8-5.3-2.8-5.3 2.8 1-5.8-4.2-4.1 5.9-.9z" />
@@ -200,8 +202,9 @@
       </div>
     </section>
    
+    <!-- Sección Misión y Visión: 2 tarjetas iguales -->
     <section id="mision-vision" class="py-16 md:py-24 bg-guapinol-green">
-      <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+      <div class="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
 
         <div class="mx-auto max-w-2xl text-center">
           <p class="text-sm font-semibold uppercase tracking-widest text-guapinol-primary">Nuestro propósito</p>
@@ -254,10 +257,10 @@
     </section>
 
 
-<!-- ========== CATÁLOGO (JS/catalogo.js) ========== -->
+<!-- Sección Catálogo: las tarjetas de collares y pulseras se crean con JS/catalogo.js -->
 <section id="catalogo" class="bg-guapinol-light py-16 md:py-24">
-  <div class="mx-auto max-w-6xl px-4 sm:px-6">
-    <p class="text-sm font-bold uppercase tracking-widest text-guapinol-brown/80 underline decoration-4 underline-offset-8 decoration-guapinol-primary">Nuestras pulseras</p>
+  <div class="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
+    <p class="text-sm font-bold uppercase tracking-widest text-guapinol-brown/80 underline decoration-4 underline-offset-8 decoration-guapinol-primary">Nuestros productos</p>
     <div class="mt-6 flex flex-col gap-6 md:flex-row md:items-end md:justify-between">
       <div>
         <h2 class="text-3xl font-semibold tracking-tight sm:text-4xl font-display">Catálogo</h2>
@@ -266,21 +269,22 @@
       <!-- Los botones de filtro se crean desde JS -->
       <div id="catalog-filtros" class="flex flex-wrap gap-2" role="group" aria-label="Filtrar catálogo"></div>
     </div>
-    <div id="catalog-grid" class="mt-8 grid grid-cols-2 gap-3 md:grid-cols-3 md:gap-5 lg:grid-cols-4"></div>
+    <!-- flex-wrap + justify-center: si la última fila queda incompleta, las tarjetas quedan centradas -->
+    <div id="catalog-grid" class="mt-10 flex flex-wrap justify-center gap-4 md:gap-6"></div>
   </div>
 </section>
 
-<!-- ========== PERSONALIZADOR 360° (JS/personalizador.js) ========== -->
+<!-- Sección Personalizador 3D: visor que gira + elección de modelo y color (JS/personalizador.js) -->
 <section id="personalizar" class="bg-guapinol-cream py-16 md:py-24">
-  <div class="mx-auto max-w-6xl px-4 sm:px-6">
+  <div class="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
     <p class="text-sm font-bold uppercase tracking-widest text-guapinol-brown/80 underline decoration-4 underline-offset-8 decoration-guapinol-primary">Hazla a tu gusto</p>
     <h2 class="mt-6 text-3xl font-semibold tracking-tight sm:text-4xl font-display">Personaliza tu pulsera</h2>
-  <div class="mt-8 grid gap-8 md:grid-cols-2">
+  <div class="mt-10 grid gap-8 md:grid-cols-2">
 
-    <!-- Persona 3: visor 360°. La imagen se agranda 6 veces (600%) para que solo se vea una foto -->
+    <!-- Visor 360°: bg-[length:600%_600%] agranda la imagen 6 veces para que solo se vea una foto -->
     <div id="viewer-3d" class="grid aspect-square place-items-center rounded-3xl border border-stone-200 bg-stone-50 p-4">
       <div class="w-full">
-        <div id="visor" class="aspect-[16/10] w-full cursor-grab touch-pan-y select-none bg-no-repeat" style="background-size: 600% 600%;" role="img" aria-label="Vista 360° de tu pulsera"></div>
+        <div id="visor" class="aspect-[16/10] w-full cursor-grab touch-pan-y select-none bg-no-repeat bg-[length:600%_600%]" role="img" aria-label="Vista 360° de tu pulsera"></div>
         <p class="mt-4 text-center text-sm text-stone-400">Arrastra para girar</p>
       </div>
     </div>
@@ -316,19 +320,20 @@
 </section>
 
 
+<!-- Sección Ferias: las tarjetas se crean con JS/ferias.js -->
 <!-- ========== FERIAS (los datos están en JS/ferias.js) ========== -->
 <section id="ferias" class="bg-guapinol-light py-16 md:py-24">
-  <div class="mx-auto max-w-6xl px-4">
+  <div class="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
     <p class="text-sm font-bold uppercase tracking-widest text-guapinol-brown/80 underline decoration-4 underline-offset-8 decoration-guapinol-primary">Encuéntranos</p>
     <h2 class="mt-6 text-3xl font-semibold tracking-tight sm:text-4xl font-display">Ferias y puntos de venta</h2>
     <p class="mt-3 max-w-2xl text-guapinol-green/80">Visítanos, toca las piezas y llévate tu pulsera en persona.</p>
-    <div id="ferias-lista" class="mt-8 grid gap-5 md:grid-cols-2"></div>
+    <div id="ferias-lista" class="mt-10 grid gap-5 md:grid-cols-2"></div>
   </div>
 </section>
 
 <!-- ========== PERSONA 2: CONTACTO ========== -->
 <section id="contacto" class="bg-guapinol-cream py-16 md:py-24">
-  <div class="mx-auto grid max-w-6xl gap-10 px-4 sm:px-6 lg:grid-cols-5">
+  <div class="mx-auto grid max-w-6xl gap-10 px-4 sm:px-6 lg:grid-cols-5 lg:px-8">
 
     <!-- Datos de contacto y redes -->
     <div class="lg:col-span-2">
@@ -422,7 +427,7 @@
   <div class="max-w-6xl mx-auto px-4 py-12 grid gap-10 sm:grid-cols-2 lg:grid-cols-4">
     <div class="lg:col-span-2">
       <p class="text-lg font-bold text-white">Artesanías Guapinol</p>
-      <p class="mt-3 max-w-sm text-sm text-stone-400">Pulseras de macramé y piedras naturales hechas a mano en Hojancha, Guanacaste.</p>
+      <p class="mt-3 max-w-sm text-sm text-stone-400">Pulseras y collares de macramé, piedras naturales y semillas, hechos a mano en Hojancha, Guanacaste.</p>
     </div>
 
     <nav aria-label="Secciones">
