@@ -1,4 +1,4 @@
-/* carrito.js | Carrito: agregar productos, ver el total y pedir todo por WhatsApp. */
+/*  Carrito.js | Carrito: agregar productos, ver el total y pedir todo por WhatsApp. */
 
 
 // ===== 1. DATOS =====
