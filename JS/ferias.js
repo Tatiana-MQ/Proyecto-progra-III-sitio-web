@@ -1,6 +1,6 @@
-/* ferias.js | Ferias y puntos de venta con su día, hora y ubicación en Maps. */
+/* ferias.js | Ferias y puntos de venta con día, hora y ubicación. */
 
-// mapa: enlace de Google Maps de la feria (el botón "Ver ubicación" lo abre).
+// mapa: enlace de Google Maps de cada feria
 const FERIAS = [
   {
     lugar: 'Feria de Hojancha',
@@ -18,6 +18,7 @@ const FERIAS = [
   }
 ];
 
+// Crea una tarjeta por feria dentro de #ferias-lista
 function pintarFerias() {
   const lista = document.getElementById('ferias-lista');
   if (lista === null) {
