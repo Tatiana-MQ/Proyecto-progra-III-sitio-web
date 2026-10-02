@@ -50,7 +50,7 @@ function mostrarCatalogo() {
   PRODUCTOS.forEach(function (producto) {
 
     // Si el producto no es del filtro elegido, se salta (return pasa al siguiente producto)
-    if (filtroActual !== 'todas' && producto.tipo !== filtroActual) {
+    if (filtroActual !== 'todas' && producto.categoria !== filtroActual) {
       return;
     }
     visibles = visibles + 1;
