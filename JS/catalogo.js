@@ -11,7 +11,7 @@
 // foto: nombre del archivo en assets/images/catalogo/. Para poner la foto real,
 // guarda la imagen con ese mismo nombre (o cambia el nombre aquí). Ver assets/images/catalogo/LEEME.txt
 const PRODUCTOS = [
-  { categoria: 'pulseras', linea: 'Pulsera de piedras naturales', nombre: 'Amatista', tipo: 'piedras', dije: 'Sin dije', foto: 'piedras-amatista.webp' },
+{ categoria: 'pulseras', linea: 'Pulsera para compartir', nombre: 'Macramé rojo con corazón de imán', tipo: 'piedras', dije: 'Sin dije', foto: 'piedras-amatista.webp' },
 { categoria: 'pulseras', linea: 'Macramé yin yang', nombre: 'Negro', tipo: 'macrame', dije: 'Dije yin yang', foto: 'macrame-negro.webp' },
 { categoria: 'llaveros', linea: 'Llavero de macramé', nombre: 'Rojo', tipo: 'llavero', dije: 'Sin dije', foto: 'llavero-rojo.webp' },
 { categoria: 'collares', linea: 'Collar de piedras', nombre: 'Cuarzo rosa', tipo: 'collar', dije: 'Sin dije', foto: 'collar-cuarzo-rosa.webp' },

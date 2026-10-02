@@ -16,9 +16,11 @@ const SALUDO = 'Hola Artesanías Guapinol';
 
 // Precio de cada modelo de pulsera
 const PRECIOS_INICIALES = {
-  pulseraPiedras: 4000,       // piedras naturales sin dije
-  pulseraPiedrasDije: 4500,   // piedras con dije de corazón
-  pulseraMacrame: 5000        // macramé con dije yin yang
+  pulseraPiedras: 4000,
+  pulseraPiedrasDije: 4500,
+  pulseraMacrame: 5000,
+  llavero: 3000,     
+  collar: 6000       
 };
 
 
@@ -52,13 +54,12 @@ function formatoColones(numero) {
 function calcularTotal(modelo) {
   const precios = obtenerPrecios();
 
-  if (modelo === 'piedras') {
-    return precios.pulseraPiedras;
+  if (modelo === 'llavero') {
+    return precios.llavero;
   }
-  if (modelo === 'piedrasDije') {
-    return precios.pulseraPiedrasDije;
+  if (modelo === 'collar') {
+    return precios.collar;
   }
-  return precios.pulseraMacrame;
 }
 
 /*
