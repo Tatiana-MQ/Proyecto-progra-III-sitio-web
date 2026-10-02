@@ -11,28 +11,18 @@
 // foto: nombre del archivo en assets/images/catalogo/. Para poner la foto real,
 // guarda la imagen con ese mismo nombre (o cambia el nombre aquí). Ver assets/images/catalogo/LEEME.txt
 const PRODUCTOS = [
-  { linea: 'Pulsera de piedras naturales', nombre: 'Ágata azul',       tipo: 'piedras', dije: 'Sin dije', foto: 'piedras-agata-azul.webp' },
-  { linea: 'Pulsera de piedras naturales', nombre: 'Amatista',         tipo: 'piedras', dije: 'Sin dije', foto: 'piedras-amatista.webp' },
-  { linea: 'Pulsera de piedras naturales', nombre: 'Aventurina verde', tipo: 'piedras', dije: 'Sin dije', foto: 'piedras-aventurina-verde.webp' },
-  { linea: 'Pulsera de piedras naturales', nombre: 'Cuarzo rosa',      tipo: 'piedras', dije: 'Sin dije', foto: 'piedras-cuarzo-rosa.webp' },
-  { linea: 'Pulsera de piedras naturales', nombre: 'Howlita blanca',   tipo: 'piedras', dije: 'Sin dije', foto: 'piedras-howlita-blanca.webp' },
-  { linea: 'Pulsera de piedras naturales', nombre: 'Ónix negro',       tipo: 'piedras', dije: 'Sin dije', foto: 'piedras-onix-negro.webp' },
-  { linea: 'Pulsera con corazón', nombre: 'Aventurina, corazón dorado',    tipo: 'piedrasDije', dije: 'Corazón metálico', foto: 'corazon-aventurina-dorado.webp' },
-  { linea: 'Pulsera con corazón', nombre: 'Cuarzo rosa, corazón oro rosa', tipo: 'piedrasDije', dije: 'Corazón metálico', foto: 'corazon-cuarzo-rosa-oro-rosa.webp' },
-  { linea: 'Pulsera con corazón', nombre: 'Howlita, corazón oro rosa',     tipo: 'piedrasDije', dije: 'Corazón metálico', foto: 'corazon-howlita-oro-rosa.webp' },
-  { linea: 'Macramé yin yang', nombre: 'Negro',       tipo: 'macrame', dije: 'Dije yin yang', foto: 'macrame-negro.webp' },
-  { linea: 'Macramé yin yang', nombre: 'Rojo',        tipo: 'macrame', dije: 'Dije yin yang', foto: 'macrame-rojo.webp' },
-  { linea: 'Macramé yin yang', nombre: 'Azul marino', tipo: 'macrame', dije: 'Dije yin yang', foto: 'macrame-azul-marino.webp' },
-  { linea: 'Macramé yin yang', nombre: 'Café',        tipo: 'macrame', dije: 'Dije yin yang', foto: 'macrame-cafe.webp' },
-  { linea: 'Macramé yin yang', nombre: 'Beige',       tipo: 'macrame', dije: 'Dije yin yang', foto: 'macrame-beige.webp' }
+  { categoria: 'pulseras', linea: 'Pulsera de piedras naturales', nombre: 'Amatista', tipo: 'piedras', dije: 'Sin dije', foto: 'piedras-amatista.webp' },
+{ categoria: 'pulseras', linea: 'Macramé yin yang', nombre: 'Negro', tipo: 'macrame', dije: 'Dije yin yang', foto: 'macrame-negro.webp' },
+{ categoria: 'llaveros', linea: 'Llavero de macramé', nombre: 'Rojo', tipo: 'llavero', dije: 'Sin dije', foto: 'llavero-rojo.webp' },
+{ categoria: 'collares', linea: 'Collar de piedras', nombre: 'Cuarzo rosa', tipo: 'collar', dije: 'Sin dije', foto: 'collar-cuarzo-rosa.webp' },
 ];
 
 // Botones para filtrar. "id" coincide con el "tipo" de los productos.
 const FILTROS = [
   { id: 'todas',       texto: 'Todas' },
-  { id: 'piedras',     texto: 'Piedras naturales' },
-  { id: 'piedrasDije', texto: 'Con corazón' },
-  { id: 'macrame',     texto: 'Macramé' }
+  { id: 'pulseras',     texto: 'Pulsera' },
+  { id: 'llaveros', texto: 'Llavero' },
+  { id: 'collares',     texto: 'Collar' }
 ];
 
 // Filtro elegido en este momento (al inicio se ven todas)
