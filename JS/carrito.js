@@ -1,29 +1,20 @@
-/* carrito.js | Carrito de compras: agregar pulseras, ver el total y pedir todo por WhatsApp. */
-
-// ================= CARRITO =================
+/* carrito.js | Carrito: agregar productos, ver el total y pedir todo por WhatsApp. */
 
 
-// =============================================================
-// 1. DATOS
-// =============================================================
-/*
-El carrito es un arreglo de objetos. Cada objeto es una pulsera:
-{ clave, nombre, color, dije, precio, cantidad }
-
-"clave" identifica la pulsera (por ejemplo "macrame-Rojo"), para saber
-si ya está en el carrito.
-*/
+// ===== 1. DATOS =====
+// Cada producto del carrito: { clave, nombre, color, dije, precio, cantidad }
+// "clave" sirve para saber si el producto ya está en el carrito
 let listaCarrito = [];
 
-// Lo guardamos en el navegador para que no se pierda al recargar la página.
-// localStorage solo guarda texto: JSON.stringify() para guardar y JSON.parse() para leer.
-// Nombre con el que se guarda el carrito. Se cambió a "-v2" para borrar carritos viejos con precios anteriores.
+// Nombre con el que se guarda en el navegador (localStorage)
 const CLAVE_CARRITO = 'carrito-v2';
 
+// Guarda el carrito en el navegador (como texto JSON)
 function guardarCarrito() {
   localStorage.setItem(CLAVE_CARRITO, JSON.stringify(listaCarrito));
 }
 
+// Lee el carrito guardado, si existe
 function cargarCarrito() {
   const guardado = localStorage.getItem(CLAVE_CARRITO);
   if (guardado !== null) {
@@ -32,9 +23,7 @@ function cargarCarrito() {
 }
 
 
-// =============================================================
-// 2. ELEMENTOS DEL HTML
-// =============================================================
+// ===== 2. ELEMENTOS DEL HTML =====
 const ventanaCarrito = document.querySelector('#carrito');
 const fondoCarrito = document.querySelector('#carrito-fondo');
 const listaHTMLCarrito = document.querySelector('#carrito-lista');
@@ -48,14 +37,12 @@ const botonPedirCarrito = document.querySelector('#carrito-pedir');
 const botonVaciarCarrito = document.querySelector('#carrito-vaciar');
 
 
-// =============================================================
-// 3. AGREGAR, CAMBIAR CANTIDAD Y VACIAR
-// =============================================================
-// Recibe una pulsera { clave, nombre, color, dije, precio }.
-// Si ya estaba en el carrito, solo le suma 1 a su cantidad.
+// ===== 3. AGREGAR, CAMBIAR CANTIDAD Y VACIAR =====
+
+// Agrega un producto al carrito; si ya estaba, le suma 1
 function agregarAlCarrito(pulsera) {
 
-  // findIndex() busca la posición de la pulsera con la misma clave (-1 si no está)
+  // Busca si ya está (-1 = no está)
   const indice = listaCarrito.findIndex(function (item) {
     return item.clave === pulsera.clave;
   });
@@ -71,8 +58,7 @@ function agregarAlCarrito(pulsera) {
   mostrarCarrito();
 }
 
-// Suma (cambio = 1) o resta (cambio = -1) una unidad.
-// Si la cantidad llega a 0, la pulsera se quita del carrito.
+// Suma (+1) o resta (-1) una unidad; si llega a 0, lo quita
 function cambiarCantidad(clave, cambio) {
   const indice = listaCarrito.findIndex(function (item) {
     return item.clave === clave;
@@ -81,13 +67,14 @@ function cambiarCantidad(clave, cambio) {
   listaCarrito[indice].cantidad = listaCarrito[indice].cantidad + cambio;
 
   if (listaCarrito[indice].cantidad === 0) {
-    listaCarrito.splice(indice, 1);   // splice(posición, cantidad): elimina del arreglo
+    listaCarrito.splice(indice, 1);   // lo elimina del arreglo
   }
 
   guardarCarrito();
   mostrarCarrito();
 }
 
+// Vacía el carrito por completo
 function vaciarCarrito() {
   listaCarrito = [];
   guardarCarrito();
@@ -95,9 +82,9 @@ function vaciarCarrito() {
 }
 
 
-// =============================================================
-// 4. MOSTRAR EL CARRITO (renderizado)
-// =============================================================
+// ===== 4. MOSTRAR EL CARRITO =====
+
+// Dibuja los productos del carrito, el total y el numerito del navbar
 function mostrarCarrito() {
 
   listaHTMLCarrito.innerHTML = '';
@@ -129,7 +116,7 @@ function mostrarCarrito() {
       </div>
     `;
 
-    // Botones − y + de esta pulsera
+    // Botones − y + de este producto
     elemento.querySelector('.restar').addEventListener('click', function () {
       cambiarCantidad(pulsera.clave, -1);
     });
@@ -142,7 +129,7 @@ function mostrarCarrito() {
 
   totalCarrito.textContent = formatoColones(total);
 
-  // Numerito verde del botón del navbar: se oculta si el carrito está vacío
+  // Numerito del navbar: se oculta si el carrito está vacío
   numeritoCarrito.textContent = cantidadPulseras;
   if (cantidadPulseras === 0) {
     numeritoCarrito.classList.add('hidden');
@@ -154,25 +141,26 @@ function mostrarCarrito() {
 }
 
 
-// =============================================================
-// 5. ABRIR Y CERRAR EL CARRITO
-// =============================================================
+// ===== 5. ABRIR Y CERRAR EL CARRITO =====
+
+// Muestra el panel del carrito
 function abrirCarrito() {
   ventanaCarrito.classList.remove('hidden');
 }
 
+// Oculta el panel del carrito
 function cerrarCarrito() {
   ventanaCarrito.classList.add('hidden');
 }
 
 botonAbrirCarrito.addEventListener('click', abrirCarrito);
 botonCerrarCarrito.addEventListener('click', cerrarCarrito);
-fondoCarrito.addEventListener('click', cerrarCarrito);   // clic en la parte oscura, fuera del panel
+fondoCarrito.addEventListener('click', cerrarCarrito);   // clic fuera del panel
 
 
-// =============================================================
-// 6. PEDIR TODO POR WHATSAPP
-// =============================================================
+// ===== 6. PEDIR TODO POR WHATSAPP =====
+
+// Valida el carrito y el nombre, arma el mensaje y abre WhatsApp
 botonPedirCarrito.addEventListener('click', function () {
 
   const nombre = inputClienteCarrito.value.trim();
@@ -188,7 +176,7 @@ botonPedirCarrito.addEventListener('click', function () {
   }
   errorCarrito.textContent = '';
 
-  // Se arma el mensaje: una línea por pulsera, y al final el total y el nombre
+  // Una línea por producto, luego el total y el nombre
   let mensaje = SALUDO + ', quiero hacer este pedido:\n';
   let total = 0;
 
@@ -201,15 +189,13 @@ botonPedirCarrito.addEventListener('click', function () {
   mensaje = mensaje + 'Total: ' + formatoColones(total) + '\n';
   mensaje = mensaje + 'A nombre de: ' + nombre;
 
-  enviarWhatsApp(mensaje);   // está en pedidos.js
+  enviarWhatsApp(mensaje);   // pedidos.js
 });
 
 botonVaciarCarrito.addEventListener('click', vaciarCarrito);
 
 
-// =============================================================
-// 7. PRIMER DIBUJO
-// =============================================================
-// Al abrir la página se lee el carrito guardado y se muestra
+// ===== 7. AL CARGAR LA PÁGINA =====
+// Lee el carrito guardado y lo muestra
 cargarCarrito();
 mostrarCarrito();
