@@ -8,7 +8,7 @@
 
   <meta name="description" content="Artesanías Guapinol.">
   <title>Artesanías Guapinol</title>
-  <link rel="icon" type="image/jpeg" href="assets/images/logo1.jpg">
+  <link rel="icon" type="image/png" href="assets/images/favicon.png">
 
   
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -24,7 +24,7 @@
 <body class="antialiased bg-guapinol-light text-guapinol-green selection:bg-guapinol-primary/40">
 
   <!--  NAVBAR-->
-  <header id="navbar" class="sticky top-0 z-50 border-b border-guapinol-brown/10 bg-guapinol-light/90 backdrop-blur"> <!--un efecto visual de desenfoque detrás del navbar.-->
+  <header id="navbar" class="sticky top-0 z-50 border-b border-guapinol-brown/10 bg-guapinol-light/90 backdrop-blur"> <!-- backdrop-blur: desenfoque detrás del navbar -->
     <nav class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8" aria-label="Navegación principal">
       <div class="flex h-16 items-center justify-between md:h-20">
 
@@ -78,7 +78,7 @@
 
     <!-- PORTADA-->
     <section id="inicio" class="bg-[#f3eee7]">
-      <!-- Banner: en celular se usa otra versión de la imagen (banner-movil.jpg) -->
+      <!-- Banner: en celular usa banner-movil.jpg -->
       <picture>
         <source media="(max-width: 700px)" srcset="assets/images/banner-movil.jpg">
         <img src="assets/images/banner.jpg" alt="Artesanías Guapinol: semillas, hojas y un tazón de madera" class="block h-auto w-full">
@@ -153,11 +153,10 @@
 
 
 
-    <!-- Sección Quiénes Somos: texto centrado y 3 tarjetas simétricas con Tailwind -->
+    <!-- Quienes somos-->
     <section id="nosotros" class="py-16 md:py-24">
       <div class="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
 
-        <!-- Texto centrado, con un ancho máximo para que se lea cómodo -->
         <div class="mx-auto max-w-3xl text-center">
           <p class="text-sm font-bold uppercase tracking-widest text-guapinol-brown/80 underline decoration-4 underline-offset-8 decoration-guapinol-primary"> Quiénes somos</p>
           <div class="mt-6 space-y-4 leading-relaxed sm:text-lg text-guapinol-green/80">
@@ -166,7 +165,6 @@
           </div>
         </div>
 
-        <!-- Las 3 tarjetas: 1 columna en celular y 3 iguales en pantallas medianas (el grid las deja de la misma altura) -->
         <ul class="mt-12 grid grid-cols-1 gap-6 md:grid-cols-3">
           <li class="flex flex-col items-center rounded-2xl border p-8 text-center transition duration-300 hover:-translate-y-1 hover:shadow-lg border-guapinol-brown/10 bg-guapinol-cream hover:shadow-guapinol-green/10">
             <span class="flex h-12 w-12 items-center justify-center rounded-xl bg-guapinol-primary/25">
@@ -202,7 +200,7 @@
       </div>
     </section>
    
-    <!-- Sección Misión y Visión: 2 tarjetas iguales -->
+    <!-- mision y vision -->
     <section id="mision-vision" class="py-16 md:py-24 bg-guapinol-green">
       <div class="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
 
@@ -233,7 +231,6 @@
             </ul>
           </article>
 
-          <!-- TEXTO PROPUESTO, NO OFICIAL: VALIDAR CON EL EMPRENDIMIENTO -->
           <article id="vision" class="flex flex-col rounded-3xl border p-8 shadow-xl transition duration-300 hover:-translate-y-1 sm:p-10 border-guapinol-brown/10 bg-guapinol-cream">
             <span class="flex h-14 w-14 items-center justify-center rounded-2xl bg-guapinol-primary">
               <svg class="h-7 w-7" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
@@ -248,7 +245,7 @@
             <ul class="mt-auto flex flex-wrap gap-2 pt-6 text-xs font-semibold">
               <li class="rounded-full border px-3 py-1 border-guapinol-brown/15 bg-guapinol-light">Tradicionales</li>
               <li class="rounded-full border px-3 py-1 border-guapinol-brown/15 bg-guapinol-light">Biodiversidad</li>
-              <li class="rounded-full border px-3 py-1 border-guapinol-brown/15 bg-guapinol-light">únicas </li>
+              <li class="rounded-full border px-3 py-1 border-guapinol-brown/15 bg-guapinol-light">Únicas</li>
             </ul>
           </article>
 
@@ -257,7 +254,7 @@
     </section>
 
 
-<!-- Sección Catálogo: las tarjetas de collares y pulseras se crean con JS/catalogo.js -->
+<!-- Catalogo-->
 <section id="catalogo" class="bg-guapinol-light py-16 md:py-24">
   <div class="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
     <p class="text-sm font-bold uppercase tracking-widest text-guapinol-brown/80 underline decoration-4 underline-offset-8 decoration-guapinol-primary">Nuestros productos</p>
@@ -266,22 +263,31 @@
         <h2 class="text-3xl font-semibold tracking-tight sm:text-4xl font-display">Catálogo</h2>
         <p id="catalog-total" class="mt-2 text-guapinol-green/80"></p>
       </div>
-      <!-- Los botones de filtro se crean desde JS -->
-      <div id="catalog-filtros" class="flex flex-wrap gap-2" role="group" aria-label="Filtrar catálogo"></div>
+      <!-- Filtros -->
+      <div class="flex flex-col gap-3 md:items-end">
+        <div class="flex flex-wrap items-center gap-2">
+          <span class="text-sm font-medium text-guapinol-green/80">Categoría:</span>
+          <div id="catalog-filtros" class="flex flex-wrap gap-2" role="group" aria-label="Filtrar por categoría"></div>
+        </div>
+        <div class="flex flex-wrap items-center gap-2">
+          <span class="text-sm font-medium text-guapinol-green/80">Material:</span>
+          <div id="catalog-materiales" class="flex flex-wrap gap-2" role="group" aria-label="Filtrar por material"></div>
+        </div>
+      </div>
     </div>
-    <!-- flex-wrap + justify-center: si la última fila queda incompleta, las tarjetas quedan centradas -->
+    <!-- Tarjetas del catálogo -->
     <div id="catalog-grid" class="mt-10 flex flex-wrap justify-center gap-4 md:gap-6"></div>
   </div>
 </section>
 
-<!-- Sección Personalizador 3D: visor que gira + elección de modelo y color (JS/personalizador.js) -->
+<!-- Personalizar 3d -->
 <section id="personalizar" class="bg-guapinol-cream py-16 md:py-24">
   <div class="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
     <p class="text-sm font-bold uppercase tracking-widest text-guapinol-brown/80 underline decoration-4 underline-offset-8 decoration-guapinol-primary">Hazla a tu gusto</p>
     <h2 class="mt-6 text-3xl font-semibold tracking-tight sm:text-4xl font-display">Personaliza tu pulsera</h2>
   <div class="mt-10 grid gap-8 md:grid-cols-2">
 
-    <!-- Visor 360°: bg-[length:600%_600%] agranda la imagen 6 veces para que solo se vea una foto -->
+    <!-- Visor 360° -->
     <div id="viewer-3d" class="grid aspect-square place-items-center rounded-3xl border border-stone-200 bg-stone-50 p-4">
       <div class="w-full">
         <div id="visor" class="aspect-[16/10] w-full cursor-grab touch-pan-y select-none bg-no-repeat bg-[length:600%_600%]" role="img" aria-label="Vista 360° de tu pulsera"></div>
@@ -289,11 +295,10 @@
       </div>
     </div>
 
-    <!-- Persona 3: panel con los 3 modelos y los colores del modelo elegido -->
+    <!--  modelos y colores -->
     <form id="customizer-form" class="flex flex-col gap-6 bg-white rounded-2xl border border-stone-200 shadow-sm p-6" novalidate>
       <div>
         <p class="font-semibold text-stone-900">1. Elige tu pulsera</p>
-        <!-- Las tarjetas de los modelos se crean desde JS/app.js -->
         <div id="panel-modelos" class="mt-3 grid grid-cols-3 gap-3"></div>
       </div>
 
@@ -302,7 +307,7 @@
         <div id="panel-colores" class="mt-3 flex flex-wrap gap-3"></div>
       </div>
 
-      <!-- PERSONA 4: pedido -->
+      <!-- pedido -->
       <label class="block"><span class="font-semibold text-stone-900">Tu nombre</span>
         <input id="customizer-cliente" name="cliente" type="text" placeholder="Para identificar tu pedido" class="mt-1 w-full rounded-lg border border-stone-300 bg-white px-3 py-2">
       </label>
@@ -320,8 +325,7 @@
 </section>
 
 
-<!-- Sección Ferias: las tarjetas se crean con JS/ferias.js -->
-<!-- ========== FERIAS (los datos están en JS/ferias.js) ========== -->
+<!-- Ferias-->
 <section id="ferias" class="bg-guapinol-light py-16 md:py-24">
   <div class="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
     <p class="text-sm font-bold uppercase tracking-widest text-guapinol-brown/80 underline decoration-4 underline-offset-8 decoration-guapinol-primary">Encuéntranos</p>
@@ -331,7 +335,7 @@
   </div>
 </section>
 
-<!-- ========== PERSONA 2: CONTACTO ========== -->
+<!--  Contacto -->
 <section id="contacto" class="bg-guapinol-cream py-16 md:py-24">
   <div class="mx-auto grid max-w-6xl gap-10 px-4 sm:px-6 lg:grid-cols-5 lg:px-8">
 
@@ -361,13 +365,13 @@
         </div>
       </dl>
 
-      <!-- Mapa del taller (coordenadas 10.028852, -85.402792) -->
+      <!-- Mapa del taller -->
       <div class="mt-8 overflow-hidden rounded-2xl border border-stone-200">
         <iframe title="Ubicación del taller de Artesanías Guapinol" src="https://www.google.com/maps?q=10.028852,-85.402792&z=16&output=embed" class="h-64 w-full" loading="lazy" referrerpolicy="no-referrer-when-downgrade" allowfullscreen></iframe>
       </div>
     </div>
 
-    <!-- Formulario con validación (la lógica está en JS/contacto.js) -->
+    <!-- Formulario  -->
     <form id="form-contacto" novalidate class="lg:col-span-3 grid gap-5 sm:grid-cols-2 rounded-3xl border border-stone-200 bg-white p-6 md:p-8">
       <div class="sm:col-span-2">
         <label for="nombre" class="block text-sm font-medium text-stone-900">Nombre</label>
@@ -422,7 +426,7 @@
 </section>
 </main>
 
-<!-- ========== PERSONA 2: FOOTER ========== -->
+<!-- Footer -->
 <footer class="bg-stone-900 text-stone-300">
   <div class="max-w-6xl mx-auto px-4 py-12 grid gap-10 sm:grid-cols-2 lg:grid-cols-4">
     <div class="lg:col-span-2">
@@ -458,7 +462,7 @@
   </div>
 </footer>
 
-<!-- ========== CARRITO (JS/carrito.js) ========== -->
+<!-- Carrito -->
 <div id="carrito" class="fixed inset-0 z-[60] hidden" role="dialog" aria-modal="true" aria-labelledby="carrito-titulo">
   <div id="carrito-fondo" class="absolute inset-0 bg-guapinol-brown/50"></div>
   <aside class="absolute right-0 top-0 flex h-full w-full max-w-md flex-col bg-guapinol-light shadow-2xl">
@@ -479,7 +483,7 @@
   </aside>
 </div>
 
-<!-- Scripts: pedidos.js va primero porque los demás usan sus funciones -->
+<!-- Scripts -->
 <script src="JS/pedidos.js"></script>
 <script src="JS/menu.js"></script>
 <script src="JS/carrito.js"></script>
