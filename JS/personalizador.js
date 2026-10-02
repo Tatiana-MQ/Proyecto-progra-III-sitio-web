@@ -1,11 +1,12 @@
-/* personalizador.js | Personaliza tu pulsera: panel de modelos, colores y visor 360°. */
+/* personalizador.js | Personaliza tu pulsera: elegir modelo y color, verla girar y pedirla. */
 
 // ================= PERSONA 3: personalizador semi-3D =================
-// Panel con los 3 modelos: el usuario elige uno y luego su color.
-// Se muestra solo el modelo elegido, girando con el visor 360°.
 
 
-// ---------- 1. DATOS: los 3 modelos y sus colores ----------
+// =============================================================
+// 1. DATOS: los 3 modelos y sus colores
+// =============================================================
+// Cada color tiene su imagen. Las imágenes están en assets/images/360/
 const CARPETA = 'assets/images/360/';
 
 const MODELOS = [
@@ -40,139 +41,196 @@ const MODELOS = [
   }
 ];
 
-// Lo que el usuario tiene elegido en este momento
+// Lo que el usuario tiene elegido en este momento (al inicio: el primero de cada lista)
 let modeloElegido = MODELOS[0];
-let colorElegido = modeloElegido.variantes[0];
+let colorElegido = MODELOS[0].variantes[0];
 
 
-// ---------- 2. VISOR 360° ----------
-// Cada imagen tiene 36 fotos de la pulsera, acomodadas en una cuadrícula
-// de 6 columnas y 6 filas. Mostrando una foto tras otra, la pulsera "gira".
-const TOTAL_FOTOS = 36;
-const COLUMNAS = 6;
+// =============================================================
+// 2. ELEMENTOS DEL HTML
+// =============================================================
+const visor = document.querySelector('#visor');
+const panelModelos = document.querySelector('#panel-modelos');
+const panelColores = document.querySelector('#panel-colores');
+const textoColor = document.querySelector('#color-nombre');
+const textoTotal = document.querySelector('#customizer-total');
+const formularioPersonalizar = document.querySelector('#customizer-form');
+const inputCliente = document.querySelector('#customizer-cliente');
+const mensajeError = document.querySelector('#customizer-error');
+const botonAgregar = document.querySelector('#customizer-agregar');
 
-let visor;              // el div donde se ve la pulsera
-let fotoActual = 0;     // número de foto que se está mostrando (de 0 a 35)
-let girando = true;     // si está girando sola
-let arrastrando = false;
-let inicioX = 0;        // dónde empezó el arrastre
-let fotoInicio = 0;     // qué foto se veía al empezar a arrastrar
 
-// Muestra la foto número "numero" moviendo la imagen de fondo.
-// Con 6 columnas, las posiciones son 0%, 20%, 40%, 60%, 80% y 100%.
-function mostrarFoto(numero) {
-  const columna = numero % COLUMNAS;             // resto de la división: 0 a 5
-  const fila = Math.floor(numero / COLUMNAS);    // división sin decimales: 0 a 5
-  visor.style.backgroundPosition = (columna * 20) + '% ' + (fila * 20) + '%';
+// =============================================================
+// 3. HACER GIRAR LA PULSERA
+// =============================================================
+/*
+Cada imagen tiene 36 fotos de la pulsera, acomodadas como una tabla
+de 6 columnas y 6 filas:
+
+  fila 0:  foto foto foto foto foto foto
+  fila 1:  foto foto foto foto foto foto
+  ...
+  fila 5:  foto foto foto foto foto foto
+
+En el HTML, la imagen se agranda 6 veces (background-size: 600%),
+así en el visor solo cabe UNA foto. Moviendo la imagen de foto en foto
+muy rápido, la pulsera parece girar (como un folioscopio).
+*/
+let columna = 0;   // columna de la foto que se ve (de 0 a 5)
+let fila = 0;      // fila de la foto que se ve (de 0 a 5)
+
+// Mueve la imagen para mostrar la foto de la columna y fila actuales.
+// Con 6 columnas, las posiciones van de 20% en 20%: 0%, 20%, 40%, 60%, 80%, 100%
+function mostrarFoto() {
+  visor.style.backgroundPosition = `${columna * 20}% ${fila * 20}%`;
 }
 
-// Avanza una foto. Al llegar a la última, vuelve a la primera.
+// Pasa a la siguiente foto, como un reloj:
+// al terminar una fila, baja a la siguiente; al terminar la última, vuelve al inicio.
 function siguienteFoto() {
-  if (girando === false) {
-    return;
+  columna = columna + 1;
+  if (columna === 6) {
+    columna = 0;
+    fila = fila + 1;
   }
-  fotoActual = fotoActual + 1;
-  if (fotoActual === TOTAL_FOTOS) {
-    fotoActual = 0;
+  if (fila === 6) {
+    fila = 0;
   }
-  mostrarFoto(fotoActual);
+  mostrarFoto();
 }
 
-// Cambia la imagen del visor (cuando se elige otro modelo o color)
-function cambiarImagen(imagen) {
-  visor.style.backgroundImage = 'url("' + CARPETA + imagen + '")';
+// Igual que siguienteFoto(), pero hacia atrás
+function fotoAnterior() {
+  columna = columna - 1;
+  if (columna === -1) {
+    columna = 5;
+    fila = fila - 1;
+  }
+  if (fila === -1) {
+    fila = 5;
+  }
+  mostrarFoto();
 }
 
-// Al presionar el mouse o el dedo sobre el visor, se detiene el giro
-function empezarArrastre(evento) {
+// ----- Arrastrar con el mouse o el dedo -----
+let arrastrando = false;   // true mientras el usuario tiene presionado el visor
+let ultimoX = 0;           // posición horizontal del mouse en el último movimiento
+
+// Al presionar: empieza el arrastre y se guarda dónde está el mouse
+visor.addEventListener('pointerdown', function (event) {
   arrastrando = true;
-  girando = false;
-  inicioX = evento.clientX;
-  fotoInicio = fotoActual;
-  visor.setPointerCapture(evento.pointerId);
-}
+  ultimoX = event.clientX;
+  visor.setPointerCapture(event.pointerId);   // sigue el arrastre aunque el mouse salga del visor
+});
 
-// Mientras se arrastra: cada 10 píxeles de movimiento se avanza una foto
-function arrastrar(evento) {
+// Al mover: cada 10 píxeles se cambia de foto
+visor.addEventListener('pointermove', function (event) {
   if (arrastrando === false) {
     return;
   }
-  const pasos = Math.round((inicioX - evento.clientX) / 10);
-  let foto = (fotoInicio + pasos) % TOTAL_FOTOS;
-  if (foto < 0) {
-    foto = foto + TOTAL_FOTOS;   // si se arrastra hacia atrás, sigue desde la última foto
+  const diferencia = event.clientX - ultimoX;
+
+  if (diferencia >= 10) {          // se movió 10 px a la derecha
+    fotoAnterior();
+    ultimoX = event.clientX;
   }
-  fotoActual = foto;
-  mostrarFoto(fotoActual);
-}
+  if (diferencia <= -10) {         // se movió 10 px a la izquierda
+    siguienteFoto();
+    ultimoX = event.clientX;
+  }
+});
 
-// Al soltar, espera 2 segundos y vuelve a girar sola
-function soltar() {
+// Al soltar (o si el celular interrumpe el toque para hacer scroll): termina el arrastre
+visor.addEventListener('pointerup', function () {
   arrastrando = false;
-  setTimeout(function () {
-    if (arrastrando === false) {
-      girando = true;
-    }
-  }, 2000);
-}
+});
+visor.addEventListener('pointercancel', function () {
+  arrastrando = false;
+});
+
+// Giro automático: cada 250 milisegundos avanza una foto, menos mientras se arrastra.
+// 36 fotos x 0.25 segundos = una vuelta cada 9 segundos.
+setInterval(function () {
+  if (arrastrando === false) {
+    siguienteFoto();
+  }
+}, 250);
 
 
-// ---------- 3. PANEL DE MODELOS ----------
-// Crea un botón por cada modelo, con la primera foto de su primer color
-function pintarModelos() {
-  const panel = document.getElementById('panel-modelos');
-  panel.innerHTML = '';
+// =============================================================
+// 4. MOSTRAR LOS MODELOS (tarjetas para elegir)
+// =============================================================
+function mostrarModelos() {
 
-  for (let i = 0; i < MODELOS.length; i++) {
-    const modelo = MODELOS[i];
+  // Limpiamos lo que había, para no repetir tarjetas
+  panelModelos.innerHTML = '';
+
+  MODELOS.forEach(function (modelo) {
+
     const boton = document.createElement('button');
     boton.type = 'button';
-    boton.className = 'flex flex-col overflow-hidden rounded-xl border border-stone-300 bg-white text-left hover:border-stone-500 ' +
-                      'aria-pressed:border-lime-500 aria-pressed:ring-2 aria-pressed:ring-lime-200';
-    boton.setAttribute('aria-pressed', modelo === modeloElegido);
-    boton.innerHTML =
-      '<span class="block aspect-[16/10] w-full bg-stone-50 bg-no-repeat" ' +
-            'style="background-image:url(\'' + CARPETA + modelo.variantes[0].imagen + '\'); background-size:600% 600%; background-position:0 0"></span>' +
-      '<span class="px-3 py-2 text-sm">' +
-        '<span class="block font-medium text-stone-900">' + modelo.nombre + '</span>' +
-        '<span class="text-stone-500">' + modelo.dije + '</span>' +
-      '</span>';
+
+    // El modelo elegido se marca con borde verde
+    if (modelo === modeloElegido) {
+      boton.className = 'flex flex-col overflow-hidden rounded-xl border-2 border-lime-500 bg-white text-left';
+    } else {
+      boton.className = 'flex flex-col overflow-hidden rounded-xl border-2 border-stone-200 bg-white text-left hover:border-stone-400';
+    }
+
+    // La foto es la primera de la tabla de 36 (esquina de arriba a la izquierda)
+    boton.innerHTML = `
+      <span class="block aspect-[16/10] w-full bg-stone-50 bg-no-repeat"
+            style="background-image: url('${CARPETA + modelo.variantes[0].imagen}'); background-size: 600% 600%;"></span>
+      <span class="px-3 py-2 text-sm">
+        <span class="block font-medium text-stone-900">${modelo.nombre}</span>
+        <span class="text-stone-500">${modelo.dije}</span>
+      </span>
+    `;
 
     boton.addEventListener('click', function () {
       elegirModelo(modelo);
     });
-    panel.appendChild(boton);
-  }
+
+    panelModelos.appendChild(boton);
+  });
 }
 
 
-// ---------- 4. COLORES DEL MODELO ELEGIDO ----------
-// Crea un círculo de color por cada variante del modelo elegido
-function pintarColores() {
-  const panel = document.getElementById('panel-colores');
-  panel.innerHTML = '';
+// =============================================================
+// 5. MOSTRAR LOS COLORES DEL MODELO ELEGIDO
+// =============================================================
+function mostrarColores() {
 
-  for (let i = 0; i < modeloElegido.variantes.length; i++) {
-    const variante = modeloElegido.variantes[i];
+  panelColores.innerHTML = '';
+
+  modeloElegido.variantes.forEach(function (variante) {
+
     const boton = document.createElement('button');
     boton.type = 'button';
-    boton.title = variante.nombre;
-    boton.className = 'h-9 w-9 rounded-full ring-1 ring-black/15 ring-offset-2 aria-pressed:ring-2 aria-pressed:ring-stone-900';
-    boton.style.background = variante.color;
-    boton.setAttribute('aria-label', variante.nombre);
-    boton.setAttribute('aria-pressed', variante === colorElegido);
+    boton.title = variante.nombre;               // nombre que aparece al pasar el mouse
+    boton.style.backgroundColor = variante.color;
+
+    // El color elegido se marca con un anillo oscuro
+    if (variante === colorElegido) {
+      boton.className = 'h-9 w-9 rounded-full ring-2 ring-stone-900 ring-offset-2';
+    } else {
+      boton.className = 'h-9 w-9 rounded-full ring-1 ring-black/15 ring-offset-2';
+    }
 
     boton.addEventListener('click', function () {
       elegirColor(variante);
     });
-    panel.appendChild(boton);
-  }
 
-  document.getElementById('color-nombre').textContent = colorElegido.nombre;
+    panelColores.appendChild(boton);
+  });
+
+  textoColor.textContent = colorElegido.nombre;
 }
 
 
-// ---------- 5. ELEGIR Y MOSTRAR ----------
+// =============================================================
+// 6. ELEGIR Y ACTUALIZAR
+// =============================================================
 // Al elegir un modelo, se muestra con su primer color
 function elegirModelo(modelo) {
   modeloElegido = modelo;
@@ -185,31 +243,36 @@ function elegirColor(variante) {
   actualizar();
 }
 
-// Vuelve a dibujar los paneles, cambia la imagen y el total
+// Vuelve a dibujar todo según lo elegido: tarjetas, colores, imagen y total
 function actualizar() {
-  pintarModelos();
-  pintarColores();
-  cambiarImagen(colorElegido.imagen);
+  mostrarModelos();
+  mostrarColores();
+
+  // Cambiamos la imagen del visor por la del color elegido
+  visor.style.backgroundImage = `url('${CARPETA + colorElegido.imagen}')`;
+
   // El precio lo calcula Persona 4 (calcularTotal y formatoColones están en pedidos.js)
-  const precio = calcularTotal(modeloElegido.id);
-  document.getElementById('customizer-total').textContent = formatoColones(precio);
+  textoTotal.textContent = formatoColones(calcularTotal(modeloElegido.id));
 }
 
 
-// ---------- 6. PEDIDO POR WHATSAPP ----------
-function pedir(evento) {
-  evento.preventDefault();   // evita que el formulario recargue la página
+// =============================================================
+// 7. PEDIR AHORA (por WhatsApp)
+// =============================================================
+formularioPersonalizar.addEventListener('submit', function (event) {
 
-  const form = document.getElementById('customizer-form');
-  const error = document.getElementById('customizer-error');
-  const nombre = form.elements.cliente.value.trim();
+  // Evitamos que el formulario recargue la página
+  event.preventDefault();
 
+  const nombre = inputCliente.value.trim();
+
+  // Validación: el nombre debe tener al menos 3 letras
   if (nombre.length < 3) {
-    error.textContent = 'Escribe tu nombre para identificar el pedido (mínimo 3 letras).';
-    form.elements.cliente.focus();
+    mensajeError.textContent = 'Escribe tu nombre para identificar el pedido (mínimo 3 letras).';
+    inputCliente.focus();
     return;
   }
-  error.textContent = '';
+  mensajeError.textContent = '';
 
   // El mensaje y el envío por WhatsApp los hace Persona 4 (pedidos.js)
   const pedido = {
@@ -219,14 +282,17 @@ function pedir(evento) {
     dije: modeloElegido.dije
   };
   pedirPorWhatsApp(pedido, nombre);
-}
+});
 
 
-// ---------- AGREGAR AL CARRITO ----------
-// Agrega la pulsera elegida al carrito (la función agregarAlCarrito está en carrito.js)
-function agregarModeloAlCarrito() {
+// =============================================================
+// 8. AGREGAR AL CARRITO
+// =============================================================
+botonAgregar.addEventListener('click', function () {
+
+  // agregarAlCarrito está en carrito.js
   agregarAlCarrito({
-    clave: modeloElegido.id + '-' + colorElegido.nombre,   // identifica la combinación modelo + color
+    clave: modeloElegido.id + '-' + colorElegido.nombre,   // identifica la combinación
     nombre: modeloElegido.nombre,
     color: colorElegido.nombre,
     dije: modeloElegido.dije,
@@ -234,51 +300,16 @@ function agregarModeloAlCarrito() {
   });
 
   // Aviso en el mismo botón durante 1.5 segundos
-  const boton = document.getElementById('customizer-agregar');
-  boton.textContent = '¡Agregada! ✓';
+  botonAgregar.textContent = '¡Agregada! ✓';
   setTimeout(function () {
-    boton.textContent = 'Agregar al carrito';
+    botonAgregar.textContent = 'Agregar al carrito';
   }, 1500);
-}
+});
 
 
-// ---------- 7. INICIO ----------
-function iniciarPersonalizador() {
-  const form = document.getElementById('customizer-form');
-  const contenedor = document.getElementById('viewer-3d');
-  if (form === null || contenedor === null) {
-    return;
-  }
-
-  // Se reemplaza el recuadro vacío del HTML por el visor
-  contenedor.className = 'grid aspect-square place-items-center rounded-3xl border border-stone-200 bg-stone-50 p-4';
-  contenedor.innerHTML =
-    '<div class="w-full">' +
-      '<div class="visor aspect-[16/10] w-full cursor-grab touch-pan-y select-none bg-no-repeat" ' +
-           'role="img" aria-label="Vista 360° de tu pulsera"></div>' +
-      '<p class="mt-4 text-center text-sm text-stone-400">Arrastra para girar</p>' +
-    '</div>';
-
-  visor = contenedor.querySelector('.visor');
-  visor.style.backgroundSize = '600% 600%';   // la imagen es 6 veces más grande: se ve una sola foto
-
-  // Arrastrar con mouse o dedo
-  visor.addEventListener('pointerdown', empezarArrastre);
-  visor.addEventListener('pointermove', arrastrar);
-  visor.addEventListener('pointerup', soltar);
-  visor.addEventListener('pointercancel', soltar);   // en celular, si el usuario hace scroll
-
-  form.addEventListener('submit', pedir);
-
-  // Botón "Agregar al carrito" (solo si existe en el HTML)
-  const botonAgregar = document.getElementById('customizer-agregar');
-  if (botonAgregar !== null) {
-    botonAgregar.addEventListener('click', agregarModeloAlCarrito);
-  }
-
-  actualizar();
-  mostrarFoto(0);
-  setInterval(siguienteFoto, 250);   // una foto cada 0.25 s: 36 fotos = una vuelta en 9 s
-}
-
-iniciarPersonalizador();
+// =============================================================
+// 9. PRIMER DIBUJO
+// =============================================================
+// Al cargar la página se muestran los modelos, los colores y la primera pulsera
+actualizar();
+mostrarFoto();
