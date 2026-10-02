@@ -19,7 +19,6 @@
   <script src="https://cdn.tailwindcss.com/3.4.17"></script>
   <script src="JS/tailwind.config.js"></script>
 
-  <link rel="stylesheet" href="src/css/styles.css">
 </head>
 
 <body class="antialiased bg-guapinol-light text-guapinol-green selection:bg-guapinol-primary/40">
@@ -29,10 +28,8 @@
     <nav class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8" aria-label="Navegación principal">
       <div class="flex h-16 items-center justify-between md:h-20">
 
-        <a href="#inicio" class="flex items-center gap-3">
-
-          <img src="assets/images/logo1.jpg" alt="Logo de Artesanías Guapinol" width="44" height="44" class="h-10 w-10 md:h-14 md:w-14">
-          <span class="text-lg font-semibold tracking-tight font-display">Artesanías Guapinol</span>
+        <a href="#inicio">
+          <img src="assets/images/logo.png" alt="Artesanías Guapinol" class="block h-11 w-auto md:h-14">
         </a>
 
         <ul class="hidden items-center gap-1 whitespace-nowrap text-sm font-medium md:flex lg:gap-3 lg:text-base">
@@ -82,19 +79,19 @@
   <main>
 
     <!-- PORTADA-->
-    <section id="inicio" class="relative overflow-hidden">
-      <!-- Video de fondo: poner el archivo en assets/videos/ (corto, sin audio, menos de 5 MB) -->
-      <video class="absolute inset-0 h-full w-full object-cover motion-reduce:hidden" autoplay muted loop playsinline preload="metadata" poster="assets/images/logo1.jpg" aria-hidden="true">
-        <source src="assets/videos/semillas.webm" type="video/webm">
-        <source src="assets/videos/semillas.mp4" type="video/mp4">
-      </video>
-      <div class="absolute inset-0 bg-guapinol-light/80" aria-hidden="true"></div>
-      <div class="relative mx-auto grid max-w-7xl items-center gap-12 px-4 py-16 sm:px-6 sm:py-20 lg:grid-cols-2 lg:gap-16 lg:px-8 lg:py-24">
+    <section id="inicio" class="bg-[#f3eee7]">
+      <!-- Banner: en celular se usa otra versión de la imagen (banner-movil.jpg) -->
+      <picture>
+        <source media="(max-width: 700px)" srcset="assets/images/banner-movil.jpg">
+        <img src="assets/images/banner.jpg" alt="Artesanías Guapinol: semillas, hojas y un tazón de madera" class="block h-auto w-full">
+      </picture>
 
-        <div class="text-center lg:text-left">
+      <div class="mx-auto max-w-3xl px-4 py-12 sm:px-6 sm:py-16">
+
+        <div class="text-center">
           
           <p class="inline-block rounded-full border px-4 py-1.5 text-sm font-medium border-guapinol-brown/10 bg-guapinol-cream">
-            Artesanias · Bisuteria
+            Artesanías · Bisutería
           </p>
 
           <h1 class="mt-6 text-balance text-4xl font-semibold leading-tight tracking-tight sm:text-5xl lg:text-6xl font-display">
@@ -103,14 +100,14 @@
           </h1>
 
           <p class="mt-6 text-lg font-medium sm:text-xl">
-            Artesanias inspiradas en la naturaleza y creadas a tu medida.
+            Artesanías inspiradas en la naturaleza y creadas a tu medida.
           </p>
 
-          <p class="mx-auto mt-4 max-w-xl leading-relaxed lg:mx-0 text-guapinol-green/80">
+          <p class="mx-auto mt-4 max-w-xl leading-relaxed text-guapinol-green/80">
             Unimos el valor del trabajo hecho a mano con la tecnología: elige los colores,  los dijes que más te gusten, y mira tu pulsera en 3D antes de pedirla.
           </p>
 
-          <div class="mt-8 flex flex-col gap-4 sm:flex-row sm:justify-center lg:justify-start">
+          <div class="mt-8 flex flex-col gap-4 sm:flex-row sm:justify-center">
             <a href="#personalizar" class="group inline-flex items-center justify-center gap-2 rounded-full border px-8 py-4 font-semibold shadow-lg transition duration-300 hover:-translate-y-0.5 border-guapinol-primary bg-guapinol-primary shadow-guapinol-green/20 hover:border-guapinol-green hover:bg-guapinol-green hover:text-guapinol-light">
               Personaliza tu pulsera
               <svg class="h-5 w-5 transition-transform duration-300 group-hover:translate-x-1" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
@@ -122,7 +119,7 @@
             </a>
           </div>
 
-          <ul class="mt-10 flex flex-wrap justify-center gap-x-6 gap-y-3 text-sm font-medium lg:justify-start">
+          <ul class="mt-10 flex flex-wrap justify-center gap-x-6 gap-y-3 text-sm font-medium">
             <li class="flex items-center gap-2">
               <span class="flex h-8 w-8 items-center justify-center rounded-full bg-guapinol-primary/25">
                 <svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
@@ -153,10 +150,6 @@
           </ul>
         </div>
 
-        <div class="mx-auto w-full max-w-md lg:mr-0">
-        <img src="assets/images/logo1.jpg" alt="Artesanías Guapinol" class="aspect-[5/5] w-full rounded-2xl object-cover"> 
-        </div>
-
       </div>
     </section>
 
@@ -169,8 +162,8 @@
         <div>
           <p class="text-sm font-bold uppercase tracking-widest text-guapinol-brown/80 underline decoration-4 underline-offset-8 decoration-guapinol-primary"> Quiénes somos</p>
           <div class="mt-6 space-y-4 leading-relaxed sm:text-lg text-guapinol-green/80">
-            <p>Somos un emprendimiento familiar costarricense dedicado al diseño y elaboración de bisutería artesanal única. Inspirados en la biodiversidad de nuestra tierra, trabajamos en equipo desde nuestro taller utilizando semillas y materiales de la zona para crear piezas y detalles especiales que transmiten la esencia, el color y la calidez de Costa Rica..</p>
-            <p>Cada una de nuestros accesorios está hecho a mano con dedicación y cariño familiar, ofreciendo un recuerdo auténtico y sostenible tanto para quienes nos visitan como para quienes desean llevar un pedacito de la naturaleza tica siempre consigo.</p>
+            <p>Somos un emprendimiento familiar costarricense dedicado al diseño y elaboración de bisutería artesanal única. Inspirados en la biodiversidad de nuestra tierra, trabajamos en equipo desde nuestro taller utilizando semillas y materiales de la zona para crear piezas y detalles especiales que transmiten la esencia, el color y la calidez de Costa Rica.</p>
+            <p>Cada uno de nuestros accesorios está hecho a mano con dedicación y cariño familiar, ofreciendo un recuerdo auténtico y sostenible tanto para quienes nos visitan como para quienes desean llevar un pedacito de la naturaleza tica siempre consigo.</p>
           </div>
         </div>
 
@@ -263,7 +256,7 @@
     </section>
 
 
-<!-- ========== PERSONA 2: CATÁLOGO (JS/app.js) ========== -->
+<!-- ========== CATÁLOGO (JS/catalogo.js) ========== -->
 <section id="catalogo" class="bg-white border-y border-stone-200">
   <div class="max-w-6xl mx-auto px-4 py-16">
     <div class="flex flex-col gap-4 md:flex-row md:items-end md:justify-between">
@@ -274,7 +267,7 @@
       <!-- Los botones de filtro se crean desde JS -->
       <div id="catalog-filtros" class="flex flex-wrap gap-2" role="group" aria-label="Filtrar catálogo"></div>
     </div>
-    <div id="catalog-grid" class="mt-8 grid gap-5 grid-cols-2 md:grid-cols-3 lg:grid-cols-4"></div>
+    <div id="catalog-grid" class="mt-8 grid grid-cols-2 gap-3 md:grid-cols-3 md:gap-5 lg:grid-cols-4"></div>
   </div>
 </section>
 
@@ -321,9 +314,9 @@
         <input id="customizer-cliente" name="cliente" type="text" placeholder="Para identificar tu pedido" class="mt-1 w-full rounded-lg border border-stone-300 bg-white px-3 py-2">
       </label>
       <p id="customizer-error" class="text-red-600 text-sm min-h-5" role="alert"></p>
-      <div class="flex items-center justify-between gap-4">
+      <div class="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
         <p>Total <strong id="customizer-total" class="text-2xl text-stone-900">₡0</strong></p>
-        <div class="flex flex-wrap justify-end gap-2">
+        <div class="flex flex-col gap-2 sm:flex-row">
           <button type="button" id="customizer-agregar" class="rounded-full border border-stone-900 px-5 py-3 font-semibold text-stone-900 hover:bg-stone-100">Agregar al carrito</button>
           <button type="submit" class="bg-lime-400 hover:bg-lime-500 text-stone-900 font-semibold rounded-full px-5 py-3">Pedir ahora</button>
         </div>
