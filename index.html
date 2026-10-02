@@ -295,8 +295,12 @@
   <h2 class="text-3xl font-bold text-stone-900">Personaliza tu pulsera</h2>
   <div class="mt-8 grid gap-8 md:grid-cols-2">
 
-    <div id="viewer-3d" class="aspect-square rounded-2xl border-2 border-dashed border-stone-300 bg-white grid place-items-center text-stone-500">
-      Aquí va el visor 3D (Persona 3)
+    <!-- Persona 3: visor 360°. La imagen se agranda 6 veces (600%) para que solo se vea una foto -->
+    <div id="viewer-3d" class="grid aspect-square place-items-center rounded-3xl border border-stone-200 bg-stone-50 p-4">
+      <div class="w-full">
+        <div id="visor" class="aspect-[16/10] w-full cursor-grab touch-pan-y select-none bg-no-repeat" style="background-size: 600% 600%;" role="img" aria-label="Vista 360° de tu pulsera"></div>
+        <p class="mt-4 text-center text-sm text-stone-400">Arrastra para girar</p>
+      </div>
     </div>
 
     <!-- Persona 3: panel con los 3 modelos y los colores del modelo elegido -->
@@ -314,7 +318,7 @@
 
       <!-- PERSONA 4: pedido -->
       <label class="block"><span class="font-semibold text-stone-900">Tu nombre</span>
-        <input name="cliente" type="text" placeholder="Para identificar tu pedido" class="mt-1 w-full rounded-lg border border-stone-300 bg-white px-3 py-2">
+        <input id="customizer-cliente" name="cliente" type="text" placeholder="Para identificar tu pedido" class="mt-1 w-full rounded-lg border border-stone-300 bg-white px-3 py-2">
       </label>
       <p id="customizer-error" class="text-red-600 text-sm min-h-5" role="alert"></p>
       <div class="flex items-center justify-between gap-4">
