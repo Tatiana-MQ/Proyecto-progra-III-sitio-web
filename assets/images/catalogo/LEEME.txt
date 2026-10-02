@@ -1,7 +1,7 @@
-Fotos reales del catálogo.
+Fotos del catálogo (800 x 600 px, horizontales 4:3).
 
-Guarda aquí cada foto con el mismo nombre que aparece en JS/catalogo.js (campo "foto"),
-por ejemplo: piedras-amatista.jpg
-
-Mientras la foto no exista, la tarjeta muestra el cuadro "Foto próximamente".
-Recomendado: fotos horizontales (4:3), de unos 800 x 600 px.
+Cada producto usa el archivo que dice su campo "foto" en JS/catalogo.js.
+Por ahora son recortes de las imágenes 360. Para poner una foto real:
+guárdala aquí con el MISMO nombre (por ejemplo macrame-rojo.webp) y reemplaza el archivo.
+Si tu foto es .jpg, guárdala como macrame-rojo.jpg y cambia el nombre en catalogo.js.
+Si la foto no existe, la tarjeta muestra "Foto próximamente".

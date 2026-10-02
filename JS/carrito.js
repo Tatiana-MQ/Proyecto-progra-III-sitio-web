@@ -186,7 +186,7 @@ botonPedirCarrito.addEventListener('click', function () {
   errorCarrito.textContent = '';
 
   // Se arma el mensaje: una línea por pulsera, y al final el total y el nombre
-  let mensaje = 'Hola Artesanías Guapinol, quiero hacer este pedido:\n';
+  let mensaje = SALUDO + ', quiero hacer este pedido:\n';
   let total = 0;
 
   listaCarrito.forEach(function (pulsera) {

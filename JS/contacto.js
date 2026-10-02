@@ -75,7 +75,7 @@ formularioContacto.addEventListener('submit', function (event) {
 
   // Teléfono: se quitan los espacios y guiones, y debe quedar un número de 8 dígitos
   const soloNumeros = telefono.replaceAll(' ', '').replaceAll('-', '');
-  if (soloNumeros.length !== 8 || Number.isNaN(Number(soloNumeros))) {
+  if (/^[0-9]{8}$/.test(soloNumeros) === false) {   // exactamente 8 dígitos
     mostrarError(inputTelefono, errorTelefono, 'Escribe un número de 8 dígitos, por ejemplo 8888 8888.');
     hayErrores = true;
   }
@@ -102,7 +102,7 @@ formularioContacto.addEventListener('submit', function (event) {
   }
 
   // 3.4 Armar el mensaje de WhatsApp ('\n' es un salto de línea)
-  let texto = 'Hola Artesanías Guapinol\n';
+  let texto = SALUDO + '\n';
   texto = texto + 'Motivo: ' + motivo + '\n';
   texto = texto + 'Nombre: ' + nombre + '\n';
   texto = texto + 'Teléfono: ' + telefono + '\n';

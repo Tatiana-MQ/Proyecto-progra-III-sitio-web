@@ -9,22 +9,22 @@
 // tipo: el modelo de la pulsera ('piedras', 'piedrasDije' o 'macrame').
 // Sirve para filtrar y para saber su precio (calcularTotal está en pedidos.js).
 // foto: nombre del archivo en assets/images/catalogo/. Para poner la foto real,
-// guarda la imagen con ese mismo nombre (o cambia el nombre aquí).
+// guarda la imagen con ese mismo nombre (o cambia el nombre aquí). Ver assets/images/catalogo/LEEME.txt
 const PRODUCTOS = [
-  { linea: 'Pulsera de piedras naturales', nombre: 'Ágata azul',       tipo: 'piedras', dije: 'Sin dije', foto: 'piedras-agata-azul.jpg' },
-  { linea: 'Pulsera de piedras naturales', nombre: 'Amatista',         tipo: 'piedras', dije: 'Sin dije', foto: 'piedras-amatista.jpg' },
-  { linea: 'Pulsera de piedras naturales', nombre: 'Aventurina verde', tipo: 'piedras', dije: 'Sin dije', foto: 'piedras-aventurina-verde.jpg' },
-  { linea: 'Pulsera de piedras naturales', nombre: 'Cuarzo rosa',      tipo: 'piedras', dije: 'Sin dije', foto: 'piedras-cuarzo-rosa.jpg' },
-  { linea: 'Pulsera de piedras naturales', nombre: 'Howlita blanca',   tipo: 'piedras', dije: 'Sin dije', foto: 'piedras-howlita-blanca.jpg' },
-  { linea: 'Pulsera de piedras naturales', nombre: 'Ónix negro',       tipo: 'piedras', dije: 'Sin dije', foto: 'piedras-onix-negro.jpg' },
-  { linea: 'Pulsera con corazón', nombre: 'Aventurina, corazón dorado',    tipo: 'piedrasDije', dije: 'Corazón metálico', foto: 'corazon-aventurina-dorado.jpg' },
-  { linea: 'Pulsera con corazón', nombre: 'Cuarzo rosa, corazón oro rosa', tipo: 'piedrasDije', dije: 'Corazón metálico', foto: 'corazon-cuarzo-rosa-oro-rosa.jpg' },
-  { linea: 'Pulsera con corazón', nombre: 'Howlita, corazón oro rosa',     tipo: 'piedrasDije', dije: 'Corazón metálico', foto: 'corazon-howlita-oro-rosa.jpg' },
-  { linea: 'Macramé yin yang', nombre: 'Negro',       tipo: 'macrame', dije: 'Dije yin yang', foto: 'macrame-negro.jpg' },
-  { linea: 'Macramé yin yang', nombre: 'Rojo',        tipo: 'macrame', dije: 'Dije yin yang', foto: 'macrame-rojo.jpg' },
-  { linea: 'Macramé yin yang', nombre: 'Azul marino', tipo: 'macrame', dije: 'Dije yin yang', foto: 'macrame-azul-marino.jpg' },
-  { linea: 'Macramé yin yang', nombre: 'Café',        tipo: 'macrame', dije: 'Dije yin yang', foto: 'macrame-cafe.jpg' },
-  { linea: 'Macramé yin yang', nombre: 'Beige',       tipo: 'macrame', dije: 'Dije yin yang', foto: 'macrame-beige.jpg' }
+  { linea: 'Pulsera de piedras naturales', nombre: 'Ágata azul',       tipo: 'piedras', dije: 'Sin dije', foto: 'piedras-agata-azul.webp' },
+  { linea: 'Pulsera de piedras naturales', nombre: 'Amatista',         tipo: 'piedras', dije: 'Sin dije', foto: 'piedras-amatista.webp' },
+  { linea: 'Pulsera de piedras naturales', nombre: 'Aventurina verde', tipo: 'piedras', dije: 'Sin dije', foto: 'piedras-aventurina-verde.webp' },
+  { linea: 'Pulsera de piedras naturales', nombre: 'Cuarzo rosa',      tipo: 'piedras', dije: 'Sin dije', foto: 'piedras-cuarzo-rosa.webp' },
+  { linea: 'Pulsera de piedras naturales', nombre: 'Howlita blanca',   tipo: 'piedras', dije: 'Sin dije', foto: 'piedras-howlita-blanca.webp' },
+  { linea: 'Pulsera de piedras naturales', nombre: 'Ónix negro',       tipo: 'piedras', dije: 'Sin dije', foto: 'piedras-onix-negro.webp' },
+  { linea: 'Pulsera con corazón', nombre: 'Aventurina, corazón dorado',    tipo: 'piedrasDije', dije: 'Corazón metálico', foto: 'corazon-aventurina-dorado.webp' },
+  { linea: 'Pulsera con corazón', nombre: 'Cuarzo rosa, corazón oro rosa', tipo: 'piedrasDije', dije: 'Corazón metálico', foto: 'corazon-cuarzo-rosa-oro-rosa.webp' },
+  { linea: 'Pulsera con corazón', nombre: 'Howlita, corazón oro rosa',     tipo: 'piedrasDije', dije: 'Corazón metálico', foto: 'corazon-howlita-oro-rosa.webp' },
+  { linea: 'Macramé yin yang', nombre: 'Negro',       tipo: 'macrame', dije: 'Dije yin yang', foto: 'macrame-negro.webp' },
+  { linea: 'Macramé yin yang', nombre: 'Rojo',        tipo: 'macrame', dije: 'Dije yin yang', foto: 'macrame-rojo.webp' },
+  { linea: 'Macramé yin yang', nombre: 'Azul marino', tipo: 'macrame', dije: 'Dije yin yang', foto: 'macrame-azul-marino.webp' },
+  { linea: 'Macramé yin yang', nombre: 'Café',        tipo: 'macrame', dije: 'Dije yin yang', foto: 'macrame-cafe.webp' },
+  { linea: 'Macramé yin yang', nombre: 'Beige',       tipo: 'macrame', dije: 'Dije yin yang', foto: 'macrame-beige.webp' }
 ];
 
 // Botones para filtrar. "id" coincide con el "tipo" de los productos.
@@ -67,12 +67,12 @@ function mostrarCatalogo() {
 
     const precio = calcularTotal(producto.tipo);
     const tarjeta = document.createElement('article');
-    tarjeta.className = 'flex flex-col overflow-hidden rounded-2xl border border-stone-200 bg-stone-50';
+    tarjeta.className = 'flex flex-col overflow-hidden rounded-2xl border border-guapinol-brown/10 bg-white transition duration-300 hover:-translate-y-1 hover:shadow-lg';
 
     // Espacio para la foto del producto. Si la foto todavía no existe, onerror la
     // esconde (clase hidden) y se ve el cuadro con el texto "Foto próximamente".
     tarjeta.innerHTML = `
-      <div class="relative flex aspect-[4/3] w-full items-center justify-center bg-guapinol-cream text-sm text-stone-500">
+      <div class="relative flex aspect-[4/3] w-full items-center justify-center bg-guapinol-cream text-sm text-guapinol-green/60">
         <span>Foto próximamente</span>
         <img src="assets/images/catalogo/${producto.foto}" alt="${producto.linea}: ${producto.nombre}" class="absolute inset-0 h-full w-full object-cover" onerror="this.classList.add('hidden')">
       </div>
@@ -107,7 +107,7 @@ function mostrarCatalogo() {
 
     // Botón "Comprar ahora": abre WhatsApp con esta pulsera (enviarWhatsApp está en pedidos.js)
     tarjeta.querySelector('.comprar').addEventListener('click', function () {
-      let mensaje = 'Hola Artesanías Guapinol, quiero comprar:\n';
+      let mensaje = SALUDO + ', quiero comprar:\n';
       mensaje = mensaje + '• ' + producto.linea + ' (' + producto.nombre + ')\n';
       mensaje = mensaje + '• Dije: ' + producto.dije + '\n';
       mensaje = mensaje + 'Total: ' + formatoColones(precio);
