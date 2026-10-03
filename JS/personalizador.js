@@ -1,10 +1,8 @@
-/* personalizador.js | Elegir modelo y color, ver la pulsera girar y pedirla. */
+// personalizador.js: elegir modelo y color, ver la pulsera girar y pedirla
 
 // Persona 3: personalizador semi-3D
 
-
-// ===== 1. DATOS: modelos y colores =====
-// Cada color tiene su imagen en assets/images/360/
+// cada color tiene su imagen en assets/images/360/
 const CARPETA = 'assets/images/360/';
 
 const MODELOS = [
@@ -39,12 +37,12 @@ const MODELOS = [
   }
 ];
 
-// Modelo y color elegidos (al inicio, los primeros)
+// lo que está elegido (al inicio el primero de cada uno)
 let modeloElegido = MODELOS[0];
 let colorElegido = MODELOS[0].variantes[0];
 
 
-// ===== 2. ELEMENTOS DEL HTML =====
+// elementos del html
 const visor = document.querySelector('#visor');
 const panelModelos = document.querySelector('#panel-modelos');
 const panelColores = document.querySelector('#panel-colores');
@@ -56,18 +54,18 @@ const mensajeError = document.querySelector('#customizer-error');
 const botonAgregar = document.querySelector('#customizer-agregar');
 
 
-// ===== 3. HACER GIRAR LA PULSERA =====
-// Cada imagen tiene 36 fotos en una tabla de 6 x 6.
-// El visor solo muestra una foto; al pasar de una a otra rápido, parece que gira.
+// girar la pulsera
+// cada imagen trae 36 fotos en una tabla de 6 x 6
+// el visor solo enseña una y al cambiar rápido parece que gira
 let columna = 0;   // columna actual (0 a 5)
 let fila = 0;      // fila actual (0 a 5)
 
-// Mueve la imagen para mostrar la foto actual (posiciones de 20% en 20%)
+// mueve la imagen a la foto actual (de 20% en 20%)
 function mostrarFoto() {
   visor.style.backgroundPosition = `${columna * 20}% ${fila * 20}%`;
 }
 
-// Pasa a la siguiente foto; al final vuelve al inicio
+// siguiente foto, al final vuelve a empezar
 function siguienteFoto() {
   columna = columna + 1;
   if (columna === 6) {
@@ -80,7 +78,7 @@ function siguienteFoto() {
   mostrarFoto();
 }
 
-// Vuelve a la foto anterior
+// lo mismo pero hacia atrás
 function fotoAnterior() {
   columna = columna - 1;
   if (columna === -1) {
@@ -93,18 +91,18 @@ function fotoAnterior() {
   mostrarFoto();
 }
 
-// ----- Arrastrar con el mouse o el dedo -----
+// arrastrar con el mouse o el dedo
 let arrastrando = false;   // true mientras se arrastra
 let ultimoX = 0;           // última posición horizontal
 
-// Al presionar: empieza el arrastre
+// al presionar
 visor.addEventListener('pointerdown', function (event) {
   arrastrando = true;
   ultimoX = event.clientX;
-  visor.setPointerCapture(event.pointerId);   // sigue aunque el mouse salga del visor
+  visor.setPointerCapture(event.pointerId);   // así sigue aunque el mouse se salga del visor
 });
 
-// Al mover: cada 10 px cambia de foto
+// al mover, cada 10 px cambia de foto
 visor.addEventListener('pointermove', function (event) {
   if (arrastrando === false) {
     return;
@@ -121,7 +119,7 @@ visor.addEventListener('pointermove', function (event) {
   }
 });
 
-// Al soltar o cancelar: termina el arrastre
+// al soltar o si se cancela
 visor.addEventListener('pointerup', function () {
   arrastrando = false;
 });
@@ -129,7 +127,7 @@ visor.addEventListener('pointercancel', function () {
   arrastrando = false;
 });
 
-// Giro automático: una foto cada 250 ms (menos mientras se arrastra)
+// giro automático, una foto cada 250 ms (menos si se está arrastrando)
 setInterval(function () {
   if (arrastrando === false) {
     siguienteFoto();
@@ -137,9 +135,7 @@ setInterval(function () {
 }, 250);
 
 
-// ===== 4. MOSTRAR LOS MODELOS =====
-
-// Crea una tarjeta por modelo; la elegida lleva borde verde
+// una tarjeta por modelo, la elegida tiene borde verde
 function mostrarModelos() {
 
   panelModelos.innerHTML = '';
@@ -155,7 +151,7 @@ function mostrarModelos() {
       boton.className = 'flex flex-col overflow-hidden rounded-xl border-2 border-stone-200 bg-white text-left hover:border-stone-400';
     }
 
-    // Miniatura: primera foto de la tabla
+    // miniatura: la primera foto de la tabla
     boton.innerHTML = `
       <span class="miniatura block aspect-[16/10] w-full bg-stone-50 bg-no-repeat bg-[length:600%_600%]"></span>
       <span class="px-3 py-2 text-sm">
@@ -175,9 +171,7 @@ function mostrarModelos() {
 }
 
 
-// ===== 5. MOSTRAR LOS COLORES =====
-
-// Crea un círculo por color del modelo elegido; el elegido lleva anillo oscuro
+// un círculo por cada color del modelo, el elegido lleva anillo oscuro
 function mostrarColores() {
 
   panelColores.innerHTML = '';
@@ -186,7 +180,7 @@ function mostrarColores() {
 
     const boton = document.createElement('button');
     boton.type = 'button';
-    boton.title = variante.nombre;               // se ve al pasar el mouse
+    boton.title = variante.nombre;               // sale al pasar el mouse
     boton.style.backgroundColor = variante.color;
 
     if (variante === colorElegido) {
@@ -206,22 +200,19 @@ function mostrarColores() {
 }
 
 
-// ===== 6. ELEGIR Y ACTUALIZAR =====
-
-// Elige un modelo y empieza con su primer color
+// al elegir un modelo arranca con su primer color
 function elegirModelo(modelo) {
   modeloElegido = modelo;
   colorElegido = modelo.variantes[0];
   actualizar();
 }
 
-// Elige un color del modelo actual
 function elegirColor(variante) {
   colorElegido = variante;
   actualizar();
 }
 
-// Redibuja modelos, colores, imagen del visor y precio
+// vuelve a dibujar todo
 function actualizar() {
   mostrarModelos();
   mostrarColores();
@@ -232,12 +223,10 @@ function actualizar() {
 }
 
 
-// ===== 7. PEDIR AHORA =====
-
-// Valida el nombre y envía el pedido por WhatsApp (pedidos.js)
+// pedir ahora: revisa el nombre y manda el pedido (pedirPorWhatsApp está en pedidos.js)
 formularioPersonalizar.addEventListener('submit', function (event) {
 
-  event.preventDefault();   // no recarga la página
+  event.preventDefault();   // para que no recargue la página
 
   const nombre = inputCliente.value.trim();
 
@@ -258,9 +247,7 @@ formularioPersonalizar.addEventListener('submit', function (event) {
 });
 
 
-// ===== 8. AGREGAR AL CARRITO =====
-
-// Agrega la pulsera elegida al carrito (carrito.js)
+// agregar al carrito (agregarAlCarrito está en carrito.js)
 botonAgregar.addEventListener('click', function () {
 
   agregarAlCarrito({
@@ -271,14 +258,14 @@ botonAgregar.addEventListener('click', function () {
     precio: calcularTotal(modeloElegido.id)
   });
 
-  // Aviso en el botón por 1.5 segundos
-  botonAgregar.textContent = '¡Agregada! ✓';
+  // cambia el texto del botón por un momento
+  botonAgregar.textContent = '¡Agregada!';
   setTimeout(function () {
     botonAgregar.textContent = 'Agregar al carrito';
   }, 1500);
 });
 
 
-// ===== 9. AL CARGAR LA PÁGINA =====
+// al cargar la página
 actualizar();
 mostrarFoto();

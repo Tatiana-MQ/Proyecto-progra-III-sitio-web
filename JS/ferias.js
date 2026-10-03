@@ -1,6 +1,6 @@
-/* ferias.js | Ferias y puntos de venta con día, hora y ubicación. */
+// ferias.js: ferias y puntos de venta
 
-// mapa: enlace de Google Maps de cada feria
+// en mapa va el link de Google Maps
 const FERIAS = [
   {
     lugar: 'Feria de Hojancha',
@@ -18,23 +18,20 @@ const FERIAS = [
   }
 ];
 
-// Crea una tarjeta por feria dentro de #ferias-lista
+// dibuja una tarjeta por cada feria
 function pintarFerias() {
   const lista = document.getElementById('ferias-lista');
-  if (lista === null) {
-    return;
-  }
 
   let html = '';
   for (let i = 0; i < FERIAS.length; i++) {
     const f = FERIAS[i];
     html = html +
-      '<article class="flex flex-col rounded-2xl border border-guapinol-brown/10 bg-guapinol-light p-6 transition duration-300 hover:-translate-y-1 hover:shadow-lg hover:shadow-guapinol-green/10">' +
+      '<article class="flex flex-col rounded-2xl border border-guapinol-brown/10 bg-guapinol-light p-6 transition duration-300 hover:-translate-y-1 hover:shadow-lg">' +
         '<h3 class="text-xl font-semibold font-display">' + f.lugar + '</h3>' +
-        '<p class="mt-3 font-medium">' + f.dias + ' · ' + f.hora + '</p>' +
+        '<p class="mt-3 font-medium">' + f.dias + ', ' + f.hora + '</p>' +
         '<p class="mt-1 text-sm text-guapinol-green/80">' + f.direccion + '</p>' +
         '<a href="' + f.mapa + '" target="_blank" rel="noopener" ' +
-           'class="mt-auto pt-4 text-sm font-semibold underline decoration-guapinol-primary decoration-2 underline-offset-4 hover:text-guapinol-brown">Ver ubicación en Maps →</a>' +
+           'class="mt-auto pt-4 text-sm font-semibold underline decoration-guapinol-primary decoration-2 underline-offset-4 hover:text-guapinol-brown">Ver ubicación en Maps</a>' +
       '</article>';
   }
   lista.innerHTML = html;
