@@ -29,7 +29,7 @@ function pintarFerias() {
   for (let i = 0; i < FERIAS.length; i++) {
     const f = FERIAS[i];
     html = html +
-      '<article class="flex flex-col rounded-2xl border border-guapinol-brown/10 bg-guapinol-light p-6">' +
+      '<article class="flex flex-col rounded-2xl border border-guapinol-brown/10 bg-guapinol-light p-6 transition duration-300 hover:-translate-y-1 hover:shadow-lg hover:shadow-guapinol-green/10">' +
         '<h3 class="text-xl font-semibold font-display">' + f.lugar + '</h3>' +
         '<p class="mt-3 font-medium">' + f.dias + ' · ' + f.hora + '</p>' +
         '<p class="mt-1 text-sm text-guapinol-green/80">' + f.direccion + '</p>' +

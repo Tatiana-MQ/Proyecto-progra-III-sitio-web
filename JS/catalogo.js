@@ -79,7 +79,7 @@ function mostrarCatalogo() {
 
     // Tarjeta: ancho fijo (así las filas quedan centradas) y misma altura en cada fila
     const tarjeta = document.createElement('article');
-    tarjeta.className = 'flex w-40 flex-col overflow-hidden rounded-2xl border border-guapinol-brown/10 bg-white sm:w-52 lg:w-56';
+    tarjeta.className = 'flex w-40 flex-col overflow-hidden rounded-2xl border border-guapinol-brown/10 bg-white sm:w-52 lg:w-56 transition duration-300 hover:-translate-y-1 hover:shadow-lg hover:shadow-guapinol-green/10';
     tarjeta.innerHTML = `
       <img src="assets/images/catalogo/${producto.foto}" alt="${producto.linea}: ${producto.nombre}" loading="lazy" class="aspect-[3/4] w-full bg-white object-contain">
       <div class="flex flex-1 flex-col p-4">
