@@ -5,12 +5,12 @@
 // foto: nombre del archivo en assets/images/catalogo/
 const PRODUCTOS = [
   // pulseras
-  { categoria: 'pulseras', material: 'Macramé',  linea: 'Pulsera para compartir', nombre: 'Pulsera con corazón de imán',            foto: 'pulsera-roja-iman.jpg' },
-  { categoria: 'pulseras', material: 'Macramé',  linea: 'Pulsera para compartir', nombre: 'Pulsera con corazón de imán', foto: 'pulsera-morado-blanco-iman.jpg' },
-  { categoria: 'pulseras', material: 'Macramé',  linea: 'Pulsera para compartir', nombre: 'Pulsera con corazón de imán',  foto: 'pulsera-negra-blanco-iman.jpg' },
-  { categoria: 'pulseras', material: 'Macramé',  linea: 'Pulsera para compartir', nombre: 'Pulsera con infinito',                  foto: 'pulsera-negra-infinito.jpg' },
+  { categoria: 'pulseras', material: 'Macramé',  linea: 'Pulsera para compartir', nombre: 'Pulsera con corazón de imán roja',            foto: 'pulsera-roja-iman.jpg' },
+  { categoria: 'pulseras', material: 'Macramé',  linea: 'Pulsera para compartir', nombre: 'Pulsera con corazón de imán morado y blanco', foto: 'pulsera-morado-blanco-iman.jpg' },
+  { categoria: 'pulseras', material: 'Macramé',  linea: 'Pulsera para compartir', nombre: 'Pulsera con corazón de imán negro',  foto: 'pulsera-negra-blanco-iman.jpg' },
+  { categoria: 'pulseras', material: 'Macramé',  linea: 'Pulsera para compartir', nombre: 'Pulsera con infinito negro',                  foto: 'pulsera-negra-infinito.jpg' },
   { categoria: 'pulseras', material: 'Macramé',  linea: 'Macramé yin yang',       nombre: 'Pulsera con yin yang',                  foto: 'pulsera-yingyang.jpg' },
-  { categoria: 'pulseras', material: 'Semillas', linea: 'Pulsera de semillas',    nombre: 'Pulsera de guanacaste',               foto: 'pulsera-semilla-guanacaste.png' },
+  { categoria: 'pulseras', material: 'Semillas', linea: 'Pulsera de semillas',    nombre: 'Pulsera de Guanacaste',               foto: 'pulsera-semilla-guanacaste.png' },
   { categoria: 'pulseras', material: 'Semillas', linea: 'Pulsera de semillas',    nombre: 'Pulsera lágrima de San Pedro',                foto: 'pulsera-semilla-lagrimasanpedro.png' },
   { categoria: 'pulseras', material: 'Semillas', linea: 'Pulsera de semillas',    nombre: 'Pulsera semilla de nene',                     foto: 'pulsera-semilla-nene.png' },
   { categoria: 'pulseras', material: 'Semillas', linea: 'Pulsera de semillas',    nombre: 'Pulsera palma sábal',                         foto: 'pulsera-semilla-palmasabal.png' },
@@ -21,10 +21,10 @@ const PRODUCTOS = [
   { categoria: 'collares', material: 'Semillas', linea: 'Semilla de guapinol',        nombre: 'Collar y aretes',   foto: 'collar-guapinol.jpg' },
 
   // llaveros
-  { categoria: 'llaveros', material: 'Madera',   linea: 'Llavero de macramé', nombre: 'Tabla de surf',            foto: 'llavero-madera-surf.png' },
-  { categoria: 'llaveros', material: 'Madera',   linea: 'Llavero de macramé', nombre: 'Tiburón',                  foto: 'llavero-madera-tiburon.png' },
-  { categoria: 'llaveros', material: 'Madera',   linea: 'Llavero de macramé', nombre: 'Muñeca roja',              foto: 'llavero-muneca-roja.png' },
-  { categoria: 'llaveros', material: 'Semillas', linea: 'Llavero de macramé', nombre: 'Flor de semilla de guanacaste', foto: 'llavero-semilla-guanacaste.png' }
+  { categoria: 'llaveros', material: 'Madera',   linea: 'Llavero de talla madera', nombre: 'Llavero tabla de surf',            foto: 'llavero-madera-surf.png' },
+  { categoria: 'llaveros', material: 'Madera',   linea: 'Llavero de talla madera', nombre: 'Llavero de Tiburón',                  foto: 'llavero-madera-tiburon.png' },
+  { categoria: 'llaveros', material: 'Semillas',   linea: 'Llavero de semillas', nombre: 'Llavero muñeca roja',              foto: 'llavero-muneca-roja.png' },
+  { categoria: 'llaveros', material: 'Semillas', linea: 'Llavero de semillas', nombre: 'Llavero semilla de guanacaste', foto: 'llavero-semilla-guanacaste.png' }
 ];
 
 // botones de los filtros, el id es igual a la categoria o al material del producto
