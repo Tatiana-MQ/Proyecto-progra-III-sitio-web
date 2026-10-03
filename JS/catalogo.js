@@ -18,7 +18,6 @@ const PRODUCTOS = [
   { categoria: 'pulseras', material: 'Semillas', linea: 'Pulsera de semillas',    nombre: 'Palma sábal',                         foto: 'pulsera-semilla-palmasabal.png' },
 
   // ----- Collares -----
-  { categoria: 'collares', material: 'Cuentas',  linea: 'Collar con dije de corazón', nombre: 'Corazón amarillo',  foto: 'collar-corazon-amarillo.png' },
   { categoria: 'collares', material: 'Cuentas',  linea: 'Collar con dije de corazón', nombre: 'Corazón azul',      foto: 'collar-corazon-azul.png' },
   { categoria: 'collares', material: 'Cuentas',  linea: 'Collar con dije de corazón', nombre: 'Corazón verde',     foto: 'collar-corazon-verde.png' },
   { categoria: 'collares', material: 'Semillas', linea: 'Semilla de guapinol',        nombre: 'Collar y aretes',   foto: 'collar-guapinol.jpg' },
