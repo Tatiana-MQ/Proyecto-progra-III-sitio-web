@@ -1,12 +1,10 @@
-/* catalogo.js | Catálogo de productos con filtros de categoría y material. */
+// catalogo.js: productos y filtros
 
-
-// ===== 1. DATOS DEL CATÁLOGO =====
-// categoria: 'pulseras', 'collares' o 'llaveros' (de aquí sale el precio, ver pedidos.js)
-// material: uno de los materiales de la lista MATERIALES
+// categoria: 'pulseras', 'collares' o 'llaveros' (de ahí sale el precio, ver pedidos.js)
+// material: tiene que estar en la lista MATERIALES de abajo
 // foto: nombre del archivo en assets/images/catalogo/
 const PRODUCTOS = [
-  // ----- Pulseras -----
+  // pulseras
   { categoria: 'pulseras', material: 'Macramé',  linea: 'Pulsera para compartir', nombre: 'Pulsera con corazón de imán',            foto: 'pulsera-roja-iman.jpg' },
   { categoria: 'pulseras', material: 'Macramé',  linea: 'Pulsera para compartir', nombre: 'Pulsera con corazón de imán', foto: 'pulsera-morado-blanco-iman.jpg' },
   { categoria: 'pulseras', material: 'Macramé',  linea: 'Pulsera para compartir', nombre: 'Pulsera con corazón de imán',  foto: 'pulsera-negra-blanco-iman.jpg' },
@@ -17,19 +15,19 @@ const PRODUCTOS = [
   { categoria: 'pulseras', material: 'Semillas', linea: 'Pulsera de semillas',    nombre: 'Pulsera semilla de nene',                     foto: 'pulsera-semilla-nene.png' },
   { categoria: 'pulseras', material: 'Semillas', linea: 'Pulsera de semillas',    nombre: 'Pulsera palma sábal',                         foto: 'pulsera-semilla-palmasabal.png' },
 
-  // ----- Collares -----
+  // collares
   { categoria: 'collares', material: 'Cuentas',  linea: 'Collar con dije de corazón', nombre: 'Corazón azul',      foto: 'collar-corazon-azul.png' },
   { categoria: 'collares', material: 'Cuentas',  linea: 'Collar con dije de corazón', nombre: 'Corazón verde',     foto: 'collar-corazon-verde.png' },
   { categoria: 'collares', material: 'Semillas', linea: 'Semilla de guapinol',        nombre: 'Collar y aretes',   foto: 'collar-guapinol.jpg' },
 
-  // ----- Llaveros -----
+  // llaveros
   { categoria: 'llaveros', material: 'Madera',   linea: 'Llavero de macramé', nombre: 'Tabla de surf',            foto: 'llavero-madera-surf.png' },
   { categoria: 'llaveros', material: 'Madera',   linea: 'Llavero de macramé', nombre: 'Tiburón',                  foto: 'llavero-madera-tiburon.png' },
   { categoria: 'llaveros', material: 'Madera',   linea: 'Llavero de macramé', nombre: 'Muñeca roja',              foto: 'llavero-muneca-roja.png' },
   { categoria: 'llaveros', material: 'Semillas', linea: 'Llavero de macramé', nombre: 'Flor de semilla de guanacaste', foto: 'llavero-semilla-guanacaste.png' }
 ];
 
-// Botones de los filtros. "id" coincide con la "categoria" o el "material" del producto.
+// botones de los filtros, el id es igual a la categoria o al material del producto
 const CATEGORIAS = [
   { id: 'todas',    texto: 'Todas' },
   { id: 'pulseras', texto: 'Pulseras' },
@@ -45,20 +43,19 @@ const MATERIALES = [
   { id: 'Cuentas',  texto: 'Cuentas' }
 ];
 
-// Filtros elegidos ahora (al inicio se ve todo)
+// filtros que están puestos (al inicio se ve todo)
 let filtroCategoria = 'todas';
 let filtroMaterial = 'todos';
 
 
-// ===== 2. ELEMENTOS DEL HTML =====
+// elementos del html
 const listaCatalogo = document.querySelector('#catalog-grid');
 const zonaCategorias = document.querySelector('#catalog-filtros');
 const zonaMateriales = document.querySelector('#catalog-materiales');
 const contadorCatalogo = document.querySelector('#catalog-total');
 
 
-// ===== 3. MOSTRAR LOS PRODUCTOS =====
-// Limpia la lista y crea una tarjeta por cada producto que pase los dos filtros
+// dibuja una tarjeta por cada producto que pase los dos filtros
 function mostrarCatalogo() {
 
   listaCatalogo.innerHTML = '';
@@ -66,7 +63,7 @@ function mostrarCatalogo() {
 
   PRODUCTOS.forEach(function (producto) {
 
-    // Si no cumple algún filtro, se salta al siguiente producto
+    // si no cumple un filtro, lo salta
     if (filtroCategoria !== 'todas' && producto.categoria !== filtroCategoria) {
       return;
     }
@@ -75,11 +72,11 @@ function mostrarCatalogo() {
     }
     visibles = visibles + 1;
 
-    const precio = calcularTotal(producto.categoria);   // pedidos.js
+    const precio = calcularTotal(producto.categoria);   // está en pedidos.js
 
-    // Tarjeta: ancho fijo (así las filas quedan centradas) y misma altura en cada fila
+    // ancho fijo para que las filas queden centradas
     const tarjeta = document.createElement('article');
-    tarjeta.className = 'flex w-40 flex-col overflow-hidden rounded-2xl border border-guapinol-brown/10 bg-white sm:w-52 lg:w-56 transition duration-300 hover:-translate-y-1 hover:shadow-lg hover:shadow-guapinol-green/10';
+    tarjeta.className = 'flex w-40 flex-col overflow-hidden rounded-2xl border border-guapinol-brown/10 bg-white sm:w-52 lg:w-56 transition duration-300 hover:-translate-y-1 hover:shadow-lg';
     tarjeta.innerHTML = `
       <img src="assets/images/catalogo/${producto.foto}" alt="${producto.linea}: ${producto.nombre}" loading="lazy" class="aspect-[3/4] w-full bg-white object-contain">
       <div class="flex flex-1 flex-col p-4">
@@ -93,29 +90,29 @@ function mostrarCatalogo() {
       </div>
     `;
 
-    // Botón "Agregar al carrito" (agregarAlCarrito está en carrito.js)
+    // botón de agregar (agregarAlCarrito está en carrito.js)
     const botonAgregar = tarjeta.querySelector('.agregar');
     botonAgregar.addEventListener('click', function () {
       agregarAlCarrito({
-        clave: producto.foto,        // cada foto es única: sirve de identificador
+        clave: producto.foto,        // la foto no se repite, sirve de identificador
         nombre: producto.linea,
         color: producto.nombre,
-        dije: producto.material,     // el carrito muestra "nombre · material"
+        dije: producto.material,     // el carrito muestra el color y el material
         precio: precio
       });
 
-      // Aviso en el mismo botón por 1.5 segundos
-      botonAgregar.textContent = '¡Agregado! ✓';
+      // cambia el texto del botón por un momento
+      botonAgregar.textContent = '¡Agregado!';
       setTimeout(function () {
         botonAgregar.textContent = 'Agregar al carrito';
       }, 1500);
     });
 
-    // Botón "Comprar ahora": abre WhatsApp con este producto (enviarWhatsApp está en pedidos.js)
+    // botón de comprar, abre whatsapp con este producto
     tarjeta.querySelector('.comprar').addEventListener('click', function () {
       let mensaje = SALUDO + ', quiero comprar:\n';
-      mensaje = mensaje + '• ' + producto.linea + ' (' + producto.nombre + ')\n';
-      mensaje = mensaje + '• Material: ' + producto.material + '\n';
+      mensaje = mensaje + '- ' + producto.linea + ' (' + producto.nombre + ')\n';
+      mensaje = mensaje + '- Material: ' + producto.material + '\n';
       mensaje = mensaje + 'Total: ' + formatoColones(precio);
       enviarWhatsApp(mensaje);
     });
@@ -123,12 +120,12 @@ function mostrarCatalogo() {
     listaCatalogo.appendChild(tarjeta);
   });
 
-  // Si ningún producto pasó los filtros, se avisa
+  // si no quedó ninguno
   if (visibles === 0) {
     listaCatalogo.innerHTML = '<p class="py-10 text-stone-500">No hay productos con esos filtros.</p>';
   }
 
-  // Contador: "1 producto" o "5 productos"
+  // contador, singular o plural
   if (visibles === 1) {
     contadorCatalogo.textContent = '1 producto';
   } else {
@@ -137,9 +134,8 @@ function mostrarCatalogo() {
 }
 
 
-// ===== 4. MOSTRAR LOS BOTONES DE FILTRO =====
-// Crea los botones de una lista de opciones. El elegido se pinta oscuro.
-// alTocar es la función que se ejecuta al tocar un botón.
+// crea los botones de filtro, el elegido se ve oscuro
+// alTocar es lo que pasa cuando le dan clic
 function dibujarBotones(zona, opciones, elegido, alTocar) {
 
   zona.innerHTML = '';
@@ -164,7 +160,7 @@ function dibujarBotones(zona, opciones, elegido, alTocar) {
   });
 }
 
-// Dibuja los dos grupos de filtros y luego los productos
+// dibuja los filtros y después los productos
 function mostrarTodo() {
   dibujarBotones(zonaCategorias, CATEGORIAS, filtroCategoria, function (id) {
     filtroCategoria = id;
@@ -178,5 +174,5 @@ function mostrarTodo() {
 }
 
 
-// ===== 5. AL CARGAR LA PÁGINA =====
+// al cargar la página
 mostrarTodo();

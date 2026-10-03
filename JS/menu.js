@@ -1,35 +1,31 @@
-/* menu.js | Abre y cierra el menú del navbar en celular. */
+// menu.js: abre y cierra el menú en celular
 
 // Persona 1: menú
 
-
-// ===== 1. ELEMENTOS DEL HTML =====
+// elementos del html
 const botonMenu = document.querySelector('#boton-menu');
 const menuMovil = document.querySelector('#menu-movil');
 const iconoAbrir = document.querySelector('#icono-abrir');     // tres rayas
 const iconoCerrar = document.querySelector('#icono-cerrar');   // X
 
 
-// ===== 2. ABRIR Y CERRAR =====
-// La clase "hidden" de Tailwind oculta un elemento
+// la clase hidden de Tailwind esconde el elemento
 
-// Muestra el menú y cambia el ícono a X
+// muestra el menú y pone la X
 function abrirMenu() {
   menuMovil.classList.remove('hidden');
   iconoAbrir.classList.add('hidden');
   iconoCerrar.classList.remove('hidden');
 }
 
-// Oculta el menú y vuelve a las tres rayas
+// lo esconde y vuelve a poner las rayas
 function cerrarMenu() {
   menuMovil.classList.add('hidden');
   iconoAbrir.classList.remove('hidden');
   iconoCerrar.classList.add('hidden');
 }
 
-// ===== 3. EVENTOS =====
-
-// Botón del menú: abre si está cerrado, cierra si está abierto
+// el botón abre o cierra según como esté
 botonMenu.addEventListener('click', function () {
   if (menuMovil.classList.contains('hidden')) {
     abrirMenu();
@@ -38,7 +34,7 @@ botonMenu.addEventListener('click', function () {
   }
 });
 
-// Al tocar un enlace del menú, se cierra
+// si tocan un enlace se cierra el menú
 menuMovil.addEventListener('click', function (event) {
   if (event.target.tagName === 'A') {
     cerrarMenu();
