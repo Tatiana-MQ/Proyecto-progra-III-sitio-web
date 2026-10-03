@@ -7,17 +7,18 @@
 // foto: nombre del archivo en assets/images/catalogo/
 const PRODUCTOS = [
   // ----- Pulseras -----
-  { categoria: 'pulseras', material: 'Macramé',  linea: 'Pulsera para compartir', nombre: 'Pulsera con corazón de imán',            foto: 'pulsera-roja-iman.jpg' },
-  { categoria: 'pulseras', material: 'Macramé',  linea: 'Pulsera para compartir', nombre: 'Pulsera con corazón de imán', foto: 'pulsera-morado-blanco-iman.jpg' },
-  { categoria: 'pulseras', material: 'Macramé',  linea: 'Pulsera para compartir', nombre: 'Pulsera con corazón de imán',  foto: 'pulsera-negra-blanco-iman.jpg' },
-  { categoria: 'pulseras', material: 'Macramé',  linea: 'Pulsera para compartir', nombre: 'Pulsera con infinito',                  foto: 'pulsera-negra-infinito.jpg' },
-  { categoria: 'pulseras', material: 'Macramé',  linea: 'Pulsera yin yang',       nombre: 'Pulsera con yin-yang',                  foto: 'pulsera-yingyang.jpg' },
+  { categoria: 'pulseras', material: 'Macramé',  linea: 'Pulsera para compartir', nombre: 'Rojo con corazón de imán',            foto: 'pulsera-roja-iman.jpg' },
+  { categoria: 'pulseras', material: 'Macramé',  linea: 'Pulsera para compartir', nombre: 'Morado y blanco con corazón de imán', foto: 'pulsera-morado-blanco-iman.jpg' },
+  { categoria: 'pulseras', material: 'Macramé',  linea: 'Pulsera para compartir', nombre: 'Negro y blanco con corazón de imán',  foto: 'pulsera-negra-blanco-iman.jpg' },
+  { categoria: 'pulseras', material: 'Macramé',  linea: 'Pulsera para compartir', nombre: 'Negro con infinito',                  foto: 'pulsera-negra-infinito.jpg' },
+  { categoria: 'pulseras', material: 'Macramé',  linea: 'Macramé yin yang',       nombre: 'Negro con yin yang',                  foto: 'pulsera-yingyang.jpg' },
   { categoria: 'pulseras', material: 'Semillas', linea: 'Pulsera de semillas',    nombre: 'Semilla de guanacaste',               foto: 'pulsera-semilla-guanacaste.png' },
   { categoria: 'pulseras', material: 'Semillas', linea: 'Pulsera de semillas',    nombre: 'Lágrima de San Pedro',                foto: 'pulsera-semilla-lagrimasanpedro.png' },
   { categoria: 'pulseras', material: 'Semillas', linea: 'Pulsera de semillas',    nombre: 'Semilla de nene',                     foto: 'pulsera-semilla-nene.png' },
   { categoria: 'pulseras', material: 'Semillas', linea: 'Pulsera de semillas',    nombre: 'Palma sábal',                         foto: 'pulsera-semilla-palmasabal.png' },
 
   // ----- Collares -----
+  { categoria: 'collares', material: 'Cuentas',  linea: 'Collar con dije de corazón', nombre: 'Corazón amarillo',  foto: 'collar-corazon-amarillo.png' },
   { categoria: 'collares', material: 'Cuentas',  linea: 'Collar con dije de corazón', nombre: 'Corazón azul',      foto: 'collar-corazon-azul.png' },
   { categoria: 'collares', material: 'Cuentas',  linea: 'Collar con dije de corazón', nombre: 'Corazón verde',     foto: 'collar-corazon-verde.png' },
   { categoria: 'collares', material: 'Semillas', linea: 'Semilla de guapinol',        nombre: 'Collar y aretes',   foto: 'collar-guapinol.jpg' },
