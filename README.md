@@ -6,8 +6,6 @@ Proyecto académico con sitio web y API REST para administrar productos.
 
 - `frontend/`: sitio web estático, catálogo y panel administrativo.
 - `backend/`: API REST en NestJS + TypeScript.
-- `docs/`: documentación del laboratorio y colección Postman.
-- `evidencias/`: capturas de pruebas del laboratorio.
 
 ## Ejecución local
 
